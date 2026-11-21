@@ -3,7 +3,11 @@ layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>{{ '/' | absolute_url | xml_escape }}</loc>
-  </url>
+  {% assign public_pages = '/,/asesoria-de-interiorismo-online/,/proyectos/' | split: ',' %}
+  {% for url in public_pages %}
+  <url><loc>{{ url | absolute_url | xml_escape }}</loc></url>
+  {% endfor %}
+  {% for proyecto in site.proyectos %}
+  <url><loc>{{ proyecto.url | absolute_url | xml_escape }}</loc></url>
+  {% endfor %}
 </urlset>

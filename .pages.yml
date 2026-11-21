@@ -1,0 +1,80 @@
+media:
+  input: media/proyectos
+  output: /media/proyectos
+  categories: [image]
+content:
+  - name: proyectos
+    label: Proyectos
+    type: collection
+    path: _proyectos
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: title
+      fields: [title, space]
+    fields:
+      - name: title
+        label: Título del proyecto
+        type: string
+        required: true
+      - name: space
+        label: Tipo de ambiente
+        description: Por ejemplo, living, comedor o dormitorio.
+        type: string
+        required: true
+      - name: description
+        label: Resumen breve
+        description: Una o dos frases que resuman el proyecto.
+        type: text
+        required: true
+      - name: cover
+        label: Foto de portada
+        type: image
+        required: true
+        options:
+          extensions: [jpg, jpeg, png, webp]
+          rename: random
+      - name: cover_alt
+        label: Descripción de la portada
+        description: Contá qué se ve en la imagen.
+        type: string
+        required: true
+      - name: objective
+        label: El punto de partida
+        type: text
+        required: true
+      - name: decisions
+        label: Decisiones de diseño
+        type: text
+        required: true
+      - name: result
+        label: El resultado
+        type: text
+      - name: gallery
+        label: Galería
+        type: object
+        list:
+          max: 12
+          collapsible: true
+        fields:
+          - name: image
+            label: Foto
+            type: image
+            required: true
+            options:
+              extensions: [jpg, jpeg, png, webp]
+              rename: random
+          - name: alt
+            label: Qué se ve en la foto
+            type: string
+            required: true
+  - name: contacto
+    label: Contacto
+    type: file
+    path: _data/contacto.yml
+    format: yaml
+    fields:
+      - name: email
+        label: Correo público de BRENBE
+        type: string
+        pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'

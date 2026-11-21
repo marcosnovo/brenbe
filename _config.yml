@@ -1,0 +1,10 @@
+collections:
+  proyectos:
+    output: true
+    permalink: /proyectos/:name/
+defaults:
+  - scope:
+      path: ""
+      type: proyectos
+    values:
+      layout: proyecto

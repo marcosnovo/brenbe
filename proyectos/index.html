@@ -1,0 +1,28 @@
+---
+layout: base
+title: Proyectos de interiorismo
+seo_title: Proyectos e ideas de interiorismo | BRENBE
+description: Explorá el portafolio de BRENBE Interiorismo e ideas de diseño para livings, comedores y dormitorios.
+---
+<main>
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{{ '/' | relative_url }}">Inicio</a> / Proyectos</p>
+    <h1>Proyectos de interiorismo</h1>
+    <p>Espacios, materiales y decisiones de diseño para vivir mejor en casa.</p>
+  </div>
+  {% if site.proyectos.size > 0 %}
+  <section class="section">
+    <div class="section-head"><h2>Proyectos realizados</h2></div>
+    {% include proyectos.html limit: site.proyectos.size %}
+  </section>
+  {% endif %}
+  <section class="section">
+    <div class="section-head">
+      <h2>Ideas para tu casa</h2>
+      <p class="section-intro">Referencias visuales para explorar combinaciones de color, mobiliario e iluminación.</p>
+    </div>
+    {% include referencias.html %}
+    <a class="button secondary after-grid" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Conocé la asesoría online</a>
+  </section>
+  {% include contact.html %}
+</main>
