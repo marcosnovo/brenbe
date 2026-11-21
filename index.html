@@ -27,7 +27,7 @@ description: "Asesorías de interiorismo y decoración desde Argentina. Elegí c
         <p class="section-intro">{% if site.proyectos.size > 0 %}Conocé el punto de partida y las decisiones de diseño de cada espacio.{% else %}Referencias visuales para combinar paletas, muebles, textiles e iluminación.{% endif %}</p>
       </div>
       {% if site.proyectos.size > 0 %}
-        {% include proyectos.html limit: 3 %}
+        {% include proyectos.html limit=3 %}
       {% else %}
         {% include referencias.html %}
       {% endif %}
