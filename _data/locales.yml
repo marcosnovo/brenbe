@@ -17,6 +17,8 @@ es-ar:
   og: es_AR
   name: Argentina
   lang_name: Español
+  short: AR        # código corto del botón del selector
+  menu_name: Argentina   # nombre largo en el menú del selector
   currency: ARS
   price_key: ars
   guias: guias
@@ -34,6 +36,8 @@ es-mx:
   og: es_MX
   name: México
   lang_name: Español
+  short: MX        # código corto del botón del selector
+  menu_name: México   # nombre largo en el menú del selector
   currency: USD
   price_key: usd
   guias: guias_es_mx
@@ -51,6 +55,8 @@ es-es:
   og: es_ES
   name: España
   lang_name: Español
+  short: ES        # código corto del botón del selector
+  menu_name: España   # nombre largo en el menú del selector
   currency: EUR
   price_key: eur
   guias: guias_es_es
@@ -68,6 +74,8 @@ en:
   og: en_US
   name: English
   lang_name: English
+  short: EN        # código corto del botón del selector
+  menu_name: United States   # nombre largo en el menú del selector
   currency: USD
   price_key: usd
   guias: guias_en
@@ -85,6 +93,8 @@ pt-br:
   og: pt_BR
   name: Português
   lang_name: Português
+  short: PT        # código corto del botón del selector
+  menu_name: Brasil   # nombre largo en el menú del selector
   currency: BRL
   price_key: brl
   guias: guias_pt_br

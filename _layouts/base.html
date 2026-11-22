@@ -57,7 +57,7 @@
   {% if page.preload_image %}<link rel="preload" as="image" href="{{ page.preload_image.src | relative_url }}" imagesrcset="{{ page.preload_image.srcset | escape }}" imagesizes="{{ page.preload_image.sizes | escape }}" fetchpriority="high">{% endif %}
   <link rel="preload" href="{{ '/fonts/cormorant-garamond-latin-wght-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ '/fonts/dm-sans-latin-wght-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="{{ '/brenbe.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/brenbe.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 </head>
 
 <body{% if wa_href != '' %} class="has-wa"{% endif %}>
@@ -75,7 +75,7 @@
   {%- assign cm = alt_list | where: 'locale', key | first %}
   {{ key | jsonify }}:{"url":{{ cm.url | default: live_homes[forloop.index0] | replace: 'index.html', '' | relative_url | jsonify }},"lang":{{ cl.html_lang | jsonify }},"text":{{ ct.banner_text | default: TD.banner_text | jsonify }},"go":{{ ct.banner_go | default: TD.banner_go | jsonify }},"stay":{{ ct.banner_stay | default: TD.banner_stay | jsonify }},"close":{{ ct.banner_close | default: TD.banner_close | jsonify }},"aria":{{ ct.banner_aria | default: TD.banner_aria | jsonify }}}{% unless forloop.last %},{% endunless %}
   {%- endfor %}}}</script>
-  <script defer src="{{ '/brenbe-lang.js' | relative_url }}"></script>
+  <script defer src="{{ '/brenbe-lang.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
   {%- endif %}
   {%- assign cfa = site.data.sitio.cloudflare_analytics_token | default: '' | append: '' | strip %}
   {% if cfa != '' %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": {{ cfa | jsonify }}}'></script>{% endif %}
