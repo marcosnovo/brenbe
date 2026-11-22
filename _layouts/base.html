@@ -11,8 +11,10 @@
   {% assign seo_desc = page.description | default: site.description %}
   {% assign canonical_url = page.url | replace: '/index.html', '/' | absolute_url %}
   {% assign social_image = page.cover | default: '/brenbe-vista-previa.jpg' %}
-  {%- comment -%} Las fotos del panel pesan MB: para redes pedimos un JPG de 1200x630 a Cloudflare. {%- endcomment -%}
-  {% if site.image_transforms != false and page.cover contains '/media/' %}{% capture social_image %}/cdn-cgi/image/width=1200,height=630,fit=cover,quality=80,format=jpeg{{ page.cover }}{% endcapture %}{% endif %}
+  {%- comment -%} Las fotos del panel pesan MB: para redes pedimos un JPG de 1200x630 a Cloudflare.
+  Los crawlers sociales no tienen fallback, así que solo se usa cuando social_image_transforms está activado
+  (después de habilitar Images > Transformations en la zona). {%- endcomment -%}
+  {% if site.social_image_transforms == true and page.cover contains '/media/' %}{% capture social_image %}/cdn-cgi/image/width=1200,height=630,fit=cover,quality=80,format=jpeg{{ page.cover }}{% endcapture %}{% endif %}
   <title>{{ seo_title | escape }}</title>
   <meta name="description" content="{{ seo_desc | strip_html | normalize_whitespace | truncate: 158 | escape }}">
   {% if is_indexable %}<link rel="canonical" href="{{ canonical_url | escape }}">
