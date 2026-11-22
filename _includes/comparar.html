@@ -1,0 +1,14 @@
+{%- comment -%}
+  Comparador antes / después. Parámetros: before (ruta), before_alt, after (ruta), after_alt, caption (opcional).
+  Sin JavaScript (o al imprimir): las dos fotos lado a lado (una debajo de otra en pantallas chicas), cada una con su etiqueta.
+  Con JavaScript (brenbe-blocks.js): control deslizante accesible (<input type="range">, teclado y lector de pantalla) que descubre el "después".
+{%- endcomment -%}
+{%- unless T %}{% include loc.html %}{% endunless -%}
+<figure class="ba" data-ba>
+  <div class="ba-pair">
+    <div class="ba-side ba-before">{% include foto.html src=include.before alt=include.before_alt widths="480,800,1200" sizes="(max-width: 800px) 100vw, 50vw" %}<span class="ba-tag">{% include t.html k="project_before" %}</span></div>
+    <div class="ba-side ba-after">{% include foto.html src=include.after alt=include.after_alt widths="480,800,1200" sizes="(max-width: 800px) 100vw, 50vw" %}<span class="ba-tag ba-tag-after">{% include t.html k="project_after" %}</span></div>
+  </div>
+  <label class="ba-control" hidden><span>{% include t.html k="ba_slider" %}</span><input type="range" min="0" max="100" value="50" aria-valuetext="50 %"></label>
+  {%- if include.caption %}<figcaption>{{ include.caption | escape }}</figcaption>{% endif %}
+</figure>

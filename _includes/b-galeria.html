@@ -1,0 +1,16 @@
+{%- comment -%}
+  Galería con epígrafes visibles (front matter `galeria:` [{image, alt, caption}]). Sin carrusel: todo el contenido queda a la vista.
+  `caption` = por qué funciona (se muestra y se usa como descripción del pin de Pinterest). `galeria_titulo:` cambia el título.
+{%- endcomment -%}
+{%- if page.galeria.size > 0 -%}
+<section class="guide-block galeria" id="galeria">
+  <h2>{{ page.galeria_titulo | default: T.gal_h | default: TD.gal_h | escape }}</h2>
+  <div class="gallery-figs">
+  {%- for f in page.galeria %}
+    {%- if f.image == nil or f.image == '' %}{% continue %}{% endif %}
+    {%- assign f_alt = f.alt | default: f.caption | default: page.title %}
+    <figure class="fig">{% include imagen.html src=f.image alt=f_alt pin=f.caption sizes="(max-width: 800px) 100vw, 50vw" %}{% if f.caption %}<figcaption>{{ f.caption | escape }}</figcaption>{% endif %}</figure>
+  {%- endfor %}
+  </div>
+</section>
+{%- endif -%}

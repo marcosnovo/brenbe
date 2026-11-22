@@ -1,0 +1,5 @@
+{%- comment -%} Respuesta rápida (front matter `respuesta:`, 40-60 palabras). Citable por buscadores y asistentes de IA. {%- endcomment -%}
+{%- assign b_resp = page.respuesta | default: '' | append: '' | strip -%}
+{%- if b_resp != '' -%}
+<aside class="quick-answer" aria-labelledby="respuesta-h"><h2 id="respuesta-h">{% include t.html k="respuesta_h" %}</h2><p>{{ b_resp | escape }}</p></aside>
+{%- endif -%}

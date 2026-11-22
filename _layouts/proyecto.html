@@ -37,16 +37,44 @@ layout: base
       {% if t_author != '' %}<figcaption>{{ t_author | escape }}</figcaption>{% endif %}
     </figure>
     {% endif %}
-    {% if page.gallery and page.gallery.size > 0 %}
+    {%- comment -%} Antes y después: la 1.ª foto "antes" se empareja con la 1.ª "después", y así sucesivamente. Las fotos emparejadas salen de la galería. {%- endcomment -%}
+    {%- assign ba_before = '' | split: '' -%}
+    {%- assign ba_after = '' | split: '' -%}
+    {%- for photo in page.gallery -%}
+      {%- if photo.image == nil or photo.image == '' %}{% continue %}{% endif -%}
+      {%- if photo.etapa == 'antes' -%}{%- assign ba_before = ba_before | push: photo -%}
+      {%- elsif photo.etapa == 'despues' -%}{%- assign ba_after = ba_after | push: photo -%}{%- endif -%}
+    {%- endfor -%}
+    {%- assign ba_n = ba_before.size -%}
+    {%- if ba_after.size < ba_n -%}{%- assign ba_n = ba_after.size -%}{%- endif -%}
+    {%- assign ba_used = '|' -%}
+    {%- if ba_n > 0 %}
+    <section class="ba-section" id="antes-y-despues">
+      <h2>{% include t.html k="ba_h" %}</h2>
+      {%- for i in (0..ba_n) -%}
+        {%- if i >= ba_n %}{% break %}{% endif -%}
+        {%- assign b = ba_before[i] -%}{%- assign a = ba_after[i] -%}
+        {%- assign ba_used = ba_used | append: b.image | append: '|' | append: a.image | append: '|' -%}
+        {%- assign ba_cap = a.caption | default: b.caption %}
+      {% include comparar.html before=b.image before_alt=b.alt after=a.image after_alt=a.alt caption=ba_cap %}
+      {%- endfor %}
+    </section>
+    {%- endif %}
+    {%- assign gal_rest = 0 -%}
+    {%- for photo in page.gallery -%}{%- capture g_key %}|{{ photo.image }}|{% endcapture -%}{%- unless photo.image == nil or photo.image == '' or ba_used contains g_key -%}{%- assign gal_rest = gal_rest | plus: 1 -%}{%- endunless -%}{%- endfor -%}
+    {% if gal_rest > 0 %}
     <h2>{% include t.html k="project_photos" %}</h2>
     <div class="gallery">
       {%- for photo in page.gallery %}
       {%- if photo.image == nil or photo.image == '' %}{% continue %}{% endif %}
+      {%- capture g_key %}|{{ photo.image }}|{% endcapture -%}
+      {%- if ba_used contains g_key %}{% continue %}{% endif %}
       {%- assign g_alt = photo.alt | default: page.title -%}
       {%- assign g_etapa = photo.etapa | default: '' -%}
       <figure class="gallery-item">
-        {% include foto.html src=photo.image alt=g_alt sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 380px" widths="480,800,1200" %}
+        {% include foto.html src=photo.image alt=g_alt pin=photo.caption sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 380px" widths="480,800,1200" %}
         {%- if g_etapa == 'antes' %}<span class="badge">{% include t.html k="project_before" %}</span>{% elsif g_etapa == 'despues' %}<span class="badge badge-after">{% include t.html k="project_after" %}</span>{% endif %}
+        {%- if photo.caption %}<figcaption>{{ photo.caption | escape }}</figcaption>{% endif %}
       </figure>
       {%- endfor %}
     </div>

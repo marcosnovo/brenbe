@@ -1,0 +1,27 @@
+---
+layout: base
+---
+{%- comment -%}
+  Glosario (opcional). Página con `layout: glosario` y `terminos: [{termino, definicion, ejemplo, link, link_texto}]`.
+  Cada término tiene ancla (#paleta-60-30-10) y sale como DefinedTermSet. Ver docs/growth/plantillas.md.
+{%- endcomment -%}
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | default: page.title | escape }}</p>
+    <h1>{{ page.title | escape }}</h1>
+    {% if page.description %}<p class="lead-text">{{ page.description | escape }}</p>{% endif %}
+  </div>
+  <section class="section copy glosario">
+    {{ content }}
+    <dl class="glossary">
+    {%- for t in page.terminos %}
+      <div class="glossary-term" id="{{ t.termino | slugify }}">
+        <dt><a href="#{{ t.termino | slugify }}">{{ t.termino | escape }}</a></dt>
+        <dd>{{ t.definicion | escape }}{% if t.ejemplo %} <em>{{ t.ejemplo | escape }}</em>{% endif %}{% if t.link %} <a href="{{ t.link | relative_url }}">{{ t.link_texto | default: T.glos_more | default: TD.glos_more | escape }}</a>{% endif %}</dd>
+      </div>
+    {%- endfor %}
+    </dl>
+  </section>
+  {% include contact.html %}
+</main>

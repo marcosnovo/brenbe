@@ -1,0 +1,21 @@
+{%- comment -%}
+  "Cómo lograrlo" (front matter `como_lograrlo:` [{titulo, texto, grupo}]). Si los pasos traen `grupo`, se agrupan con un subtítulo
+  (p. ej. "En un depto chico" / "Si alquilás"). `pasos_titulo:` cambia el título de la sección.
+{%- endcomment -%}
+{%- if page.como_lograrlo.size > 0 -%}
+<section class="guide-block pasos" id="como-lograrlo">
+  <h2>{{ page.pasos_titulo | default: T.idea_how_h | default: TD.idea_how_h | escape }}</h2>
+  {%- assign p_group = '__none__' -%}
+  {%- for s in page.como_lograrlo %}
+    {%- assign s_group = s.grupo | default: '' -%}
+    {%- if forloop.first or s_group != p_group %}
+      {%- unless forloop.first %}</ol>{% endunless %}
+      {%- if s_group != '' %}<h3>{{ s_group | escape }}</h3>{% endif %}
+  <ol class="steps-list">
+      {%- assign p_group = s_group -%}
+    {%- endif %}
+    <li>{% if s.titulo %}<strong>{{ s.titulo | escape }}</strong>{% endif %}{% if s.texto %} {{ s.texto | escape }}{% endif %}</li>
+  {%- endfor %}
+  </ol>
+</section>
+{%- endif -%}

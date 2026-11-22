@@ -1,0 +1,7 @@
+{%- comment -%}
+  Figura con epígrafe visible para usar DENTRO del texto de una guía (Markdown):
+  {% include fig.html src="/media/guias/living-sofa-oliva.jpg" alt="Qué se ve" caption="Por qué funciona" %}
+  Sin líneas en blanco ni sangría en la salida (para no romper el Markdown). Agrega data-pin-description (Pinterest).
+{%- endcomment -%}
+{%- capture fig_img %}{% include imagen.html src=include.src alt=include.alt pin=include.caption sizes="(max-width: 800px) 100vw, 760px" %}{% endcapture -%}
+<figure class="fig fig-inline">{{ fig_img | strip }}{% if include.caption %}<figcaption>{{ include.caption | escape }}</figcaption>{% endif %}</figure>
