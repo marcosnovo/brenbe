@@ -1,0 +1,27 @@
+# Datos técnicos y poco frecuentes. NO se editan desde el panel de Brenda:
+# se cambian solo desde GitHub. Todo es opcional; lo vacío no se publica.
+apellido:
+cargo:
+formacion:
+anio_inicio:
+ciudad:
+provincia:
+# Lista, por ejemplo: [CABA, GBA Norte]. Vacío si solo trabaja online.
+zona_presencial: []
+direccion:
+codigo_postal:
+telefono:
+# Mensaje que se completa al abrir WhatsApp desde la portada (vacío = mensaje por defecto).
+whatsapp_mensaje:
+pinterest:
+linkedin:
+facebook:
+behance:
+google_business_url:
+# Frase sobre plazos, por ejemplo: "Reunión de 60 minutos y propuesta en 7 días".
+duracion:
+# Medición y verificación (vacío = no se publica nada).
+# Token de Cloudflare Web Analytics (solo el valor del token).
+cloudflare_analytics_token:
+# Código de Search Console (solo el valor de content="...").
+google_site_verification:

@@ -1,10 +1,11 @@
 {%- include wa.html -%}
 {%- assign n = site.data.negocio -%}
+{%- assign t = site.data.sitio -%}
 {%- assign f_mail = n.email | default: '' | append: '' | strip -%}
 {%- assign f_has = false -%}
 {%- if wa_href != '' or f_mail != '' -%}{%- assign f_has = true -%}{%- endif -%}
 {%- for k in 'instagram,pinterest,linkedin,facebook,behance' | split: ',' -%}
-  {%- assign kv = n[k] | default: '' | append: '' | strip -%}
+  {%- assign kv = n[k] | default: t[k] | default: '' | append: '' | strip -%}
   {%- if kv != '' -%}{%- assign f_has = true -%}{%- endif -%}
 {%- endfor -%}
 <footer>
@@ -37,7 +38,7 @@
     {%- assign redes = 'instagram:Instagram,pinterest:Pinterest,linkedin:LinkedIn,facebook:Facebook,behance:Behance' | split: ',' -%}
     {%- for r in redes -%}
       {%- assign rp = r | split: ':' -%}
-      {%- assign r_url = n[rp[0]] | default: '' | append: '' | strip -%}
+      {%- assign r_url = n[rp[0]] | default: t[rp[0]] | default: '' | append: '' | strip -%}
       {%- if r_url != '' %}
     <a href="{{ r_url | escape }}" rel="me noopener" target="_blank">{{ rp[1] }}</a>{% endif -%}
     {%- endfor %}

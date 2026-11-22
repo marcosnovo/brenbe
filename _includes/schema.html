@@ -8,27 +8,28 @@
 {%- endcomment -%}
 {%- if is_indexable -%}
 {%- assign n = site.data.negocio -%}
+{%- assign t = site.data.sitio -%}
 {%- assign org_id = '/#organization' | absolute_url -%}
 {%- assign person_id = '/#brenda' | absolute_url -%}
 {%- assign website_id = '/#website' | absolute_url -%}
 {%- assign nombre = n.nombre_completo | default: '' | strip -%}
-{%- assign apellido = n.apellido | default: '' | strip -%}
-{%- assign cargo = n.cargo | default: 'Interiorista' | strip -%}
-{%- assign ciudad = n.ciudad | default: '' | strip -%}
-{%- assign provincia = n.provincia | default: '' | strip -%}
-{%- assign direccion = n.direccion | default: '' | strip -%}
-{%- assign cp = n.codigo_postal | default: '' | strip -%}
+{%- assign apellido = t.apellido | default: '' | strip -%}
+{%- assign cargo = t.cargo | default: 'Interiorista' | strip -%}
+{%- assign ciudad = t.ciudad | default: '' | strip -%}
+{%- assign provincia = t.provincia | default: '' | strip -%}
+{%- assign direccion = t.direccion | default: '' | strip -%}
+{%- assign cp = t.codigo_postal | default: '' | strip -%}
 {%- assign mail = n.email | default: '' | strip -%}
-{%- assign tel = n.telefono | default: '' | strip -%}
-{%- assign gbp = n.google_business_url | default: '' | strip -%}
+{%- assign tel = t.telefono | default: '' | strip -%}
+{%- assign gbp = t.google_business_url | default: '' | strip -%}
 {%- assign moneda = n.moneda | default: 'ARS' | strip -%}
 {%- assign precio = n.precio_desde | default: '' | strip -%}
-{%- assign formacion = n.formacion | default: '' | strip -%}
+{%- assign formacion = t.formacion | default: '' | strip -%}
 {%- assign retrato = n.retrato | default: '' | strip -%}
 {%- assign same = '' -%}
 {%- assign redes = 'instagram,pinterest,linkedin,facebook,behance' | split: ',' -%}
 {%- for red in redes -%}
-  {%- assign red_url = n[red] | default: '' | strip -%}
+  {%- assign red_url = n[red] | default: t[red] | default: '' | strip -%}
   {%- if red_url != '' -%}{%- assign same = same | append: red_url | append: ' ' -%}{%- endif -%}
 {%- endfor -%}
 {%- assign same_list = same | strip | split: ' ' -%}
@@ -50,7 +51,7 @@
   "knowsLanguage": "es-AR",
   "serviceType": ["Asesoría de interiorismo", "Asesoría de decoración", "Diseño de interiores online"],
   "knowsAbout": ["Interiorismo", "Decoración de interiores", "Diseño de interiores", "Paletas de color", "Iluminación", "Mobiliario", "Textiles"],
-  "areaServed": [{ "@type": "Country", "name": "Argentina" }{% for z in n.zona_presencial %}{% assign zona = z | strip %}{% if zona != '' %}, { "@type": "AdministrativeArea", "name": {{ zona | jsonify }} }{% endif %}{% endfor %}],
+  "areaServed": [{ "@type": "Country", "name": "Argentina" }{% for z in t.zona_presencial %}{% assign zona = z | strip %}{% if zona != '' %}, { "@type": "AdministrativeArea", "name": {{ zona | jsonify }} }{% endif %}{% endfor %}],
   "founder": { "@id": {{ person_id | jsonify }} }
   {%- if ciudad != '' %},
   "address": { "@type": "PostalAddress", "addressLocality": {{ ciudad | jsonify }}{% if provincia != '' %}, "addressRegion": {{ provincia | jsonify }}{% endif %}{% if direccion != '' %}, "streetAddress": {{ direccion | jsonify }}{% endif %}{% if cp != '' %}, "postalCode": {{ cp | jsonify }}{% endif %}, "addressCountry": "AR" }{% endif %}
@@ -219,6 +220,8 @@
   "description": {{ page.description | jsonify }}{% endif %}
   {%- if page.space %},
   "genre": {{ page.space | jsonify }}{% endif %}
+  {%- if page.location and page.location != '' %},
+  "contentLocation": { "@type": "Place", "name": {{ page.location | jsonify }} }{% endif %}
   {%- if page.date %},
   "datePublished": {{ page.date | date_to_xmlschema | jsonify }}{% endif %}
   {%- if page.updated %},
@@ -299,7 +302,8 @@
   "mainEntity": {
     "@type": "ItemList",
     "itemListElement": [
-      {%- for p in site.proyectos reversed %}
+      {%- assign p_sorted = site.proyectos | sort: 'date' | reverse %}
+      {%- for p in p_sorted %}
       { "@type": "ListItem", "position": {{ forloop.index }}, "url": {{ p.url | absolute_url | jsonify }}, "name": {{ p.title | jsonify }} }{% unless forloop.last %},{% endunless %}
       {%- endfor %}
     ]

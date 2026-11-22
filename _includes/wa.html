@@ -5,7 +5,7 @@
 {%- assign wa_num = site.data.negocio.whatsapp | default: '' | append: '' | replace: '+', '' | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' | strip -%}
 {%- assign wa_href = '' -%}
 {%- if wa_num != '' -%}
-  {%- assign wa_default = site.data.negocio.whatsapp_mensaje | default: '' | strip -%}
+  {%- assign wa_default = site.data.sitio.whatsapp_mensaje | default: '' | strip -%}
   {%- if include.msg -%}{%- assign wa_msg = include.msg -%}
   {%- elsif page.wa_message -%}{%- assign wa_msg = page.wa_message -%}
   {%- elsif page.url == '/' and wa_default != '' -%}{%- assign wa_msg = wa_default -%}

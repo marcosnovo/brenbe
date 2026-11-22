@@ -5,18 +5,19 @@ seo_title: Sobre Brenda, interiorista | BRENBE Interiorismo
 description: "Conocé a Brenda, la interiorista detrás de BRENBE: cómo trabaja, su formación y cómo acompaña a quienes quieren renovar su casa sin obra."
 last_modified_at: 2026-11-22
 breadcrumb: Sobre Brenda
-# Se indexa sola cuando la dueña completa estos datos en Pages CMS > Datos del negocio.
+# Se indexa sola cuando la dueña completa estos datos en Pages CMS > Mis datos.
 # Mientras falte alguno: noindex y fuera del sitemap (ver _includes/indexable.html).
 index_when: [nombre_completo, bio]
 ---
 {%- assign n = site.data.negocio -%}
+{%- assign t = site.data.sitio -%}
 {%- assign s_nombre = n.nombre_completo | default: '' | append: '' | strip -%}
 {%- assign s_bio = n.bio | default: '' | append: '' | strip -%}
-{%- assign s_cargo = n.cargo | default: 'Interiorista' | append: '' | strip -%}
-{%- assign s_form = n.formacion | default: '' | append: '' | strip -%}
-{%- assign s_anio = n.anio_inicio | default: '' | append: '' | strip -%}
-{%- assign s_ciudad = n.ciudad | default: '' | append: '' | strip -%}
-{%- assign s_prov = n.provincia | default: '' | append: '' | strip -%}
+{%- assign s_cargo = t.cargo | default: 'Interiorista' | append: '' | strip -%}
+{%- assign s_form = t.formacion | default: '' | append: '' | strip -%}
+{%- assign s_anio = t.anio_inicio | default: '' | append: '' | strip -%}
+{%- assign s_ciudad = t.ciudad | default: '' | append: '' | strip -%}
+{%- assign s_prov = t.provincia | default: '' | append: '' | strip -%}
 {%- assign s_ret = n.retrato | default: '' | append: '' | strip -%}
 <main id="main">
   <div class="section page-intro about-intro">
@@ -47,7 +48,7 @@ index_when: [nombre_completo, bio]
       {% if s_form != '' %}<li><strong>Formación:</strong> {{ s_form | escape }}</li>{% endif %}
       {% if s_anio != '' %}<li><strong>Trabajo en interiorismo desde:</strong> {{ s_anio | escape }}</li>{% endif %}
       {% if s_ciudad != '' %}<li><strong>Base:</strong> {{ s_ciudad | escape }}{% if s_prov != '' %}, {{ s_prov | escape }}{% endif %}</li>{% endif %}
-      {% assign zonas = n.zona_presencial | default: '' %}
+      {% assign zonas = t.zona_presencial | default: '' %}
       {% if zonas.size > 0 %}<li><strong>Presencial en:</strong> {{ zonas | join: ', ' | escape }}</li>{% endif %}
     </ul>
     {% endif %}
