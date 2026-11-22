@@ -8,3 +8,23 @@ defaults:
       type: proyectos
     values:
       layout: proyecto
+
+url: "https://brenbe.com"
+lang: es-AR
+timezone: America/Argentina/Buenos_Aires
+
+# Cloudflare Pages reads these from the build output; Jekyll skips "_" files by default.
+include:
+  - _headers
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - .pages.yml
+  - .ruby-version
+  - .gitignore
+  - vendor
+  - node_modules
+  - .bundle
+  - .jekyll-cache
