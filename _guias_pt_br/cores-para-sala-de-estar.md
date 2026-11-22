@@ -3,7 +3,7 @@ title: "Cores para sala de estar: como escolher a paleta"
 description: "Como escolher as cores da sala de estar: luz e orientação solar, neutros quentes, verdes, terracota e azuis, quando ousar em tom escuro e a regra 60-30-10."
 category: Cor
 hub: color-y-paletas
-role: pilar
+role: cluster
 ref: colores-para-living
 ready: true
 date: 2026-11-20
