@@ -5,7 +5,26 @@ collections:
   guias:
     output: true
     permalink: /guias/:name/
+  # Guías de los otros idiomas: NO están en el panel de Brenda; las mantiene el equipo técnico.
+  # Cada guía lleva `ref: <nombre del archivo de la guía equivalente en es-AR>` para el hreflang.
+  guias_es_mx:
+    output: true
+    permalink: /es-mx/guias/:name/
+  guias_es_es:
+    output: true
+    permalink: /es-es/guias/:name/
+  guias_en:
+    output: true
+    permalink: /en/guides/:name/
+  guias_pt_br:
+    output: true
+    permalink: /pt-br/guias/:name/
 defaults:
+  # Idioma por defecto: es-AR (raíz). Va primero para que los más específicos lo pisen.
+  - scope:
+      path: ""
+    values:
+      locale: es-ar
   - scope:
       path: ""
       type: guias
@@ -18,8 +37,45 @@ defaults:
       layout: proyecto
   - scope:
       path: ""
+      type: guias_es_mx
     values:
-      lang: es-AR
+      layout: guia
+      locale: es-mx
+  - scope:
+      path: ""
+      type: guias_es_es
+    values:
+      layout: guia
+      locale: es-es
+  - scope:
+      path: ""
+      type: guias_en
+    values:
+      layout: guia
+      locale: en
+  - scope:
+      path: ""
+      type: guias_pt_br
+    values:
+      layout: guia
+      locale: pt-br
+  # Idioma por carpeta (cada página igualmente declara `locale:` y `ref:` en su front matter).
+  - scope:
+      path: "es-mx"
+    values:
+      locale: es-mx
+  - scope:
+      path: "es-es"
+    values:
+      locale: es-es
+  - scope:
+      path: "en"
+    values:
+      locale: en
+  - scope:
+      path: "pt-br"
+    values:
+      locale: pt-br
 
 title: BRENBE Interiorismo
 description: "Asesorías de interiorismo y decoración desde Argentina: renová tu casa sin obra, presencial u online."
@@ -37,6 +93,8 @@ social_image_transforms: false
 # Cloudflare Pages reads these from the build output; Jekyll skips "_" files by default.
 include:
   - _headers
+  - _redirects
+  - _routes.json
 
 exclude:
   - Gemfile
@@ -49,3 +107,6 @@ exclude:
   - node_modules
   - .bundle
   - .jekyll-cache
+  - functions      # Cloudflare Pages Function (functions/index.js): la usa Pages desde la raíz del repo, no es parte del sitio
+  - tests
+  - docs

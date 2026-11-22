@@ -1,0 +1,4 @@
+{%- comment -%} Texto de interfaz: {% include t.html k="nav_servicios" %}. esc=true escapa HTML (atributos). Si falta en el idioma, usa es-AR. {%- endcomment -%}
+{%- unless T %}{% include loc.html %}{% endunless -%}
+{%- assign t_v = T[include.k] | default: TD[include.k] -%}
+{%- if include.esc -%}{{- t_v | escape -}}{%- else -%}{{- t_v -}}{%- endif -%}

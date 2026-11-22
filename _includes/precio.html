@@ -1,0 +1,41 @@
+{%- comment -%}
+  Precio "desde" del idioma actual. Define:
+    price_num  (número o vacío), price_cur (ARS, USD, EUR, BRL), price_txt (ej. "US$ 90", "90 €", "$90 USD"; vacío si no hay precio),
+    price_label ("Desde US$ 90" o "Consultá el precio").
+  es-AR lee negocio.yml (lo que carga Brenda); el resto lee _data/precios.yml según la moneda del idioma.
+{%- endcomment -%}
+{%- unless L %}{% include loc.html %}{% endunless -%}
+{%- if lk == 'es-ar' -%}
+  {%- assign price_num = site.data.negocio.precio_desde | default: '' | append: '' | strip -%}
+  {%- assign price_cur = site.data.negocio.moneda | default: 'ARS' | strip -%}
+{%- else -%}
+  {%- assign price_num = site.data.precios[L.price_key] | default: '' | append: '' | strip -%}
+  {%- assign price_cur = L.currency -%}
+{%- endif -%}
+{%- assign price_txt = '' -%}
+{%- if price_num != '' -%}
+  {%- assign n_int = price_num | times: 1 | round -%}
+  {%- assign n_digits = n_int | append: '' | size -%}
+  {%- assign n_fmt = n_int | append: '' -%}
+  {%- if n_digits >= L.group_min -%}
+    {%- assign n_m = n_int | divided_by: 1000000 -%}
+    {%- assign n_k = n_int | modulo: 1000000 | divided_by: 1000 -%}
+    {%- assign n_r = n_int | modulo: 1000 -%}
+    {%- assign r_s = n_r | append: '' -%}
+    {%- if n_r < 10 -%}{%- assign r_s = r_s | prepend: '00' -%}{%- elsif n_r < 100 -%}{%- assign r_s = r_s | prepend: '0' -%}{%- endif -%}
+    {%- if n_m > 0 -%}
+      {%- assign k_s = n_k | append: '' -%}
+      {%- if n_k < 10 -%}{%- assign k_s = k_s | prepend: '00' -%}{%- elsif n_k < 100 -%}{%- assign k_s = k_s | prepend: '0' -%}{%- endif -%}
+      {%- capture n_fmt %}{{ n_m }}{{ L.thousands }}{{ k_s }}{{ L.thousands }}{{ r_s }}{% endcapture -%}
+    {%- else -%}
+      {%- capture n_fmt %}{{ n_k }}{{ L.thousands }}{{ r_s }}{% endcapture -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- assign pr_prefix = L.money_prefix -%}
+  {%- assign pr_suffix = L.money_suffix -%}
+  {%- if price_cur != L.currency -%}
+    {%- if price_cur == 'USD' -%}{%- assign pr_prefix = 'US$ ' -%}{%- assign pr_suffix = '' -%}{%- elsif price_cur == 'EUR' -%}{%- assign pr_prefix = '' -%}{%- assign pr_suffix = ' €' -%}{%- else -%}{%- assign pr_prefix = price_cur | append: ' ' -%}{%- assign pr_suffix = '' -%}{%- endif -%}
+  {%- endif -%}
+  {%- capture price_txt %}{{ pr_prefix }}{{ n_fmt }}{{ pr_suffix }}{% endcapture -%}
+{%- endif -%}
+{%- if price_txt != '' -%}{%- assign price_label = T.price_from | default: TD.price_from | replace: '%s', price_txt -%}{%- else -%}{%- assign price_label = T.price_ask | default: TD.price_ask -%}{%- endif -%}

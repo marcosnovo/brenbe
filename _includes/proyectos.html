@@ -1,7 +1,13 @@
-{%- comment -%} Grilla de proyectos, del más nuevo al más viejo. Parámetros: limit, exclude (url). {%- endcomment -%}
+{%- comment -%}
+  Grilla de proyectos, del más nuevo al más viejo. Parámetros: limit, exclude (url).
+  Los proyectos son una sola colección en español (la carga Brenda): en todos los idiomas enlazan a su URL canónica es-AR.
+  Se traduce solo el "chrome" (tipo de ambiente vía `spaces` de _data/i18n/*.yml y la nota de idioma).
+{%- endcomment -%}
+{%- include loc.html -%}
 {%- assign pj_list = site.proyectos | sort: 'date' | reverse -%}
 {%- assign pj_n = 0 -%}
 {%- assign pj_max = include.limit | default: 1000 -%}
+{%- assign pj_note = T.project_note | default: '' -%}
 {% if pj_list.size > 0 %}
 <div class="project-grid">
   {%- for proyecto in pj_list %}
@@ -9,11 +15,12 @@
   {%- if pj_n >= pj_max %}{% break %}{% endif %}
   {%- assign pj_n = pj_n | plus: 1 %}
   {%- assign pj_alt = proyecto.cover_alt | default: proyecto.title %}
-  {%- capture pj_meta %}{{ proyecto.space }}{% if proyecto.location and proyecto.location != '' %} · {{ proyecto.location }}{% endif %}{% endcapture %}
+  {%- assign pj_space = T.spaces[proyecto.space] | default: TD.spaces[proyecto.space] | default: proyecto.space %}
+  {%- capture pj_meta %}{{ pj_space }}{% if proyecto.location and proyecto.location != '' %} · {{ proyecto.location }}{% endif %}{% endcapture %}
   <article class="project-card">
     <a href="{{ proyecto.url | relative_url }}">
       <div class="frame">{% include foto.html src=proyecto.cover alt=pj_alt sizes="(max-width: 480px) 100vw, (max-width: 800px) 50vw, 33vw" widths="480,720,960" %}</div>
-      <div class="project-meta"><div><h3>{{ proyecto.title | escape }}</h3><p>{{ pj_meta | strip | escape }}</p></div></div>
+      <div class="project-meta"><div><h3>{{ proyecto.title | escape }}</h3><p>{{ pj_meta | strip | escape }}</p>{% if pj_note != '' %}<p class="lang-note">{{ pj_note | escape }}</p>{% endif %}</div></div>
     </a>
   </article>
   {%- endfor %}

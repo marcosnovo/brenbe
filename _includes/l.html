@@ -1,0 +1,15 @@
+{%- comment -%}
+  URL de la página equivalente (mismo `ref`) en el idioma actual: {% include l.html ref="asesoria-online" %}.
+  Orden: 1) misma página en el idioma actual y publicada, 2) (vista previa de una página sin publicar) la de este idioma aunque no esté publicada,
+  3) la versión es-AR (siempre existe), 4) la home. Parámetro opcional loc="es-mx" para forzar otro idioma.
+{%- endcomment -%}
+{%- unless L %}{% include loc.html %}{% endunless -%}
+{%- assign l_loc = include.loc | default: lk -%}
+{%- assign l_all = site.pages | concat: site.documents -%}
+{%- assign l_c = l_all | where: 'ref', include.ref -%}
+{%- assign l_same = l_c | where: 'locale', l_loc -%}
+{%- if page_preview -%}{%- assign l_p = l_same | first -%}
+{%- else -%}{%- assign l_p = l_same | where_exp: 'x', 'x.ready != false' | first -%}{%- endif -%}
+{%- unless l_p -%}{%- assign l_p = l_c | where: 'locale', 'es-ar' | first -%}{%- endunless -%}
+{%- assign l_url = l_p.url | default: '/' | replace: 'index.html', '' -%}
+{{- l_url | relative_url -}}

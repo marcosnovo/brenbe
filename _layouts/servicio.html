@@ -1,43 +1,37 @@
 ---
 layout: base
 ---
+{% include loc.html %}
 {% include wa.html %}
 <main id="main">
   <div class="section page-intro service-intro">
     <div>
-      <p class="breadcrumb"><a href="{{ '/' | relative_url }}">Inicio</a> / <a href="{{ '/servicios/' | relative_url }}">Servicios</a> / {{ page.breadcrumb | escape }}</p>
-      <div class="eyebrow">{{ page.eyebrow | default: 'Servicio de interiorismo' | escape }}</div>
+      <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / <a href="{% include l.html ref='servicios' %}">{% include t.html k="bc_services" %}</a> / {{ page.breadcrumb | escape }}</p>
+      <div class="eyebrow">{{ page.eyebrow | default: T.service_eyebrow | default: TD.service_eyebrow | escape }}</div>
       <h1>{{ page.h1 | default: page.title | escape }}</h1>
       <p>{{ page.intro | escape }}</p>
       <div class="actions">
-        <a class="button primary" href="#contacto">Consultar por mi espacio</a>
-        {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="noopener">Escribime por WhatsApp</a>{% endif %}
+        <a class="button primary" href="#contacto">{% include t.html k="service_btn_consult" %}</a>
+        {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="noopener">{% include t.html k="service_btn_wa" %}</a>{% endif %}
       </div>
     </div>
-    {% if page.image %}<figure class="service-figure">{% include imagen.html src=page.image alt=page.image_alt sizes="(max-width: 800px) 100vw, 40vw" loading="eager" %}<figcaption>Referencia visual</figcaption></figure>{% endif %}
+    {% if page.image %}<figure class="service-figure">{% include imagen.html src=page.image alt=page.image_alt sizes="(max-width: 800px) 100vw, 40vw" loading="eager" %}<figcaption>{% include t.html k="service_visual_ref" %}</figcaption></figure>{% endif %}
   </div>
   <section class="section copy article">
     {{ content }}
-    <a class="button secondary" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Cómo funciona la asesoría online</a>
+    <a class="button secondary" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="btn_how_online" %}</a>
   </section>
-  {% if page.faq.size > 0 %}{% include faq.html title="Preguntas frecuentes" %}{% endif %}
+  {% if page.faq.size > 0 %}{% include faq.html title=T.faq_title %}{% endif %}
   {%- if page.related_guides %}
-  {%- assign rg = site.guias | where_exp: 'g', 'page.related_guides contains g.slug' %}
+  {%- assign g_coll = site[L.guias] | default: site.guias %}
+  {%- assign rg = g_coll | where_exp: 'g', 'page.related_guides contains g.slug' %}
   {%- if rg.size > 0 %}
   <section class="section">
-    <div class="section-head"><h2>Guías para profundizar</h2></div>
+    <div class="section-head"><h2>{% include t.html k="service_guides" %}</h2></div>
     {% include guias.html list=rg %}
   </section>
   {%- endif %}
   {%- endif %}
-  {%- assign otros = site.pages | where_exp: 'p', 'p.layout == "servicio" and p.url != page.url' | sort: 'order' %}
-  <section class="section other-services">
-    <div class="section-head"><h2>Otros servicios</h2></div>
-    <ul class="link-list">
-      {%- for o in otros %}
-      <li><a href="{{ o.url | relative_url }}"><strong>{{ o.breadcrumb | escape }}</strong><span>{{ o.card | escape }}</span></a></li>
-      {%- endfor %}
-    </ul>
-  </section>
+  {% include services-list.html exclude=page.url heading=true %}
   {% include contact.html %}
 </main>

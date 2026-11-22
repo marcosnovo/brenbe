@@ -1,0 +1,17 @@
+{%- comment -%}
+  Idiomas con la home publicada. Define live_locs (claves) y live_homes (URL de cada home, mismo orden).
+  Si hay uno solo (hoy: es-AR) no se muestra switcher, banner ni JS.
+{%- endcomment -%}
+{%- assign live_locs = '' | split: '' -%}
+{%- assign live_homes = '' | split: '' -%}
+{%- assign lh_pages = site.pages | where: 'ref', 'home' -%}
+{%- for lh_pair in site.data.locales -%}
+  {%- assign lh_p = lh_pages | where: 'locale', lh_pair[0] | first -%}
+  {%- if lh_p -%}
+    {%- include indexable.html p=lh_p quiet=true -%}
+    {%- if ix_res -%}
+      {%- assign live_locs = live_locs | push: lh_pair[0] -%}
+      {%- assign live_homes = live_homes | push: lh_p.url -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}

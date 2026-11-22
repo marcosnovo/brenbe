@@ -1,17 +1,20 @@
 {%- comment -%}
   Define `wa_href` (vacío si no hay WhatsApp en negocio.yml).
-  Mensaje: include.msg > page.wa_message > texto según la página > negocio.whatsapp_mensaje (home).
+  Mensaje: include.msg > page.wa_message > texto según la página (en el idioma de la página) > negocio.whatsapp_mensaje (solo home es-AR).
 {%- endcomment -%}
+{%- unless T %}{% include loc.html %}{% endunless -%}
 {%- assign wa_num = site.data.negocio.whatsapp | default: '' | append: '' | replace: '+', '' | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' | strip -%}
 {%- assign wa_href = '' -%}
 {%- if wa_num != '' -%}
   {%- assign wa_default = site.data.sitio.whatsapp_mensaje | default: '' | strip -%}
+  {%- assign wa_is_home = false -%}
+  {%- if page.url == '/' or page.ref == 'home' -%}{%- assign wa_is_home = true -%}{%- endif -%}
   {%- if include.msg -%}{%- assign wa_msg = include.msg -%}
   {%- elsif page.wa_message -%}{%- assign wa_msg = page.wa_message -%}
-  {%- elsif page.url == '/' and wa_default != '' -%}{%- assign wa_msg = wa_default -%}
-  {%- elsif page.url == '/' or page.layout == nil or page.title == nil -%}{%- assign wa_msg = 'Hola Brenda, vi tu web y quiero consultar por una asesoría de interiorismo.' -%}
-  {%- elsif page.layout == 'guia' -%}{%- capture wa_msg -%}Hola Brenda, leí la guía "{{ page.title }}" en brenbe.com y quiero consultar por una asesoría.{%- endcapture -%}
-  {%- else -%}{%- capture wa_msg -%}Hola Brenda, estoy mirando "{{ page.title }}" en brenbe.com y quiero consultar por una asesoría.{%- endcapture -%}
+  {%- elsif wa_is_home and lk == 'es-ar' and wa_default != '' -%}{%- assign wa_msg = wa_default -%}
+  {%- elsif wa_is_home or page.layout == nil or page.title == nil -%}{%- assign wa_msg = T.wa_home | default: TD.wa_home -%}
+  {%- elsif page.layout == 'guia' -%}{%- assign wa_msg = T.wa_guide | default: TD.wa_guide | replace: '%s', page.title -%}
+  {%- else -%}{%- assign wa_msg = T.wa_page | default: TD.wa_page | replace: '%s', page.title -%}
   {%- endif -%}
   {%- capture wa_href -%}https://wa.me/{{ wa_num }}?text={{ wa_msg | url_encode }}{%- endcapture -%}
 {%- endif -%}
