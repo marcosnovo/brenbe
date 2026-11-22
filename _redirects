@@ -1,0 +1,6 @@
+# Cloudflare Pages redirects. Una línea por redirección: origen destino código.
+# Regla de oro: el destino nunca debe coincidir con un origen (evita bucles). Estas son 301 permanentes.
+
+# es-AR: "papel pintado" es un término de España; en Argentina se busca "empapelado" (2026-11).
+/servicios/papel-pintado-y-revestimientos   /servicios/empapelado-y-revestimientos/   301
+/servicios/papel-pintado-y-revestimientos/  /servicios/empapelado-y-revestimientos/   301

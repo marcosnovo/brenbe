@@ -1,5 +1,7 @@
 ---
 layout: servicio
+locale: es-ar
+ref: servicio-color
 title: Asesoría de color para tu casa
 seo_title: Asesoría de color para tu casa, online y presencial | BRENBE
 h1: Asesoría de color para tu casa

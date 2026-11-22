@@ -1,5 +1,7 @@
 ---
 layout: servicio
+locale: es-ar
+ref: servicio-mobiliario
 title: Asesoría de mobiliario y distribución
 seo_title: Asesoría de mobiliario y distribución de ambientes | BRENBE
 h1: Mobiliario y distribución de ambientes

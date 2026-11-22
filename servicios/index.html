@@ -1,8 +1,10 @@
 ---
 layout: base
+locale: es-ar
+ref: servicios
 title: Servicios de interiorismo y decoración
 seo_title: Servicios de interiorismo y decoración sin obra | BRENBE
-description: "Servicios de interiorismo y decoración de BRENBE: asesoría online, color, papel pintado, mobiliario, iluminación y deptos chicos. Todo sin obra."
+description: "Servicios de interiorismo y decoración de BRENBE: asesoría online, color, empapelado, mobiliario, iluminación y deptos chicos. Todo sin obra."
 last_modified_at: 2026-11-22
 breadcrumb: Servicios
 ---
@@ -20,12 +22,7 @@ breadcrumb: Servicios
   </section>
   <section class="section other-services">
     <div class="section-head"><h2>Servicios puntuales</h2><p class="section-intro">Cuando ya sabés qué parte del ambiente querés resolver.</p></div>
-    <ul class="link-list">
-      {%- assign servicios = site.pages | where_exp: 'p', 'p.layout == "servicio"' | sort: 'order' %}
-      {%- for s in servicios %}
-      <li><a href="{{ s.url | relative_url }}"><strong>{{ s.breadcrumb | escape }}</strong><span>{{ s.card | escape }}</span></a></li>
-      {%- endfor %}
-    </ul>
+    {% include services-list.html %}
   </section>
   <section class="section copy">
     <h2>¿Cuál me conviene?</h2>
