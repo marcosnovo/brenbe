@@ -1,23 +1,228 @@
 ---
 layout: base
-title: Administración de BRENBE
-description: Acceso para gestionar los proyectos y fotos de BRENBE.
+title: Ayuda para el panel de BRENBE
+description: Guía paso a paso para manejar tu web desde el panel.
 indexable: false
 ---
+<style>
+  .ayuda { max-width: 820px; margin: 0 auto; }
+  .ayuda-hero { background: var(--cream); padding: clamp(40px, 7vw, 80px) 6vw clamp(36px, 5vw, 60px); }
+  .ayuda-hero > div { max-width: 820px; margin: 0 auto; }
+  .ayuda-hero h1 { margin-top: 0; }
+  .ayuda-hero p { max-width: 60ch; font-size: 17px; line-height: 1.7; font-weight: 400; color: #524b43; }
+  .ayuda-boton { display: block; width: 100%; max-width: 420px; margin: 26px 0 10px; padding: 20px 24px; text-align: center; font-size: 14px; }
+  .ayuda-nota { font-size: 14px !important; color: var(--muted) !important; margin: 0; }
+  .ayuda-wrap { padding: 48px 6vw 90px; }
+  .ayuda-wrap > div { max-width: 820px; margin: 0 auto; }
+  .ayuda-toc { margin: 0 0 56px; padding: 24px 26px; background: #fff; border: 1px solid var(--line); }
+  .ayuda-toc h2 { margin: 0 0 12px; font-family: var(--serif); font-weight: 500; color: var(--maroon); font-size: 32px; }
+  .ayuda-toc ol { margin: 0; padding-left: 22px; }
+  .ayuda-toc li { padding: 4px 0; font-size: 17px; line-height: 1.5; }
+  .ayuda-toc a { color: var(--maroon); text-decoration: underline; text-underline-offset: 3px; }
+  .ayuda-sec { margin: 0 0 64px; scroll-margin-top: 90px; }
+  .ayuda-sec h2, .pasos > li::before { font-variant-numeric: lining-nums; }
+  .ayuda-sec h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 6vw, 44px); line-height: 1.05; color: var(--maroon); margin: 0 0 10px; }
+  .ayuda-sec > p { font-size: 17px; line-height: 1.7; font-weight: 400; max-width: 62ch; }
+  .pasos { list-style: none; margin: 24px 0 0; padding: 0; counter-reset: paso; }
+  .pasos > li { position: relative; margin: 0 0 14px; padding: 20px 20px 20px 74px; background: #fff; border: 1px solid var(--line); counter-increment: paso; font-size: 17px; line-height: 1.65; font-weight: 400; }
+  .pasos > li::before { content: counter(paso); position: absolute; left: 18px; top: 18px; width: 40px; height: 40px; border-radius: 50%; background: var(--maroon); color: var(--cream); display: grid; place-items: center; font-family: var(--serif); font-size: 24px; font-weight: 600; }
+  .pasos > li + li { margin-top: 14px; }
+  .pasos strong { color: var(--maroon); font-weight: 600; }
+  .pasos ul { margin: 10px 0 0; padding-left: 20px; }
+  .pasos ul li { margin: 6px 0; max-width: none; font-size: 16px; }
+  .pasos .ej { display: block; margin-top: 8px; padding: 10px 14px; background: var(--cream); font-size: 15px; line-height: 1.55; }
+  .req { display: inline-block; padding: 1px 8px; background: var(--maroon); color: var(--cream); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; vertical-align: 2px; }
+  .opc { display: inline-block; padding: 0 8px; border: 1px solid var(--olive); color: var(--olive); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; vertical-align: 2px; }
+  .aviso { margin: 22px 0 0; padding: 16px 20px; border-left: 4px solid var(--olive); background: var(--cream); font-size: 16px; line-height: 1.65; font-weight: 400; }
+  .aviso strong { color: var(--maroon); }
+  .aviso p { margin: 0; max-width: none; font-size: 16px; }
+  .aviso p + p { margin-top: 8px; }
+  .consejos { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 14px; }
+  .consejos li { margin: 0; padding: 18px 20px; background: #fff; border: 1px solid var(--line); font-size: 16px; line-height: 1.65; font-weight: 400; max-width: none; }
+  .consejos strong { display: block; color: var(--maroon); font-family: var(--serif); font-size: 22px; font-weight: 600; margin-bottom: 2px; }
+  .ayuda-cierre { text-align: center; padding: 32px 20px; background: var(--maroon); color: var(--cream); }
+  .ayuda-cierre p { margin: 0 auto 18px; font-size: 18px; max-width: 40ch; color: var(--cream); }
+  .ayuda-cierre .button { background: var(--cream); color: var(--maroon); border-color: var(--cream); }
+  @media (max-width: 560px) {
+    .pasos > li { padding: 64px 16px 18px; }
+    .pasos > li::before { left: 16px; top: 16px; }
+  }
+</style>
 <main id="main">
-  <div class="section page-intro copy">
-    <h1>Administración de BRENBE</h1>
-    <p>Desde el panel podés agregar o editar proyectos y fotos. El acceso está reservado a personas invitadas.</p>
-    <a class="button primary" href="https://app.pagescms.org/">Abrir panel de proyectos</a>
+  <div class="ayuda-hero">
+    <div>
+      <p class="eyebrow">Ayuda para Brenda</p>
+      <h1>Tu panel, paso a paso</h1>
+      <p>Desde el panel cargás tus proyectos, escribís tus guías y cambiás tus datos. Es como llenar un formulario: no hace falta saber nada de computación, y nada se rompe.</p>
+      <a class="button primary ayuda-boton" href="https://app.pagescms.org/" target="_blank" rel="noopener">Abrir el panel</a>
+      <p class="ayuda-nota">Se abre en otra pestaña. Dejá esta página abierta para ir mirando los pasos.</p>
+    </div>
   </div>
-  <section class="section copy">
-    <h2>Cómo publicar un proyecto</h2>
-    <ol>
-      <li>Ingresá al panel y abrí <strong>Proyectos</strong>.</li>
-      <li>Cargá la portada, escribí el resumen y contá qué querías resolver y cómo lo resolviste.</li>
-      <li>Agregá las fotos de la galería con una descripción breve de lo que se ve.</li>
-      <li>Guardá los cambios. La ficha se incorpora a la web cuando termina el despliegue.</li>
-    </ol>
-    <p>La sección <strong>Datos del negocio</strong> permite actualizar los datos del estudio: correo, WhatsApp, ciudad, redes y precio de la asesoría. Lo que dejes vacío no se publica.</p>
-  </section>
+
+  <div class="ayuda-wrap">
+    <div>
+      <div class="ayuda-toc" role="navigation" aria-label="Índice">
+        <h2>¿Qué querés hacer?</h2>
+        <ol>
+          <li><a href="#entrar">Entrar al panel</a></li>
+          <li><a href="#nuevo">Subir un proyecto nuevo</a></li>
+          <li><a href="#editar">Editar o borrar un proyecto</a></li>
+          <li><a href="#guia">Escribir una guía</a></li>
+          <li><a href="#datos">Cambiar mis datos</a></li>
+          <li><a href="#faq">Preguntas frecuentes</a></li>
+          <li><a href="#fotos">Cómo preparar las fotos</a></li>
+          <li><a href="#problemas">Si algo sale mal</a></li>
+          <li><a href="#consejos">Consejos para que tus proyectos luzcan</a></li>
+        </ol>
+      </div>
+
+      <section class="ayuda-sec" id="entrar">
+        <h2>1. Entrar al panel</h2>
+        <p>Marcos te invita con tu mail. Solo tenés que hacerlo bien la primera vez.</p>
+        <h3>La primera vez</h3>
+        <ol class="pasos">
+          <li>Abrí el mail de invitación que te llegó. Si no lo ves, mirá en <strong>Spam</strong> o <strong>Promociones</strong>.</li>
+          <li>Tocá el link que trae el mail.</li>
+          <li>Te va a mandar un <strong>código de 6 números</strong> a tu mail. Abrilo, copiá el código y pegalo en la pantalla. Ya estás adentro. No necesitás crear ninguna cuenta.</li>
+        </ol>
+        <h3>Las próximas veces</h3>
+        <ol class="pasos">
+          <li>Tocá el botón <strong>Abrir el panel</strong> de esta página.</li>
+          <li>Vas a ver una pantalla con un botón negro que dice "Sign in with GitHub". <strong>Ignoralo</strong>, no lo necesitás. Más abajo, escribí tu mail y tocá <strong>"Continue with email"</strong>.</li>
+          <li>Te llega un código de 6 números a tu mail. Pegalo en la pantalla y tocá <strong>"Verify code"</strong>.</li>
+          <li>Elegí <strong>BRENBE</strong> si te lo pide. Vas a ver las secciones del panel: <strong>Mis proyectos</strong>, <strong>Mis guías</strong>, <strong>Mis datos</strong> y <strong>Preguntas frecuentes</strong>.</li>
+        </ol>
+        <div class="aviso">
+          <p>Usá siempre el <strong>mismo mail</strong> con el que te invitaron.</p>
+          <p>Verás también una pestaña <strong>"Media"</strong>. Podés ignorarla: las fotos las subís desde cada proyecto.</p>
+        </div>
+        <div class="aviso">
+          <p><strong>Cuando guardás, la web se actualiza sola en 1 o 2 minutos.</strong> Si no ves el cambio enseguida, esperá un ratito y actualizá la página de tu web.</p>
+        </div>
+      </section>
+
+      <section class="ayuda-sec" id="nuevo">
+        <h2>2. Subir un proyecto nuevo</h2>
+        <p>Cada proyecto es una página nueva en tu web, con sus fotos y su historia. Tené las fotos a mano antes de empezar.</p>
+        <ol class="pasos">
+          <li>Entrá a <strong>Mis proyectos</strong> y tocá el botón <strong>Agregar</strong> (arriba a la derecha).</li>
+          <li><strong>Nombre del proyecto</strong> <span class="req">obligatorio</span><br>Contá qué es y cómo es.<span class="ej">Ejemplo: "Living con sofá oliva y nogal". Evitá "Proyecto 1".</span></li>
+          <li><strong>Tipo de ambiente</strong> <span class="req">obligatorio</span><br>Elegí de la lista el que más se parezca. Si no está, elegí "Otro".</li>
+          <li><strong>Ciudad o barrio</strong> <span class="opc">opcional</span><br>Por ejemplo "Palermo, CABA". Si preferís no mostrarlo, dejalo vacío.</li>
+          <li><strong>Fecha del proyecto</strong> <span class="req">obligatorio</span><br>Ya viene con la fecha de hoy. Con esa fecha se ordenan tus proyectos: los más nuevos van primero.</li>
+          <li><strong>Foto principal</strong> <span class="req">obligatorio</span><br>Es la que se ve en la lista y arriba de todo. Elegí una foto horizontal, de día. Tocá para subirla desde tu celular o tu compu.</li>
+          <li><strong>Qué se ve en la foto principal</strong> <span class="opc">opcional, pero muy recomendado</span><br>Describila como si se la contaras a alguien por teléfono. Ayuda a las personas que no ven bien y a que te encuentren en Google.<span class="ej">Ejemplo: "Living con sofá verde oliva, mesa ratona de madera y cortinas de lino".</span></li>
+          <li><strong>Resumen breve</strong> <span class="req">obligatorio</span><br>Una o dos frases que cuenten el proyecto. Es lo que se ve en Google.<span class="ej">Ejemplo: "Renovamos un living de 20 m² con una paleta cálida, sin hacer obra."</span></li>
+          <li><strong>El punto de partida</strong> <span class="req">obligatorio</span><br>¿Qué necesitaba la persona o el espacio?<span class="ej">Ejemplo: "Un living oscuro y desordenado donde la familia no se juntaba."</span></li>
+          <li><strong>Qué decidimos</strong> <span class="req">obligatorio</span><br>¿Qué cambiaste y por qué? Colores, muebles, luces, textiles.<span class="ej">Ejemplo: "Elegimos un verde oliva para el sofá porque combina con la madera que ya tenían."</span></li>
+          <li><strong>El resultado</strong> <span class="opc">opcional</span><br>¿Cómo quedó y qué cambió?</li>
+          <li><strong>Más fotos del proyecto</strong> <span class="opc">opcional</span><br>Tocá para agregar una foto, y repetí con cada una (hasta 12). En cada una podés escribir qué se ve y marcar si es de <strong>antes</strong> o de <strong>después</strong>. Para cambiar el orden, agarrá una foto y arrastrala.</li>
+          <li><strong>Lo que dijo quien vive ahí</strong> <span class="opc">opcional</span><br>Si la persona te dio permiso, escribí lo que te dijo y su nombre. Si no completás nada, no se muestra nada.</li>
+          <li>Tocá <strong>Guardar</strong> (arriba a la derecha). Listo: en 1 o 2 minutos tu proyecto aparece en la web.</li>
+        </ol>
+        <div class="aviso">
+          <p>Si te falta un campo obligatorio, el panel te lo marca y no te deja guardar. Completalo y volvé a tocar Guardar.</p>
+        </div>
+      </section>
+
+      <section class="ayuda-sec" id="editar">
+        <h2>3. Editar o borrar un proyecto</h2>
+        <h3>Para cambiar algo</h3>
+        <ol class="pasos">
+          <li>Entrá a <strong>Mis proyectos</strong>. Vas a ver la lista de todos.</li>
+          <li>Tocá el proyecto que querés cambiar.</li>
+          <li>Cambiá lo que quieras: un texto, una foto, el orden de las fotos.</li>
+          <li>Tocá <strong>Guardar</strong>. En 1 o 2 minutos se ve en la web.</li>
+        </ol>
+        <h3>Para borrar</h3>
+        <ol class="pasos">
+          <li>Abrí el proyecto.</li>
+          <li>Buscá el botón de los tres puntitos o el de <strong>Eliminar</strong> y tocalo.</li>
+          <li>Confirmá. El proyecto desaparece de la web en 1 o 2 minutos.</li>
+        </ol>
+        <div class="aviso"><p>Si te arrepentís de haber borrado algo, avisale a Marcos: se puede recuperar.</p></div>
+      </section>
+
+      <section class="ayuda-sec" id="guia">
+        <h2>4. Escribir una guía</h2>
+        <p>Las guías son artículos con consejos de decoración. Ayudan a que más gente te encuentre en Google.</p>
+        <ol class="pasos">
+          <li>Entrá a <strong>Mis guías</strong> y tocá <strong>Agregar</strong>.</li>
+          <li><strong>Título</strong> <span class="req">obligatorio</span><br>Escribilo como lo buscaría alguien en Google.<span class="ej">Ejemplo: "Cómo decorar un living chico".</span></li>
+          <li><strong>Tema</strong> <span class="req">obligatorio</span><br>Elegí el que más se parezca de la lista. La <strong>fecha</strong> ya viene con la de hoy.</li>
+          <li><strong>Foto principal</strong> <span class="req">obligatorio</span><br>Una foto horizontal. Después contá qué se ve en ella, igual que en los proyectos.</li>
+          <li><strong>Resumen breve</strong> <span class="req">obligatorio</span><br>Una o dos frases que cuenten de qué trata la guía.</li>
+          <li><strong>La guía</strong><br>Escribí como si le hablaras a una amiga. Arriba tenés botones para poner títulos, listas o negritas. Para empezar una sección nueva, usá el botón de título.</li>
+          <li><strong>Preguntas y respuestas</strong> <span class="opc">opcional</span><br>Sumá 3 o 4 preguntas que suele hacer la gente sobre el tema. Se muestran al final de la guía.</li>
+          <li>Tocá <strong>Guardar</strong>.</li>
+        </ol>
+      </section>
+
+      <section class="ayuda-sec" id="datos">
+        <h2>5. Cambiar mis datos</h2>
+        <p>En <strong>Mis datos</strong> están tu WhatsApp, tu mail, tu Instagram, tu foto y tu historia. Lo que dejes vacío no se muestra en la web.</p>
+        <ol class="pasos">
+          <li>Entrá a <strong>Mis datos</strong>.</li>
+          <li><strong>Tu WhatsApp</strong><br>Solo números, sin espacios, sin signos y sin el +. Con código de país.<span class="ej">Ejemplo: 5491112345678<br>54 es Argentina, el 9 va siempre en celulares, después tu código de área sin 0 y tu número sin el 15.</span></li>
+          <li><strong>Tu mail</strong><br>Escribilo completo.<span class="ej">Ejemplo: hola@brenbe.com</span></li>
+          <li><strong>Link de tu Instagram</strong><br>Abrí tu perfil en Instagram, copiá el link y pegalo. Tiene que empezar con https://.<span class="ej">Ejemplo: https://www.instagram.com/brenbe</span></li>
+          <li><strong>Precio de la asesoría, desde</strong><br>Elegí si es en pesos o en dólares y escribí solo el número, sin puntos.<span class="ej">Ejemplo: 80000</span> Si lo dejás vacío, no se muestra ningún precio.</li>
+          <li><strong>Tu foto, tu nombre y tu historia</strong><br>Completalos para que aparezca tu página "Sobre mí". Dejá una línea en blanco entre un párrafo y otro.</li>
+          <li>Tocá <strong>Guardar</strong>.</li>
+        </ol>
+        <div class="aviso">
+          <p>Para cambiar la ciudad, las zonas donde trabajás u otras redes sociales, escribile a Marcos.</p>
+        </div>
+      </section>
+
+      <section class="ayuda-sec" id="faq">
+        <h2>6. Preguntas frecuentes</h2>
+        <p>Son las preguntas que más te hacen, con tus respuestas. Se muestran en la web.</p>
+        <ol class="pasos">
+          <li>Entrá a <strong>Preguntas frecuentes</strong>.</li>
+          <li>Para sumar una, tocá el botón de agregar. Escribí la <strong>pregunta</strong> y tu <strong>respuesta</strong> (2 a 4 oraciones, como si hablaras con la persona).</li>
+          <li>Para cambiar una, tocala y editá el texto. Para borrarla, usá el botón de eliminar de esa pregunta.</li>
+          <li>Para cambiar el orden, agarrá una pregunta y arrastrala.</li>
+          <li>Tocá <strong>Guardar</strong>.</li>
+        </ol>
+      </section>
+
+      <section class="ayuda-sec" id="fotos">
+        <h2>7. Cómo preparar las fotos</h2>
+        <ul class="consejos">
+          <li><strong>Formato jpg o png</strong>Las fotos de iPhone a veces salen en un formato que el panel no acepta (HEIC). Para evitarlo: en el iPhone andá a <em>Ajustes &gt; Cámara &gt; Formatos</em> y elegí <em>"Más compatible"</em>.</li>
+          <li><strong>El truco del WhatsApp</strong>Si una foto no se sube o es muy pesada, mandátela a vos misma por WhatsApp y guardá la que te llega. Queda más liviana y en el formato justo.</li>
+          <li><strong>Mejor horizontales</strong>Para la foto principal, elegí una foto horizontal (más ancha que alta), con luz de día.</li>
+          <li><strong>Orden</strong>Podés arrastrar las fotos para cambiar el orden.</li>
+        </ul>
+      </section>
+
+      <section class="ayuda-sec" id="problemas">
+        <h2>8. Si algo sale mal</h2>
+        <p>Tranquila: <strong>nada se rompe para siempre</strong>. Cada cambio que guardás queda registrado y se puede deshacer.</p>
+        <ul class="consejos">
+          <li><strong>No veo mi cambio en la web</strong>Esperá 2 minutos y actualizá la página. Si pasaron más de 10 minutos, avisale a Marcos.</li>
+          <li><strong>Una foto no se sube</strong>Fijate que sea jpg o png, y probá con el truco del WhatsApp de más arriba.</li>
+          <li><strong>El panel no me deja guardar</strong>Mirá si algún campo obligatorio está en rojo, completalo y probá de nuevo.</li>
+          <li><strong>No me llega el código al mail</strong>Revisá Spam. Esperá un minuto y pedí otro con "Resend code".</li>
+          <li><strong>Borré o cambié algo sin querer</strong>Escribile a Marcos y lo deja como estaba.</li>
+        </ul>
+      </section>
+
+      <section class="ayuda-sec" id="consejos">
+        <h2>9. Consejos para que tus proyectos luzcan</h2>
+        <ul class="consejos">
+          <li><strong>Buenas fotos</strong>Sacalas de día, con las luces apagadas y las cortinas abiertas. Ordená un poco antes y mostrá el ambiente completo y algún detalle.</li>
+          <li><strong>Antes y después</strong>Si tenés fotos de cómo era el lugar, marcalas como "antes" y las nuevas como "después". Es lo que más sorprende.</li>
+          <li><strong>Lo que dijo el cliente</strong>Pedile permiso y sumá una frase suya con su nombre. Da mucha confianza.</li>
+          <li><strong>Escribí como hablás</strong>Contá el proyecto como se lo contarías a una amiga. Frases cortas y simples.</li>
+        </ul>
+      </section>
+
+      <div class="ayuda-cierre">
+        <p>¿Lista? Entrá al panel y empezá por tu primer proyecto.</p>
+        <a class="button" href="https://app.pagescms.org/" target="_blank" rel="noopener">Abrir el panel</a>
+      </div>
+    </div>
+  </div>
 </main>
