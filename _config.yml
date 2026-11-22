@@ -97,6 +97,7 @@ include:
   - _routes.json
 
 exclude:
+  - CLAUDE.md
   - Gemfile
   - Gemfile.lock
   - README.md
