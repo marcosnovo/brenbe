@@ -2,34 +2,46 @@
 layout: base
 locale: en
 ref: contacto
-# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
-# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
-ready: false
+ready: true
 title: "Contact"
 seo_title: "Contact | Online Interior Design BRENBE"
-description: "TODO(i18n) meta description (en)."
+description: "Contact Brenda about an online interior design consultation. Tell her which room you want to refresh and what to send to get started."
 last_modified_at: 2026-11-22
 breadcrumb: "Contact"
 # Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
 index_when_any: [whatsapp, email]
 permalink: /en/contact/
 ---
-{%- comment -%}
-  TODO(i18n) en: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /contacto/
-  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
-  Keywords del mercado: online interior design · virtual interior design / e-design · online interior designer · virtual decorating consultation · renter-friendly decorating · interior designer who speaks Spanish
-  Notas: Write in US English (benefit-first, "you"); avoid claiming "licensed interior designer" (regulated title in some states): use "online decorator / design consultant"; price as "$X USD"; ft² with m²; contact = email + scheduling link; show ET/PT times.
-{%- endcomment -%}
-{% include loc.html %}
+{%- include loc.html -%}
+{%- assign t = site.data.sitio -%}
+{%- assign c_ciudad = t.ciudad | default: '' | append: '' | strip -%}
+{%- assign c_prov = t.provincia | default: '' | append: '' | strip -%}
 <main id="main">
   <div class="section page-intro">
     <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
     <h1>Contact</h1>
-    <p>TODO(i18n) intro.</p>
+    <p>Tell me which room you want to refresh and we will figure out how to help. The first conversation is about understanding your starting point and deciding whether an online design consultation is what you need.</p>
   </div>
   <section class="section copy">
-    <h2>TODO(i18n) qué enviar para empezar</h2>
-    <p>TODO(i18n) (en: email + enlace de agenda; indicar zona horaria local)</p>
+    <h2>What to send to get started</h2>
+    <p>You don't need to have it all figured out. This is enough to begin:</p>
+    <ul>
+      <li><strong>Photos of the room</strong> from several angles and, if possible, at different times of day.</li>
+      <li><strong>Approximate measurements:</strong> length, width and ceiling height, plus where the doors and windows are. Feet and inches are fine.</li>
+      <li><strong>What you want to change and what you want to keep:</strong> furniture, colors, pieces that matter to you.</li>
+      <li><strong>Inspiration</strong> you like: photos, colors, rooms.</li>
+      <li><strong>Your approximate budget</strong> for furniture and decor, even as a range.</li>
+      <li><strong>Whether you rent or own,</strong> so I know which changes are on the table.</li>
+    </ul>
+    <h2>What happens next</h2>
+    <ol>
+      <li>You email me or message me on WhatsApp with your question and photos of the space.</li>
+      <li>I tell you how I work and which service fits what you need.</li>
+      <li>If it feels right, we agree on the scope and a call time that works in your time zone, and we get started.</li>
+    </ol>
+    <h2>Online and in person</h2>
+    <p>The online consultation takes place by video call from Argentina and works for any city or country. Argentina is on UTC-3 year-round, so I am 1 to 2 hours ahead of Eastern Time and 4 to 5 hours ahead of Pacific Time depending on daylight saving time.{% if c_ciudad != '' %} I also see clients in person in {{ c_ciudad | escape }}{% if c_prov != '' %}, {{ c_prov | escape }}{% endif %}, Argentina.{% endif %} Every service is no-renovation: no construction and no contractor supervision.</p>
+    <p>To learn more before writing, see how the <a href="{% include l.html ref='asesoria-online' %}">online consultation</a> works and browse the other <a href="{% include l.html ref='servicios' %}">services</a>.</p>
   </section>
   {% include faq.html title=T.faq_title %}
   {% include contact.html %}
