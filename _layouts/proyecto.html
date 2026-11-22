@@ -1,9 +1,9 @@
 ---
 layout: base
 ---
-<main>
+<main id="main">
   <div class="section page-intro">
-    <p class="breadcrumb"><a href="{{ '/proyectos/' | relative_url }}">Proyectos</a> / {{ page.title | escape }}</p>
+    <p class="breadcrumb"><a href="{{ '/' | relative_url }}">Inicio</a> / <a href="{{ '/proyectos/' | relative_url }}">Proyectos</a> / {{ page.title | escape }}</p>
     <div class="eyebrow">{{ page.space | escape }}</div>
     <h1>{{ page.title | escape }}</h1>
     <p>{{ page.description | escape }}</p>
@@ -25,6 +25,11 @@ layout: base
       <img src="{{ photo.image | relative_url | escape }}" alt="{{ photo.alt | escape }}" loading="lazy" decoding="async">
       {% endfor %}
     </div>
+    {% endif %}
+    {% assign otros = site.proyectos | where_exp: 'p', 'p.url != page.url' %}
+    {% if otros.size > 0 %}
+    <h2>Otros proyectos</h2>
+    {% include proyectos.html limit=3 exclude=page.url %}
     {% endif %}
     <a class="button secondary after-grid" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Conocé la asesoría online</a>
   </section>
