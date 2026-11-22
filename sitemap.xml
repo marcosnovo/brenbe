@@ -3,11 +3,36 @@ layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% assign public_pages = '/,/asesoria-de-interiorismo-online/,/proyectos/' | split: ',' %}
-  {% for url in public_pages %}
-  <url><loc>{{ url | absolute_url | xml_escape }}</loc></url>
-  {% endfor %}
-  {% for proyecto in site.proyectos %}
-  <url><loc>{{ proyecto.url | absolute_url | xml_escape }}</loc></url>
-  {% endfor %}
+{%- comment -%}
+  Páginas: toda página con layout que no sea noindex ni `sitemap: false`.
+  Colecciones con salida (proyectos, guías...): todos los documentos indexables.
+  lastmod: `last_modified_at` (páginas) o `updated` / `date` (documentos); nunca site.time.
+{%- endcomment -%}
+{%- assign last_project = site.proyectos | sort: 'date' | last -%}
+{%- assign last_guia = site.guias | sort: 'date' | last -%}
+{%- assign pages = site.pages | where_exp: 'p', 'p.layout and p.sitemap != false' | sort: 'url' -%}
+{%- for p in pages %}
+  {%- include indexable.html p=p -%}
+  {%- unless is_indexable %}{% continue %}{% endunless -%}
+  {%- assign lm = p.last_modified_at -%}
+  {%- assign newest = nil -%}
+  {%- if p.url == '/' or p.url == '/proyectos/' -%}{%- assign newest = last_project -%}{%- endif -%}
+  {%- if p.url == '/guias/' -%}{%- assign newest = last_guia -%}{%- endif -%}
+  {%- if p.url == '/' and last_guia -%}
+    {%- assign lg_i = last_guia.updated | default: last_guia.date | date: '%s' | plus: 0 -%}
+    {%- assign nw_i = newest.updated | default: newest.date | date: '%s' | plus: 0 -%}
+    {%- if lg_i > nw_i or newest == nil -%}{%- assign newest = last_guia -%}{%- endif -%}
+  {%- endif -%}
+  {%- if newest and lm -%}
+    {%- assign lm_i = lm | date: '%s' | plus: 0 -%}
+    {%- assign nw_i = newest.updated | default: newest.date | date: '%s' | plus: 0 -%}
+    {%- if nw_i > lm_i -%}{%- assign lm = newest.updated | default: newest.date -%}{%- endif -%}
+  {%- endif %}
+  <url><loc>{{ p.url | absolute_url | xml_escape }}</loc>{% if lm %}<lastmod>{{ lm | date_to_xmlschema }}</lastmod>{% endif %}</url>
+{%- endfor %}
+{%- assign docs = site.documents | where_exp: 'd', 'd.indexable != false and d.sitemap != false' %}
+{%- for d in docs %}
+  {%- assign lm = d.updated | default: d.date %}
+  <url><loc>{{ d.url | absolute_url | xml_escape }}</loc>{% if lm %}<lastmod>{{ lm | date_to_xmlschema }}</lastmod>{% endif %}</url>
+{%- endfor %}
 </urlset>

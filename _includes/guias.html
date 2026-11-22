@@ -1,0 +1,11 @@
+{%- comment -%} Grilla de guías. include.list (array de documentos) {%- endcomment -%}
+<div class="project-grid guide-grid">
+  {%- for guia in include.list limit: include.limit %}
+  <article class="project-card">
+    <a href="{{ guia.url | relative_url }}">
+      <div class="frame">{% include imagen.html src=guia.cover alt=guia.cover_alt sizes="(max-width: 480px) 100vw, (max-width: 800px) 50vw, 33vw" %}</div>
+      <div class="project-meta"><div><h3>{{ guia.title | escape }}</h3><p>{{ guia.category | escape }}</p></div></div>
+    </a>
+  </article>
+  {%- endfor %}
+</div>

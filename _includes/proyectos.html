@@ -1,6 +1,7 @@
 {% if site.proyectos.size > 0 %}
 <div class="project-grid">
   {% for proyecto in site.proyectos reversed limit: include.limit %}
+  {% if include.exclude == proyecto.url %}{% continue %}{% endif %}
   <article class="project-card">
     <a href="{{ proyecto.url | relative_url }}">
       <div class="frame"><img src="{{ proyecto.cover | relative_url | escape }}" alt="{{ proyecto.cover_alt | escape }}" loading="lazy" decoding="async"></div>

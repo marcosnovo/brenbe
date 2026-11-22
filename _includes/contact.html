@@ -1,10 +1,15 @@
-{% assign contact_email = site.data.contacto.email | default: '' | strip %}
+{%- include wa.html -%}
+{%- assign n = site.data.negocio -%}
+{%- assign contact_email = n.email | default: '' | append: '' | strip -%}
 <section class="contact" id="contacto">
   <div>
     <h2>Hablemos de tu espacio.</h2>
-    {% if contact_email == '' %}<p>Estamos preparando el canal de consultas.</p>{% endif %}
+    {% if contact_email == '' and wa_href == '' %}<p>Estamos preparando el canal de consultas.</p>{% endif %}
   </div>
-  {% if contact_email != '' %}
-  <a class="button" href="mailto:{{ contact_email | escape }}">Escribile a Brenda</a>
+  {% if contact_email != '' or wa_href != '' %}
+  <div class="actions">
+    {% if wa_href != '' %}<a class="button" href="{{ wa_href }}" rel="noopener">Escribime por WhatsApp</a>{% endif %}
+    {% if contact_email != '' %}<a class="button" href="mailto:{{ contact_email | escape }}">Escribile a Brenda</a>{% endif %}
+  </div>
   {% endif %}
 </section>

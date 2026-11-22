@@ -1,0 +1,36 @@
+---
+layout: base
+title: Servicios de interiorismo y decoración
+seo_title: Servicios de interiorismo y decoración sin obra | BRENBE
+description: "Servicios de interiorismo y decoración de BRENBE: asesoría online, color, papel pintado, mobiliario, iluminación y deptos chicos. Todo sin obra."
+last_modified_at: 2026-11-22
+breadcrumb: Servicios
+---
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{{ '/' | relative_url }}">Inicio</a> / Servicios</p>
+    <h1>Servicios de interiorismo y decoración</h1>
+    <p>Todo lo que trabajo parte de la misma idea: renovar tu casa sin obra, con decisiones claras de color, mobiliario, luz y textiles. Podés empezar por la asesoría integral o elegir la parte que más necesitás.</p>
+  </div>
+  <section class="section">
+    <div class="section-head"><h2>Asesoría integral</h2><p class="section-intro">Si querés revisar el ambiente completo, es el mejor punto de partida.</p></div>
+    <ul class="link-list">
+      <li><a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}"><strong>Asesoría de interiorismo online</strong><span>Distribución, color, iluminación, mobiliario y textiles para un ambiente, a distancia desde Argentina y para cualquier país.</span></a></li>
+    </ul>
+  </section>
+  <section class="section other-services">
+    <div class="section-head"><h2>Servicios puntuales</h2><p class="section-intro">Cuando ya sabés qué parte del ambiente querés resolver.</p></div>
+    <ul class="link-list">
+      {%- assign servicios = site.pages | where_exp: 'p', 'p.layout == "servicio"' | sort: 'order' %}
+      {%- for s in servicios %}
+      <li><a href="{{ s.url | relative_url }}"><strong>{{ s.breadcrumb | escape }}</strong><span>{{ s.card | escape }}</span></a></li>
+      {%- endfor %}
+    </ul>
+  </section>
+  <section class="section copy">
+    <h2>¿Cuál me conviene?</h2>
+    <p>Si dudás, empezá por la <a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">asesoría online</a>: ahí revisamos el ambiente completo y definimos prioridades. Los servicios puntuales sirven cuando ya tenés claro qué querés resolver, por ejemplo la paleta de color o la distribución de los muebles. Si tenés un espacio muy chico, el servicio de <a href="{{ '/servicios/decoracion-de-monoambientes-y-deptos-chicos/' | relative_url }}">monoambientes y deptos chicos</a> reúne todo pensado para pocos metros.</p>
+    <p>Todos los servicios son sin obra: no incluyen reformas, dirección de obra ni cálculo estructural. Se trabaja con decoración, color, mobiliario, iluminación y textiles, que es lo que permite renovar un espacio sin romper nada. Para inspirarte, mirá los <a href="{{ '/proyectos/' | relative_url }}">proyectos</a> o las <a href="{{ '/guias/' | relative_url }}">guías</a>.</p>
+  </section>
+  {% include contact.html %}
+</main>

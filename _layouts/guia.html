@@ -1,0 +1,44 @@
+---
+layout: base
+---
+{% include wa.html %}
+{%- assign words = page.content | number_of_words -%}
+{%- assign minutos = words | divided_by: 200 | plus: 1 -%}
+<main id="main">
+  <article>
+    <div class="section page-intro">
+      <p class="breadcrumb"><a href="{{ '/' | relative_url }}">Inicio</a> / <a href="{{ '/guias/' | relative_url }}">Guías</a> / {{ page.title | escape }}</p>
+      {% if page.category %}<div class="eyebrow">{{ page.category | escape }}</div>{% endif %}
+      <h1>{{ page.title | escape }}</h1>
+      <p class="lead-text">{{ page.description | escape }}</p>
+      <p class="article-meta">Por <a href="{{ '/sobre-brenda/' | relative_url }}">Brenda</a>, BRENBE Interiorismo · Publicado el <time datetime="{{ page.date | date_to_xmlschema }}">{% include fecha.html d=page.date %}</time>{% if page.updated %} · Actualizado el <time datetime="{{ page.updated | date_to_xmlschema }}">{% include fecha.html d=page.updated %}</time>{% endif %} · {{ minutos }} min de lectura</p>
+    </div>
+    <div class="section article-section">
+      {% if page.cover %}<figure class="article-cover">{% include imagen.html src=page.cover alt=page.cover_alt sizes="(max-width: 800px) 100vw, 1100px" loading="eager" class="project-cover" %}</figure>{% endif %}
+      <div class="copy article">
+        {{ content }}
+      </div>
+      <aside class="cta-box">
+        <h2>¿Querés aplicar esto en tu casa?</h2>
+        <p>Si preferís que revisemos juntas tu ambiente, la asesoría de interiorismo online te da una propuesta concreta de color, muebles e iluminación, sin obra.</p>
+        <div class="actions">
+          <a class="button primary" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Conocé la asesoría online</a>
+          {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="noopener">Consultar por WhatsApp</a>{% endif %}
+        </div>
+      </aside>
+    </div>
+  </article>
+  {% if page.faq.size > 0 %}{% include faq.html title="Preguntas frecuentes" %}{% endif %}
+  {%- assign todas = site.guias | sort: 'date' | reverse -%}
+  {%- assign rel = todas | where_exp: 'g', 'g.url != page.url' -%}
+  {%- assign rel_all = '' | split: '' -%}
+  {%- for slug in page.related %}{% for g in rel %}{% if g.slug == slug %}{% assign rel_all = rel_all | push: g %}{% endif %}{% endfor %}{% endfor -%}
+  {%- for g in rel %}{% unless page.related contains g.slug %}{% assign rel_all = rel_all | push: g %}{% endunless %}{% endfor -%}
+  {%- if rel_all.size > 0 %}
+  <section class="section">
+    <div class="section-head"><h2>Seguí leyendo</h2></div>
+    {% include guias.html list=rel_all limit=3 %}
+  </section>
+  {%- endif %}
+  {% include contact.html %}
+</main>

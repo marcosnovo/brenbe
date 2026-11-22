@@ -1,21 +1,29 @@
 ---
 layout: base
-title: "Asesoría de interiorismo en Argentina y online | BRENBE"
-description: "Asesorías de interiorismo y decoración desde Argentina. Elegí colores, muebles, iluminación y textiles para renovar tu espacio sin obra, también online."
+title: "Asesoría de interiorismo y decoración en Argentina | BRENBE"
+description: "Asesorías de interiorismo y decoración desde Argentina: elegí color, muebles, iluminación y textiles para renovar tu casa sin obra. Online y presencial."
+last_modified_at: 2026-11-22
+preload_image:
+  src: /living-sofa-oliva-960.webp
+  srcset: "/living-sofa-oliva-640.webp 640w, /living-sofa-oliva-960.webp 960w, /living-sofa-oliva.webp 1440w"
+  sizes: "(max-width: 800px) 100vw, 55vw"
 ---
-  <main id="inicio">
+  {% include wa.html %}
+  <main id="main">
     <section class="hero">
       <div class="hero-copy">
-        <div class="eyebrow">BRENBE · Interiorismo y decoración</div>
-        <h1>Interiores pensados para tu manera de vivir.</h1>
+        <div class="eyebrow">BRENBE · Brenda, interiorista</div>
+        <h1>Asesoría de interiorismo y decoración para renovar tu casa sin obra</h1>
+        <p class="lead">Interiores pensados para tu manera de vivir.</p>
         <p>Con una asesoría de interiorismo, te acompaño a elegir muebles, colores, papeles y objetos para que tu espacio se sienta tuyo. Trabajo desde Argentina y también a distancia, sin necesidad de hacer obra.</p>
         <div class="actions">
           <a class="button primary" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Conocé la asesoría online</a>
           <a class="button secondary" href="{{ '/proyectos/' | relative_url }}">Ver proyectos</a>
+          {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="noopener">Escribime por WhatsApp</a>{% endif %}
         </div>
       </div>
       <div class="hero-image">
-        <img src="living-sofa-oliva.webp" width="1440" height="810" fetchpriority="high" alt="Living cálido con sofá oliva, muebles de nogal y acentos color granate">
+        <img src="{{ '/living-sofa-oliva-960.webp' | relative_url }}" srcset="{{ '/living-sofa-oliva-640.webp' | relative_url }} 640w, {{ '/living-sofa-oliva-960.webp' | relative_url }} 960w, {{ '/living-sofa-oliva.webp' | relative_url }} 1440w" sizes="(max-width: 800px) 100vw, 55vw" width="1440" height="810" fetchpriority="high" decoding="async" alt="Living cálido con sofá oliva, muebles de nogal y acentos color granate">
         <div class="image-caption">Selección de color · mobiliario · objetos</div>
       </div>
     </section>
@@ -23,7 +31,7 @@ description: "Asesorías de interiorismo y decoración desde Argentina. Elegí c
 
     <section class="section" id="proyectos">
       <div class="section-head">
-        <div><h2>{% if site.proyectos.size > 0 %}Proyectos de interiorismo{% else %}Ideas de interiorismo{% endif %}</h2></div>
+        <div><h2>{% if site.proyectos.size > 0 %}Proyectos de interiorismo{% else %}Ideas de decoración e interiorismo para tu casa{% endif %}</h2></div>
         <p class="section-intro">{% if site.proyectos.size > 0 %}Conocé el punto de partida y las decisiones de diseño de cada espacio.{% else %}Referencias visuales para combinar paletas, muebles, textiles e iluminación.{% endif %}</p>
       </div>
       {% if site.proyectos.size > 0 %}
@@ -35,22 +43,34 @@ description: "Asesorías de interiorismo y decoración desde Argentina. Elegí c
     </section>
 
     <section class="section services" id="servicios">
-      <div><div class="eyebrow">Diseño claro, decisiones cuidadas</div><h2>Asesoría de interiorismo a tu medida.</h2><p class="services-copy">Una guía profesional para transformar el ambiente con recursos de decoración, sin necesidad de hacer obra.</p><a class="button service-link" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Cómo funciona la asesoría online</a></div>
+      <div><div class="eyebrow">Diseño claro, decisiones cuidadas</div><h2>Asesoría de interiorismo a tu medida.</h2><p class="services-copy">Una guía profesional para transformar el ambiente con recursos de decoración, sin necesidad de hacer obra.</p><div class="actions"><a class="button service-link" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Cómo funciona la asesoría online</a><a class="button service-link" href="{{ '/servicios/' | relative_url }}">Ver todos los servicios</a></div></div>
       <div class="service-list">
-        <article class="service"><span class="service-number">01</span><div><h3>Asesoría integral</h3><p>Reviso el espacio, tus necesidades y las piezas que ya tenés para definir un rumbo claro.</p></div></article>
-        <article class="service"><span class="service-number">02</span><div><h3>Color y revestimientos</h3><p>Paletas, pintura y papeles pintados elegidos en relación con la luz, los materiales y el uso del ambiente.</p></div></article>
-        <article class="service"><span class="service-number">03</span><div><h3>Mobiliario y styling</h3><p>Selección de muebles, textiles, iluminación y objetos; una propuesta que puedas llevar a la práctica.</p></div></article>
+        <article class="service"><span class="service-number">01</span><div><h3><a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Asesoría integral</a></h3><p>Reviso el espacio, tus necesidades y las piezas que ya tenés para definir un rumbo claro.</p></div></article>
+        <article class="service"><span class="service-number">02</span><div><h3><a href="{{ '/servicios/asesoria-de-color/' | relative_url }}">Color</a> y <a href="{{ '/servicios/papel-pintado-y-revestimientos/' | relative_url }}">revestimientos</a></h3><p>Paletas, pintura y papeles pintados elegidos en relación con la luz, los materiales y el uso del ambiente.</p></div></article>
+        <article class="service"><span class="service-number">03</span><div><h3><a href="{{ '/servicios/mobiliario-y-distribucion/' | relative_url }}">Mobiliario</a> y <a href="{{ '/servicios/iluminacion-textiles-y-styling/' | relative_url }}">styling</a></h3><p>Selección de muebles, textiles, iluminación y objetos; una propuesta que puedas llevar a la práctica.</p></div></article>
       </div>
     </section>
 
     <section class="section process" id="estudio">
-      <img class="process-image" src="rincon-de-lectura.webp" width="960" height="1200" loading="lazy" decoding="async" alt="Materiales y mobiliario elegidos para una asesoría de decoración">
-      <div><div class="eyebrow">Cómo trabajo</div><h2>Soy Brenda, de BRENBE.</h2><div class="steps">
+      <img class="process-image" src="{{ '/rincon-de-lectura-720.webp' | relative_url }}" srcset="{{ '/rincon-de-lectura-480.webp' | relative_url }} 480w, {{ '/rincon-de-lectura-720.webp' | relative_url }} 720w, {{ '/rincon-de-lectura.webp' | relative_url }} 960w" sizes="(max-width: 800px) 100vw, 46vw" width="960" height="1200" loading="lazy" decoding="async" alt="Rincón de lectura con sillón oliva y lámpara de travertino">
+      <div><div class="eyebrow">Cómo trabajo</div><h2>Soy Brenda, interiorista: así trabajo.</h2><div class="steps">
         <div class="step"><span>01</span><p><strong>Nos conocemos.</strong> Conversamos sobre el ambiente, lo que necesitás y lo que querés conservar.</p></div>
         <div class="step"><span>02</span><p><strong>Definimos el concepto.</strong> Armo una dirección visual, una paleta y referencias para el proyecto.</p></div>
         <div class="step"><span>03</span><p><strong>Lo llevás a tu espacio.</strong> Te llevás una selección de piezas y recomendaciones claras para avanzar a tu ritmo.</p></div>
       </div></div>
     </section>
+
+    {% if site.guias.size > 0 %}
+    <section class="section" id="guias">
+      <div class="section-head">
+        <div><h2>Guías para decorar tu casa</h2></div>
+        <p class="section-intro">Ideas y criterios prácticos para decidir mejor, escritos pensando en la vida real.</p>
+      </div>
+      {%- assign ultimas = site.guias | sort: 'date' | reverse %}
+      {% include guias.html list=ultimas limit=3 %}
+      <a class="button secondary after-grid" href="{{ '/guias/' | relative_url }}">Ver todas las guías</a>
+    </section>
+    {% endif %}
 
     {% include contact.html %}
   </main>

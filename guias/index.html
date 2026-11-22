@@ -1,0 +1,30 @@
+---
+layout: base
+title: Guías de interiorismo y decoración
+seo_title: Guías de interiorismo y decoración para tu casa | BRENBE
+description: "Guías prácticas de decoración e interiorismo en Argentina: colores, espacios chicos, distribución y cuánto cuesta una asesoría. Ideas para renovar tu casa sin obra."
+last_modified_at: 2026-11-22
+breadcrumb: Guías
+collection_page: guias
+---
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{{ '/' | relative_url }}">Inicio</a> / Guías</p>
+    <h1>Guías de interiorismo y decoración</h1>
+    <p>Artículos prácticos para decidir mejor cómo decorar tu casa: color, espacios chicos, distribución y cómo trabajar con un profesional. Pensados para la vida real, sin obra de por medio.</p>
+  </div>
+  <section class="section">
+    {%- assign grupos = site.guias | sort: 'date' | reverse | group_by: 'category' %}
+    {%- for grupo in grupos %}
+    <div class="section-head"><h2>{{ grupo.name | escape }}</h2></div>
+    {% include guias.html list=grupo.items %}
+    {%- unless forloop.last %}<div class="spacer"></div>{% endunless %}
+    {%- endfor %}
+    {% if site.guias.size == 0 %}<p>Estamos preparando las primeras guías.</p>{% endif %}
+  </section>
+  <section class="section copy">
+    <h2>¿Preferís resolverlo con ayuda?</h2>
+    <p>Las guías sirven para orientarte, pero cada casa es distinta. En una <a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">asesoría de interiorismo online</a> revisamos tu ambiente, tus medidas y lo que ya tenés, y armamos una propuesta a tu medida. También podés mirar los <a href="{{ '/servicios/' | relative_url }}">servicios</a> para ver qué parte te conviene trabajar.</p>
+  </section>
+  {% include contact.html %}
+</main>

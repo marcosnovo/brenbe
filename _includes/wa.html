@@ -1,0 +1,17 @@
+{%- comment -%}
+  Define `wa_href` (vacío si no hay WhatsApp en negocio.yml).
+  Mensaje: include.msg > page.wa_message > texto según la página > negocio.whatsapp_mensaje (home).
+{%- endcomment -%}
+{%- assign wa_num = site.data.negocio.whatsapp | default: '' | append: '' | replace: '+', '' | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' | strip -%}
+{%- assign wa_href = '' -%}
+{%- if wa_num != '' -%}
+  {%- assign wa_default = site.data.negocio.whatsapp_mensaje | default: '' | strip -%}
+  {%- if include.msg -%}{%- assign wa_msg = include.msg -%}
+  {%- elsif page.wa_message -%}{%- assign wa_msg = page.wa_message -%}
+  {%- elsif page.url == '/' and wa_default != '' -%}{%- assign wa_msg = wa_default -%}
+  {%- elsif page.url == '/' or page.layout == nil or page.title == nil -%}{%- assign wa_msg = 'Hola Brenda, vi tu web y quiero consultar por una asesoría de interiorismo.' -%}
+  {%- elsif page.layout == 'guia' -%}{%- capture wa_msg -%}Hola Brenda, leí la guía "{{ page.title }}" en brenbe.com y quiero consultar por una asesoría.{%- endcapture -%}
+  {%- else -%}{%- capture wa_msg -%}Hola Brenda, estoy mirando "{{ page.title }}" en brenbe.com y quiero consultar por una asesoría.{%- endcapture -%}
+  {%- endif -%}
+  {%- capture wa_href -%}https://wa.me/{{ wa_num }}?text={{ wa_msg | url_encode }}{%- endcapture -%}
+{%- endif -%}

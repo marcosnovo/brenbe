@@ -2,9 +2,43 @@ collections:
   proyectos:
     output: true
     permalink: /proyectos/:name/
+  guias:
+    output: true
+    permalink: /guias/:name/
 defaults:
+  - scope:
+      path: ""
+      type: guias
+    values:
+      layout: guia
   - scope:
       path: ""
       type: proyectos
     values:
       layout: proyecto
+  - scope:
+      path: ""
+    values:
+      lang: es-AR
+
+title: BRENBE Interiorismo
+description: "Asesorías de interiorismo y decoración desde Argentina: renová tu casa sin obra, presencial u online."
+url: "https://brenbe.com"
+lang: es-AR
+timezone: America/Argentina/Buenos_Aires
+
+# Cloudflare Pages reads these from the build output; Jekyll skips "_" files by default.
+include:
+  - _headers
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - .pages.yml
+  - .ruby-version
+  - .gitignore
+  - vendor
+  - node_modules
+  - .bundle
+  - .jekyll-cache
