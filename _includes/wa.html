@@ -1,20 +1,36 @@
 {%- comment -%}
-  Define `wa_href` (vacío si no hay WhatsApp en negocio.yml).
-  Mensaje: include.msg > page.wa_message > texto según la página (en el idioma de la página) > negocio.whatsapp_mensaje (solo home es-AR).
+  Define las variables de WhatsApp (vacías si no hay número en negocio.yml):
+    wa_direct  enlace directo https://wa.me/<número>?text=<mensaje>
+    wa_href    el que se usa en los botones: si hay WhatsApp, pasa por /wa/<origen>/ (ver _layouts/wa.html) para que cada
+               clic cuente como página vista en Cloudflare Web Analytics y se sepa desde qué página salió.
+               Con `wa_track: false` en _data/sitio.yml usa wa_direct (comportamiento anterior).
+    wa_rel     valor de rel para esos enlaces (nofollow si va a /wa/, noopener si va directo)
+  Mensaje: include.msg > page.wa_message > texto según la página (en el idioma de la página) > sitio.whatsapp_mensaje (solo home es-AR).
+  include.p: página de origen (lo usa _layouts/wa.html); por defecto, la página actual.
 {%- endcomment -%}
-{%- unless T %}{% include loc.html %}{% endunless -%}
+{%- if include.p -%}{%- include loc.html p=include.p -%}{%- else -%}{%- unless T %}{% include loc.html %}{% endunless -%}{%- endif -%}
+{%- assign wa_p = include.p | default: page -%}
 {%- assign wa_num = site.data.negocio.whatsapp | default: '' | append: '' | replace: '+', '' | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' | strip -%}
 {%- assign wa_href = '' -%}
+{%- assign wa_direct = '' -%}
+{%- assign wa_rel = 'noopener' -%}
 {%- if wa_num != '' -%}
   {%- assign wa_default = site.data.sitio.whatsapp_mensaje | default: '' | strip -%}
   {%- assign wa_is_home = false -%}
-  {%- if page.url == '/' or page.ref == 'home' -%}{%- assign wa_is_home = true -%}{%- endif -%}
+  {%- if wa_p.url == '/' or wa_p.ref == 'home' -%}{%- assign wa_is_home = true -%}{%- endif -%}
   {%- if include.msg -%}{%- assign wa_msg = include.msg -%}
-  {%- elsif page.wa_message -%}{%- assign wa_msg = page.wa_message -%}
+  {%- elsif wa_p.wa_message -%}{%- assign wa_msg = wa_p.wa_message -%}
   {%- elsif wa_is_home and lk == 'es-ar' and wa_default != '' -%}{%- assign wa_msg = wa_default -%}
-  {%- elsif wa_is_home or page.layout == nil or page.title == nil -%}{%- assign wa_msg = T.wa_home | default: TD.wa_home -%}
-  {%- elsif page.layout == 'guia' -%}{%- assign wa_msg = T.wa_guide | default: TD.wa_guide | replace: '%s', page.title -%}
-  {%- else -%}{%- assign wa_msg = T.wa_page | default: TD.wa_page | replace: '%s', page.title -%}
+  {%- elsif wa_is_home or wa_p.layout == nil or wa_p.title == nil -%}{%- assign wa_msg = T.wa_home | default: TD.wa_home -%}
+  {%- elsif wa_p.layout == 'guia' -%}{%- assign wa_msg = T.wa_guide | default: TD.wa_guide | replace: '%s', wa_p.title -%}
+  {%- else -%}{%- assign wa_msg = T.wa_page | default: TD.wa_page | replace: '%s', wa_p.title -%}
   {%- endif -%}
-  {%- capture wa_href -%}https://wa.me/{{ wa_num }}?text={{ wa_msg | url_encode }}{%- endcapture -%}
+  {%- capture wa_direct -%}https://wa.me/{{ wa_num }}?text={{ wa_msg | url_encode }}{%- endcapture -%}
+  {%- assign wa_href = wa_direct -%}
+  {%- if site.data.sitio.wa_track != false and include.p == nil -%}
+    {%- assign wa_pid = wa_p.url | replace: 'index.html', '' -%}
+    {%- if wa_pid == '/' or wa_pid == '' -%}{%- assign wa_pid = 'home' -%}{%- else -%}{%- assign wa_pid = wa_pid | slugify -%}{%- endif -%}
+    {%- capture wa_href -%}{{ '/wa/' | append: wa_pid | append: '/' | relative_url }}{%- endcapture -%}
+    {%- assign wa_rel = 'nofollow' -%}
+  {%- endif -%}
 {%- endif -%}

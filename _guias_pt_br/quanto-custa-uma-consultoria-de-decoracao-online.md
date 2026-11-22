@@ -2,6 +2,8 @@
 title: "Quanto custa uma consultoria de decoração online"
 description: "Quanto custa uma consultoria de decoração online? Veja como se cobra (hora, ambiente ou pacote), o que inclui e o que perguntar antes de contratar."
 category: Processo
+hub: presupuesto
+role: cluster
 ref: cuanto-cuesta-una-asesoria-de-interiorismo
 ready: true
 date: 2026-11-19

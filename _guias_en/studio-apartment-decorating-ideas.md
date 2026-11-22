@@ -4,6 +4,8 @@ description: "Studio apartment decorating ideas that need no renovation: zone sl
 ref: como-decorar-un-monoambiente
 ready: true
 category: Small spaces
+hub: depto-chico
+role: cluster
 date: 2026-11-21
 cover: /dormitorio-tonos-calidos.webp
 cover_alt: "Bedroom in cream, olive and garnet tones"

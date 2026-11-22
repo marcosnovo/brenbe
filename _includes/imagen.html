@@ -1,14 +1,15 @@
 {%- comment -%}
-  <img> responsive. Parámetros: src (ruta /archivo.webp), alt (opcional), sizes, loading (lazy|eager), class.
+  <img> responsive. Parámetros: src (ruta /archivo.webp), alt (opcional), sizes, loading (lazy|eager), class, pin (texto del botón "Guardar" de Pinterest; por defecto el alt).
   Si el archivo está en _data/imagenes.yml usa srcset y dimensiones; si no, una imagen simple.
 {%- endcomment -%}
 {%- assign im_key = include.src | remove_first: '/' | remove: '.webp' -%}
 {%- assign im = site.data.imagenes[im_key] -%}
 {%- assign im_alt = include.alt | default: im.alt | default: '' -%}
+{%- assign im_pin = include.pin | default: im_alt | strip_html | normalize_whitespace | truncate: 480 -%}
 {%- assign im_loading = include.loading | default: 'lazy' -%}
 {%- if im -%}
 {%- capture im_srcset -%}{% for v in im.variantes %}{{ '/' | append: im_key | append: '-' | append: v | append: '.webp' | relative_url }} {{ v }}w, {% endfor %}{{ include.src | relative_url }} {{ im.w }}w{%- endcapture -%}
-<img{% if include.class %} class="{{ include.class }}"{% endif %} src="{{ include.src | relative_url }}" srcset="{{ im_srcset }}" sizes="{{ include.sizes | default: '100vw' }}" width="{{ im.w }}" height="{{ im.h }}" alt="{{ im_alt | escape }}" loading="{{ im_loading }}" decoding="async"{% if im_loading == 'eager' %} fetchpriority="high"{% endif %}>
+<img{% if include.class %} class="{{ include.class }}"{% endif %} src="{{ include.src | relative_url }}" srcset="{{ im_srcset }}" sizes="{{ include.sizes | default: '100vw' }}" width="{{ im.w }}" height="{{ im.h }}" alt="{{ im_alt | escape }}"{% if im_pin != '' %} data-pin-description="{{ im_pin | escape }}"{% endif %} loading="{{ im_loading }}" decoding="async"{% if im_loading == 'eager' %} fetchpriority="high"{% endif %}>
 {%- else -%}
-{%- include foto.html src=include.src alt=im_alt sizes=include.sizes loading=im_loading class=include.class -%}
+{%- include foto.html src=include.src alt=im_alt pin=include.pin sizes=include.sizes loading=im_loading class=include.class -%}
 {%- endif -%}

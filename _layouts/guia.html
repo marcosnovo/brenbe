@@ -8,28 +8,37 @@ layout: base
 <main id="main">
   <article>
     <div class="section page-intro">
-      <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / <a href="{% include l.html ref='guias' %}">{% include t.html k="bc_guides" %}</a> / {{ page.title | escape }}</p>
+      <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / <a href="{% include l.html ref='guias' %}">{% include t.html k="bc_guides" %}</a> / {% if page.hub and site.hubs_live[lk][page.hub] %}<a href="{{ site.hubs_live[lk][page.hub] | relative_url }}">{{ site.data.hubs.hubs[page.hub][lk].nombre | escape }}</a> / {% endif %}{{ page.title | escape }}</p>
       {% if page.category %}<div class="eyebrow">{{ page.category | escape }}</div>{% endif %}
       <h1>{{ page.title | escape }}</h1>
       <p class="lead-text">{{ page.description | escape }}</p>
       <p class="article-meta">{% include t.html k="guide_by" %} <a href="{% include l.html ref='sobre-brenda' %}">Brenda</a>, BRENBE Interiorismo · {% include t.html k="guide_published" %} <time datetime="{{ page.date | date_to_xmlschema }}">{% include fecha.html d=page.date %}</time>{% if page.updated %} · {% include t.html k="guide_updated" %} <time datetime="{{ page.updated | date_to_xmlschema }}">{% include fecha.html d=page.updated %}</time>{% endif %} · {% capture g_read %}{% include t.html k="guide_read" %}{% endcapture %}{{ g_read | replace: '%s', minutos }}</p>
     </div>
     <div class="section article-section">
-      {% if page.cover %}<figure class="article-cover">{% include imagen.html src=page.cover alt=page.cover_alt sizes="(max-width: 800px) 100vw, 1100px" loading="eager" class="project-cover" %}</figure>{% endif %}
+      {% if page.cover %}<figure class="article-cover">{% include imagen.html src=page.cover alt=page.cover_alt sizes="(max-width: 800px) 100vw, 1100px" loading="eager" class="project-cover" %}{% if page.cover_caption %}<figcaption>{{ page.cover_caption | escape }}</figcaption>{% endif %}</figure>{% endif %}
       <div class="copy article">
+        {%- comment -%} Bloques de plantilla (front matter), siempre en este orden; ver docs/growth/plantillas.md {%- endcomment -%}
+        {% include b-respuesta.html %}
+        {% include b-estilo.html %}
+        {% include b-galeria.html %}
+        {% include b-paleta.html %}
         {{ content }}
+        {% include b-pasos.html %}
+        {% include b-lista.html %}
+        {% include b-errores.html %}
       </div>
       <aside class="cta-box">
         <h2>{% include t.html k="guide_cta_h2" %}</h2>
         <p>{% include t.html k="guide_cta_p" %}</p>
         <div class="actions">
           <a class="button primary" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="guide_cta_btn" %}</a>
-          {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="noopener">{% include t.html k="guide_cta_wa" %}</a>{% endif %}
+          {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include t.html k="guide_cta_wa" %}</a>{% endif %}
         </div>
       </aside>
     </div>
   </article>
   {% if page.faq.size > 0 %}{% include faq.html title=T.faq_title %}{% endif %}
+  {% include hub-more.html %}
   {%- assign g_coll = site[L.guias] | default: site.guias -%}
   {%- assign todas = g_coll | sort: 'date' | reverse -%}
   {%- assign rel = todas | where_exp: 'g', 'g.url != page.url' -%}

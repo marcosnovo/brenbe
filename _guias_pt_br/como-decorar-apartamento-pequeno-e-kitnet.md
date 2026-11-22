@@ -2,6 +2,8 @@
 title: "Como decorar apartamento pequeno e kitnet sem obra"
 description: "Como decorar apartamento pequeno, studio ou kitnet sem reforma: dividir zonas, cama e sofá, armazenamento, paleta única e dicas para aluguel."
 category: Espaços pequenos
+hub: depto-chico
+role: cluster
 ref: como-decorar-un-monoambiente
 ready: true
 date: 2026-11-21

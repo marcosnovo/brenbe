@@ -19,6 +19,7 @@ permalink: /en/guides/
     <h1>Interior design and decorating guides</h1>
     <p>Practical articles to help you decide how to decorate your home: color, small spaces, layout and how to work with an online designer. Written for real life, with no renovation required.</p>
   </div>
+  {% include hub-cards.html %}
   <section class="section">
     {%- assign grupos = g_coll | sort: 'date' | reverse | group_by: 'category' %}
     {%- for grupo in grupos %}

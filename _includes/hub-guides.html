@@ -1,0 +1,17 @@
+{%- comment -%}
+  Guías publicadas de un tema (hub) en el idioma actual. include.hub = id del tema; include.exclude = url a omitir.
+  Define: hub_pillar (guías con role: pilar), hub_clusters (el resto), hub_all (pilares primero, luego el resto por fecha).
+  Misma regla de "publicada" que el sitemap (indexable.html).
+{%- endcomment -%}
+{%- unless L %}{% include loc.html %}{% endunless -%}
+{%- assign hg_src = site[L.guias] | where: 'hub', include.hub | sort: 'date' | reverse -%}
+{%- assign hub_pillar = '' | split: '' -%}
+{%- assign hub_clusters = '' | split: '' -%}
+{%- for g in hg_src -%}
+  {%- if g.url == include.exclude -%}{%- continue -%}{%- endif -%}
+  {%- include indexable.html p=g quiet=true -%}
+  {%- unless ix_res -%}{%- continue -%}{%- endunless -%}
+  {%- if g.role == 'pilar' -%}{%- assign hub_pillar = hub_pillar | push: g -%}
+  {%- else -%}{%- assign hub_clusters = hub_clusters | push: g -%}{%- endif -%}
+{%- endfor -%}
+{%- assign hub_all = hub_pillar | concat: hub_clusters -%}

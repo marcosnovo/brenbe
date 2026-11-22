@@ -1,0 +1,7 @@
+{%- comment -%}
+  Cloudflare Web Analytics (sin cookies, sin banner). Solo se imprime si _data/sitio.yml tiene `cloudflare_analytics_token`.
+  Ojo: una página solo puede tener UN beacon. Si en el panel de Cloudflare se activa "Web Analytics" del proyecto de Pages
+  (inyección automática), dejá el token vacío para no duplicar.
+{%- endcomment -%}
+{%- assign cfa = site.data.sitio.cloudflare_analytics_token | default: '' | append: '' | strip -%}
+{%- if cfa != '' %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": {{ cfa | jsonify }}}'></script>{% endif -%}

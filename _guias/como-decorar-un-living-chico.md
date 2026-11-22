@@ -2,6 +2,8 @@
 title: "Cómo decorar un living chico: 12 ideas que funcionan"
 description: "Ideas concretas para decorar un living chico sin obra: medir primero, colores, alfombra, muebles livianos, guardado, luz y cómo zonificar un living-comedor."
 category: Espacios chicos
+hub: depto-chico
+role: cluster
 date: 2026-11-22
 cover: /rincon-de-lectura.webp
 cover_alt: "Rincón de lectura con sillón oliva y lámpara de travertino"

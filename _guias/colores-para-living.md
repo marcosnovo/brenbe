@@ -2,6 +2,8 @@
 title: "Colores para el living: cómo elegir tu paleta"
 description: "Cómo elegir los colores del living: orientación y luz, neutros cálidos, verdes, terracotas y azules, cuándo animarte a un tono oscuro y la regla 60-30-10."
 category: Color
+hub: color-y-paletas
+role: pilar
 date: 2026-11-20
 cover: /living-sofa-oliva.webp
 cover_alt: "Living cálido con sofá oliva, muebles de nogal y acentos color granate"

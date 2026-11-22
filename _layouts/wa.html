@@ -1,0 +1,45 @@
+{%- comment -%}
+  /wa/<origen>/ : redirección a WhatsApp que cuenta como página vista (se genera sola, una por página: _plugins/brenbe.rb).
+  La ruta lleva el origen porque Cloudflare Web Analytics NO registra query strings. noindex, fuera del sitemap, Disallow en robots.txt.
+  Espera un instante (para que el beacon se envíe) y salta con location.replace (no queda en el historial: "atrás" vuelve a la página de origen).
+  Sin JS: meta refresh a los 3 s y enlace visible.
+{%- endcomment -%}
+{%- assign wa_src = site.pages | concat: site.documents | where: 'url', page.wa_for | first -%}
+{%- include wa.html p=wa_src -%}
+{%- include loc.html -%}
+{%- capture back_url %}{{ page.wa_for | replace: 'index.html', '' | relative_url }}{% endcapture -%}
+<!doctype html>
+<html lang="{{ L.html_lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="origin">
+  <title>{% include t.html k="wa_redirect_title" esc=true %} | BRENBE</title>
+  {% if wa_direct != '' %}<meta http-equiv="refresh" content="3;url={{ wa_direct | escape }}">{% endif %}
+  <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ '/brenbe.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+</head>
+<body class="wa-go">
+  <main id="main" class="wa-go-box">
+    <p class="eyebrow">BRENBE</p>
+    <h1>{% include t.html k="wa_redirect_h" %}</h1>
+    {% if wa_direct != '' %}
+    <p><a class="button primary" id="wa-go" href="{{ wa_direct | escape }}">{% include t.html k="wa_redirect_btn" %}</a></p>
+    <p><a href="{{ back_url }}">{% include t.html k="wa_redirect_back" %}</a></p>
+    <script>
+      (function () {
+        var go = document.getElementById('wa-go');
+        if (!go) return;
+        function jump() { location.replace(go.href); }
+        if (document.readyState === 'complete') setTimeout(jump, 700);
+        else window.addEventListener('load', function () { setTimeout(jump, 700); });
+      })();
+    </script>
+    {% else %}
+    <p><a href="{{ back_url }}">{% include t.html k="wa_redirect_back" %}</a></p>
+    {% endif %}
+  </main>
+  {% include analytics.html %}
+</body>
+</html>

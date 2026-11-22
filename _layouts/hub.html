@@ -1,0 +1,50 @@
+---
+layout: base
+---
+{%- comment -%} Página de tema (hub): la genera _plugins/brenbe.rb a partir de _data/hubs.yml. Pilar primero, después las demás guías. {%- endcomment -%}
+{% include loc.html %}
+{% include wa.html %}
+{%- assign hub_d = site.data.hubs.hubs[page.hub] -%}
+{%- include hub-guides.html hub=page.hub -%}
+{%- assign hub_srv = site.pages | where: 'ref', hub_d.servicio | where: 'locale', lk | first -%}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / <a href="{% include l.html ref='guias' %}">{% include t.html k="bc_guides" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <div class="eyebrow">{% include t.html k="hub_eyebrow" %}</div>
+    <h1>{{ page.title | escape }}</h1>
+    <p class="lead-text">{{ hub_d[lk].intro | escape }}</p>
+  </div>
+  {%- if hub_pillar.size > 0 %}
+  <section class="section">
+    <div class="section-head"><h2>{% include t.html k="hub_pillar_h" %}</h2></div>
+    {%- for g in hub_pillar %}
+    <article class="hub-pillar">
+      <a href="{{ g.url | relative_url }}">
+        <div class="frame">{% include imagen.html src=g.cover alt=g.cover_alt sizes="(max-width: 800px) 100vw, 45vw" %}</div>
+        <div class="hub-pillar-copy"><div class="eyebrow">{{ g.category | escape }}</div><h3>{{ g.title | escape }}</h3><p>{{ g.description | escape }}</p></div>
+      </a>
+    </article>
+    {%- endfor %}
+  </section>
+  {%- endif %}
+  {%- if hub_clusters.size > 0 %}
+  <section class="section">
+    <div class="section-head"><h2>{% if hub_pillar.size > 0 %}{% include t.html k="hub_clusters_h" %}{% else %}{% include t.html k="hub_guides_h" %}{% endif %}</h2></div>
+    {% include guias.html list=hub_clusters %}
+  </section>
+  {%- endif %}
+  <section class="section copy">
+    <aside class="cta-box">
+      <h2>{% include t.html k="guide_cta_h2" %}</h2>
+      <p>{% include t.html k="guide_cta_p" %}</p>
+      <div class="actions">
+        <a class="button primary" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="guide_cta_btn" %}</a>
+        {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include t.html k="guide_cta_wa" %}</a>{% endif %}
+      </div>
+      {%- if hub_srv and hub_srv.ready != false and hub_d.servicio != 'asesoria-online' %}
+      <p class="hub-service"><a href="{{ hub_srv.url | replace: 'index.html', '' | relative_url }}">{% include t.html k="hub_service" %}: {{ hub_srv.breadcrumb | default: hub_srv.title | escape }}</a></p>
+      {%- endif %}
+    </aside>
+  </section>
+  {% include contact.html %}
+</main>

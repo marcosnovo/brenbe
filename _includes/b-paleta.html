@@ -1,0 +1,46 @@
+{%- comment -%}
+  Plantilla "paleta": front matter `paleta:`
+    titulo, intro, aviso (opcionales), imagen (moodboard opcional), imagen_alt
+    colores: lista de { nombre, hex, rol, peso, uso, pintura: { marca, codigo, nombre } }
+  Solo `nombre` y `hex` son necesarios. `pintura` es OPCIONAL: se completa únicamente con códigos verificados del idioma de la página.
+  Los colores se dibujan en HTML/CSS (texto indexable, no una imagen). El color del texto del hex se elige solo (contraste WCAG).
+{%- endcomment -%}
+{%- assign pal = page.paleta -%}
+{%- if pal.colores.size > 0 -%}
+<section class="guide-block pal" id="paleta" data-pal>
+  <h2>{{ pal.titulo | default: T.pal_h | default: TD.pal_h | escape }}</h2>
+  {%- if pal.intro %}<p class="pal-intro">{{ pal.intro | escape }}</p>{% endif %}
+  {%- if pal.imagen %}<figure class="fig pal-moodboard">{% include imagen.html src=pal.imagen alt=pal.imagen_alt pin=pal.imagen_alt sizes="(max-width: 800px) 100vw, 760px" %}</figure>{% endif %}
+  {%- assign pal_pesos = 0 -%}
+  {%- for c in pal.colores %}{% if c.peso %}{% assign pal_pesos = pal_pesos | plus: c.peso %}{% endif %}{% endfor -%}
+  {%- if pal_pesos > 0 %}
+  <div class="pal-bar" aria-hidden="true">{% for c in pal.colores %}{% assign bx = c.hex | hex_norm %}{% if bx != '' and c.peso %}<span style="flex:{{ c.peso }};background:{{ bx }}"></span>{% endif %}{% endfor %}</div>
+  {%- endif %}
+  <ul class="pal-list">
+  {%- for c in pal.colores %}
+    {%- assign bx = c.hex | hex_norm -%}
+    {%- if bx == '' %}{% continue %}{% endif -%}
+    {%- assign bfg = bx | hex_fg -%}
+    {%- assign bcr = bx | hex_contrast -%}
+    {%- assign blv = bcr | wcag_level -%}
+    {%- assign bxu = bx | upcase -%}
+    {%- capture pal_ratio %}{% include t.html k="pal_contrast" %}{% endcapture %}
+    <li class="pal-item">
+      <div class="pal-chip" style="background:{{ bx }};color:{{ bfg }}">
+        <span class="pal-hex">{{ bxu }}</span>
+        {%- if blv != '' %}<span class="pal-ratio"><span aria-hidden="true">{% if blv == 'AA-large' %}{% include t.html k="pal_large" %}{% else %}{{ blv }}{% endif %} · {{ bcr }}:1</span><span class="visually-hidden">{{ pal_ratio | replace: '%s', bcr }} ({% if blv == 'AA-large' %}{% include t.html k="pal_large" %}{% else %}{{ blv }}{% endif %})</span></span>{% endif %}
+      </div>
+      <div class="pal-info">
+        <h3 class="pal-name">{{ c.nombre | escape }}</h3>
+        {%- if c.rol or c.peso %}<p class="pal-role">{{ c.rol | escape }}{% if c.rol and c.peso %} · {% endif %}{% if c.peso %}{{ c.peso }} %{% endif %}</p>{% endif %}
+        {%- if c.pintura.marca or c.pintura.codigo %}<p class="pal-paint"><span>{% include t.html k="pal_paint" %}:</span> {{ c.pintura.marca | escape }}{% if c.pintura.nombre %} {{ c.pintura.nombre | escape }}{% endif %}{% if c.pintura.codigo %} · {% include t.html k="pal_code" %} {{ c.pintura.codigo | escape }}{% endif %}</p>{% endif %}
+        {%- if c.uso %}<p class="pal-uso">{{ c.uso | escape }}</p>{% endif %}
+        <button type="button" class="pal-copy" data-copy="{{ bxu }}" data-done="{% include t.html k='pal_copied' esc=true %}" hidden>{% include t.html k="pal_copy" %} {{ bxu }}</button>
+      </div>
+    </li>
+  {%- endfor %}
+  </ul>
+  <p class="pal-note">{{ pal.aviso | default: T.pal_aviso | default: TD.pal_aviso | escape }}</p>
+  <p class="pal-actions"><button type="button" class="button secondary pal-print" hidden>{% include t.html k="pal_print" %}</button><span class="visually-hidden" role="status" aria-live="polite" data-pal-status></span></p>
+</section>
+{%- endif -%}

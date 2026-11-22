@@ -151,6 +151,9 @@ content:
             type: string
             options:
               maxlength: 140
+          - name: caption
+            type: string
+            hidden: true
           - name: etapa
             label: ¿Es una foto de antes o de después? (opcional)
             description: Si la marcás, se muestra una etiqueta arriba de la foto. Si no, dejalo vacío.
@@ -220,6 +223,40 @@ content:
             - Tendencias
             - Proceso
             - Otros temas
+      - name: hub
+        label: ¿Pertenece a un tema? (opcional)
+        description: 'Si esta guía forma parte de un grupo de guías sobre el mismo tema, elegilo. Así aparece en la página del tema y en "Más en este tema". Si dudás, dejalo vacío.'
+        type: select
+        options:
+          placeholder: Ninguno
+          values:
+            - value: depto-chico
+              label: Deptos chicos y monoambientes
+            - value: color-y-paletas
+              label: Color y paletas
+            - value: decorar-alquilando
+              label: Decorar alquilando
+            - value: presupuesto
+              label: Presupuesto y precios
+            - value: iluminacion
+              label: Iluminación
+            - value: empapelado
+              label: Empapelado
+            - value: ideas-por-ambiente
+              label: Ideas por ambiente
+            - value: estilos
+              label: Estilos
+      - name: role
+        label: ¿Qué lugar ocupa en el tema? (opcional)
+        description: 'Solo si elegiste un tema. "Guía principal" es la más completa del tema (una sola). Si dudás, dejá "Guía complementaria".'
+        type: select
+        default: cluster
+        options:
+          values:
+            - value: pilar
+              label: Guía principal del tema
+            - value: cluster
+              label: Guía complementaria
       - name: date
         label: Fecha
         description: Ya viene con la fecha de hoy.
@@ -276,6 +313,90 @@ content:
             required: true
             options:
               maxlength: 600
+      # Plantillas de contenido (las completa el equipo técnico, ver docs/growth/plantillas.md): ocultas, pero se declaran para no perderse al guardar.
+      - name: tipo
+        type: string
+        hidden: true
+      - name: respuesta
+        type: text
+        hidden: true
+      - name: definicion
+        type: text
+        hidden: true
+      - name: cover_caption
+        type: string
+        hidden: true
+      - name: og_image
+        type: string
+        hidden: true
+      - name: galeria_titulo
+        type: string
+        hidden: true
+      - name: pasos_titulo
+        type: string
+        hidden: true
+      - name: claves
+        type: string
+        list: true
+        hidden: true
+      - name: errores
+        type: string
+        list: true
+        hidden: true
+      - name: galeria
+        type: object
+        list: true
+        hidden: true
+        fields:
+          - { name: image, type: string }
+          - { name: alt, type: string }
+          - { name: caption, type: string }
+      - name: como_lograrlo
+        type: object
+        list: true
+        hidden: true
+        fields:
+          - { name: grupo, type: string }
+          - { name: titulo, type: string }
+          - { name: texto, type: text }
+      - name: lista
+        type: object
+        hidden: true
+        fields:
+          - { name: titulo, type: string }
+          - name: items
+            type: object
+            list: true
+            fields:
+              - { name: texto, type: string }
+              - { name: rango, type: string }
+              - { name: nota, type: string }
+              - { name: link, type: string }
+              - { name: afiliado, type: boolean }
+      - name: paleta
+        type: object
+        hidden: true
+        fields:
+          - { name: titulo, type: string }
+          - { name: intro, type: text }
+          - { name: aviso, type: text }
+          - { name: imagen, type: string }
+          - { name: imagen_alt, type: string }
+          - name: colores
+            type: object
+            list: true
+            fields:
+              - { name: nombre, type: string }
+              - { name: hex, type: string }
+              - { name: rol, type: string }
+              - { name: peso, type: number }
+              - { name: uso, type: text }
+              - name: pintura
+                type: object
+                fields:
+                  - { name: marca, type: string }
+                  - { name: nombre, type: string }
+                  - { name: codigo, type: string }
       # Campos que ya existen en las guías: se declaran ocultos para que no se pierdan al guardar.
       - name: related
         type: string

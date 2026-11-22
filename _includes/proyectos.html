@@ -17,9 +17,10 @@
   {%- assign pj_alt = proyecto.cover_alt | default: proyecto.title %}
   {%- assign pj_space = T.spaces[proyecto.space] | default: TD.spaces[proyecto.space] | default: proyecto.space %}
   {%- capture pj_meta %}{{ pj_space }}{% if proyecto.location and proyecto.location != '' %} · {{ proyecto.location }}{% endif %}{% endcapture %}
+  {%- assign pj_ba = false %}{% if proyecto.gallery %}{% assign pj_b = proyecto.gallery | where: 'etapa', 'antes' %}{% assign pj_a = proyecto.gallery | where: 'etapa', 'despues' %}{% if pj_b.size > 0 and pj_a.size > 0 %}{% assign pj_ba = true %}{% endif %}{% endif %}
   <article class="project-card">
     <a href="{{ proyecto.url | relative_url }}">
-      <div class="frame">{% include foto.html src=proyecto.cover alt=pj_alt sizes="(max-width: 480px) 100vw, (max-width: 800px) 50vw, 33vw" widths="480,720,960" %}</div>
+      <div class="frame">{% include foto.html src=proyecto.cover alt=pj_alt sizes="(max-width: 480px) 100vw, (max-width: 800px) 50vw, 33vw" widths="480,720,960" %}{% if pj_ba %}<span class="badge badge-ba">{% include t.html k="ba_h" %}</span>{% endif %}</div>
       <div class="project-meta"><div><h3>{{ proyecto.title | escape }}</h3><p>{{ pj_meta | strip | escape }}</p>{% if pj_note != '' %}<p class="lang-note">{{ pj_note | escape }}</p>{% endif %}</div></div>
     </a>
   </article>

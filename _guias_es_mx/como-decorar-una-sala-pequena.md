@@ -2,6 +2,8 @@
 title: "Cómo decorar una sala pequeña: 12 ideas que funcionan"
 description: "Ideas concretas para decorar una sala pequeña sin remodelar: medir primero, colores, tapete, muebles ligeros, guardado, luz y cómo separar sala y comedor."
 category: Espacios pequeños
+hub: depto-chico
+role: cluster
 date: 2026-11-22
 ready: true
 seo_title: "Cómo decorar una sala pequeña: 12 ideas | BRENBE"

@@ -4,6 +4,8 @@ ready: true
 title: "Cómo decorar un salón pequeño: 12 ideas que funcionan"
 description: "Ideas para decorar un salón pequeño sin obras: medir antes de comprar, colores, alfombra, muebles ligeros, almacenaje, luz y cómo zonificar un salón-comedor."
 category: Espacios pequeños
+hub: depto-chico
+role: cluster
 date: 2026-11-22
 cover: /rincon-de-lectura.webp
 cover_alt: "Rincón de lectura con butaca verde oliva y lámpara de travertino"

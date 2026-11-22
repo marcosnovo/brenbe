@@ -2,12 +2,13 @@
 layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 {%- comment -%}
   Páginas: toda página con layout que no sea noindex, `ready: false` ni `sitemap: false`.
   Colecciones con salida (proyectos, guías de cada idioma...): todos los documentos indexables.
   Idiomas: cada URL con equivalentes publicados (mismo `ref`, ver _includes/alts.html) lleva un <xhtml:link rel="alternate">
   por cada equivalente, incluida ella misma, y x-default → es-AR. Es la misma fuente que los <link rel="alternate"> del <head>.
+  Imágenes: cover, galeria (guías), gallery (proyectos) y la imagen de la paleta salen como <image:image><image:loc> (Google solo usa loc).
   lastmod: `last_modified_at` (páginas) o `updated` / `date` (documentos); nunca site.time.
 {%- endcomment -%}
 {%- assign last_project = site.proyectos | sort: 'date' | last -%}
@@ -52,6 +53,18 @@ layout: null
     {%- if alt_xdef %}
     <xhtml:link rel="alternate" hreflang="x-default" href="{{ alt_xdef.url | replace: '/index.html', '/' | absolute_url | xml_escape }}"/>
     {%- endif %}
+    {%- endif %}
+    {%- if p.cover %}
+    <image:image><image:loc>{{ p.cover | absolute_url | xml_escape }}</image:loc></image:image>
+    {%- endif %}
+    {%- for g in p.galeria %}{% if g.image %}
+    <image:image><image:loc>{{ g.image | absolute_url | xml_escape }}</image:loc></image:image>
+    {%- endif %}{% endfor %}
+    {%- for g in p.gallery %}{% if g.image %}
+    <image:image><image:loc>{{ g.image | absolute_url | xml_escape }}</image:loc></image:image>
+    {%- endif %}{% endfor %}
+    {%- if p.paleta.imagen %}
+    <image:image><image:loc>{{ p.paleta.imagen | absolute_url | xml_escape }}</image:loc></image:image>
     {%- endif %}
   </url>
 {%- endfor %}

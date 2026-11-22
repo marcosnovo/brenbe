@@ -9,7 +9,7 @@
   </div>
   {% if contact_email != '' or wa_href != '' %}
   <div class="actions">
-    {% if wa_href != '' %}<a class="button" href="{{ wa_href }}" rel="noopener">{% include t.html k="contact_wa" %}</a>{% endif %}
+    {% if wa_href != '' %}<a class="button" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include t.html k="contact_wa" %}</a>{% endif %}
     {% if contact_email != '' %}<a class="button" href="mailto:{{ contact_email | escape }}">{% include t.html k="contact_email" %}</a>{% endif %}
   </div>
   {% endif %}

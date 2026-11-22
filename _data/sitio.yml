@@ -25,3 +25,8 @@ duracion:
 cloudflare_analytics_token:
 # Código de Search Console (solo el valor de content="...").
 google_site_verification:
+# Código de verificación del dominio en Pinterest (solo el valor de content="..."). Vacío = no se publica.
+pinterest_domain_verify:
+# Clics a WhatsApp: con true (por defecto) los botones pasan por /wa/<página>/ y cuentan como visita en Cloudflare Web Analytics
+# (solo si hay WhatsApp en "Mis datos"). Poné false para que abran WhatsApp directo, sin medir.
+wa_track: true

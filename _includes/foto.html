@@ -1,6 +1,7 @@
 {%- comment -%}
   Foto subida desde el panel (típicamente un JPG de celular de varios MB).
-  Parámetros: src, alt, sizes, loading (lazy|eager), class, widths (por defecto "480,800,1200,1600").
+  Parámetros: src, alt, sizes, loading (lazy|eager), class, widths (por defecto "480,800,1200,1600"), pin (texto para el botón
+  "Guardar" de Pinterest; por defecto el alt; sin alt no se agrega data-pin-description).
 
   Si `image_transforms` está activo en _config.yml y la foto está en /media/, pide a Cloudflare
   versiones chicas en WebP/AVIF (/cdn-cgi/image/...). Si Cloudflare no las puede servir
@@ -11,6 +12,8 @@
 {%- assign fo_ext = fo_src | split: '.' | last | downcase -%}
 {%- assign fo_load = include.loading | default: 'lazy' -%}
 {%- assign fo_orig = fo_src | relative_url -%}
+{%- assign fo_pin = include.pin | default: include.alt | default: '' | strip_html | normalize_whitespace | truncate: 480 -%}
+{%- capture fo_pin_attr -%}{% if fo_pin != '' %} data-pin-description="{{ fo_pin | escape }}"{% endif %}{%- endcapture -%}
 {%- assign fo_ok = false -%}
 {%- if site.image_transforms != false and fo_src contains '/media/' -%}
   {%- if fo_src contains '://' -%}{%- elsif fo_ext == 'jpg' or fo_ext == 'jpeg' or fo_ext == 'png' or fo_ext == 'webp' -%}{%- assign fo_ok = true -%}{%- endif -%}
@@ -19,7 +22,7 @@
 {%- assign fo_widths = include.widths | default: '480,800,1200,1600' | split: ',' -%}
 {%- capture fo_srcset -%}{% for w in fo_widths %}{{ '/cdn-cgi/image/width=' | append: w | append: ',quality=80,format=auto,fit=scale-down' | append: fo_src | relative_url }} {{ w }}w{% unless forloop.last %}, {% endunless %}{% endfor %}{%- endcapture -%}
 {%- assign fo_mid = fo_widths[1] | default: fo_widths[0] -%}
-<img{% if include.class %} class="{{ include.class }}"{% endif %} src="{{ '/cdn-cgi/image/width=' | append: fo_mid | append: ',quality=80,format=auto,fit=scale-down' | append: fo_src | relative_url | escape }}" srcset="{{ fo_srcset | escape }}" sizes="{{ include.sizes | default: '100vw' }}" alt="{{ include.alt | default: '' | escape }}" loading="{{ fo_load }}" decoding="async"{% if fo_load == 'eager' %} fetchpriority="high"{% endif %} onerror="this.onerror=null;this.removeAttribute('srcset');this.src='{{ fo_orig | escape }}'">
+<img{% if include.class %} class="{{ include.class }}"{% endif %} src="{{ '/cdn-cgi/image/width=' | append: fo_mid | append: ',quality=80,format=auto,fit=scale-down' | append: fo_src | relative_url | escape }}" srcset="{{ fo_srcset | escape }}" sizes="{{ include.sizes | default: '100vw' }}" alt="{{ include.alt | default: '' | escape }}"{{ fo_pin_attr }} loading="{{ fo_load }}" decoding="async"{% if fo_load == 'eager' %} fetchpriority="high"{% endif %} onerror="this.onerror=null;this.removeAttribute('srcset');this.src='{{ fo_orig | escape }}'">
 {%- else -%}
-<img{% if include.class %} class="{{ include.class }}"{% endif %} src="{{ fo_orig | escape }}" alt="{{ include.alt | default: '' | escape }}" loading="{{ fo_load }}" decoding="async"{% if fo_load == 'eager' %} fetchpriority="high"{% endif %}>
+<img{% if include.class %} class="{{ include.class }}"{% endif %} src="{{ fo_orig | escape }}" alt="{{ include.alt | default: '' | escape }}"{{ fo_pin_attr }} loading="{{ fo_load }}" decoding="async"{% if fo_load == 'eager' %} fetchpriority="high"{% endif %}>
 {%- endif -%}

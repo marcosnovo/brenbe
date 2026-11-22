@@ -1,0 +1,20 @@
+{%- comment -%}
+  Lista de compras / checklist (front matter `lista:` { titulo, items: [{texto, rango, nota, link, afiliado}] }).
+  `rango` (precio) SOLO si Brenda lo confirmó, y con la fecha en `nota`. Un link con `afiliado: true` lleva rel="sponsored" y avisa.
+{%- endcomment -%}
+{%- if page.lista.items.size > 0 -%}
+<section class="guide-block lista" id="lista">
+  <h2>{{ page.lista.titulo | default: T.idea_list_h | default: TD.idea_list_h | escape }}</h2>
+  <ul class="checklist">
+  {%- assign li_aff = false -%}
+  {%- for it in page.lista.items %}
+    <li>
+      {%- if it.link %}{% if it.afiliado %}{% assign li_aff = true %}{% endif %}<a href="{{ it.link | escape }}" rel="{% if it.afiliado %}sponsored nofollow noopener{% else %}noopener{% endif %}">{{ it.texto | escape }}</a>{% else %}<span>{{ it.texto | escape }}</span>{% endif %}
+      {%- if it.rango %} <span class="li-price">{{ it.rango | escape }}</span>{% endif %}
+      {%- if it.nota %} <span class="li-note">{{ it.nota | escape }}</span>{% endif %}
+    </li>
+  {%- endfor %}
+  </ul>
+  {%- if li_aff %}<p class="li-aff">{% include t.html k="idea_affiliate_note" %}</p>{% endif %}
+</section>
+{%- endif -%}

@@ -1,0 +1,18 @@
+{%- comment -%} Plantilla "estilo": `definicion:` (2 líneas) y `claves:` (5 señales reconocibles). {%- endcomment -%}
+{%- assign b_def = page.definicion | default: '' | append: '' | strip -%}
+{%- if b_def != '' or page.claves.size > 0 -%}
+<section class="guide-block estilo-def" id="estilo">
+{%- if b_def != '' %}
+  <h2>{% include t.html k="estilo_def_h" %}</h2>
+  <p class="estilo-definicion">{{ b_def | escape }}</p>
+{%- endif %}
+{%- if page.claves.size > 0 %}
+  <h2>{% include t.html k="estilo_keys_h" %}</h2>
+  <ol class="estilo-claves">
+  {%- for c in page.claves %}
+    <li>{% if c.titulo %}<strong>{{ c.titulo | escape }}</strong> {{ c.texto | escape }}{% else %}{{ c | escape }}{% endif %}</li>
+  {%- endfor %}
+  </ol>
+{%- endif %}
+</section>
+{%- endif -%}

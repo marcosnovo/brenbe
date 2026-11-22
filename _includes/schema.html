@@ -4,7 +4,8 @@
   Espera que base.html haya definido `canonical_url`.
   Nodos: A organización (todas), B persona (home y /sobre-brenda/), C WebSite (home),
   D servicio (page.schema_service; service_name/service_type/service_description/service_price: false), E FAQ (page.faq propia, o faq_schema: true = global), F migas (page.breadcrumb),
-  G proyecto (layout proyecto), H colección (page.collection_page).
+  G proyecto (layout proyecto), H colección (page.collection_page), I guía (Article + ImageObject de galería), J paleta (ItemList),
+  K tema/hub (CollectionPage + ItemList), L glosario (DefinedTermSet).
 {%- endcomment -%}
 {%- if is_indexable -%}
 {%- include loc.html -%}
@@ -182,7 +183,15 @@
 {%- elsif page.layout == 'guia' -%}
   {%- capture bc_names %}{{ T.bc_home | default: TD.bc_home }}|{{ T.bc_guides | default: TD.bc_guides }}{% endcapture -%}
   {%- capture bc_urls %}{% include l.html ref='home' %}|{% include l.html ref='guias' %}{% endcapture -%}
+  {%- if page.hub and site.hubs_live[lk][page.hub] -%}
+    {%- assign bc_names = bc_names | append: '|' | append: site.data.hubs.hubs[page.hub][lk].nombre -%}
+    {%- assign bc_urls = bc_urls | append: '|' | append: site.hubs_live[lk][page.hub] -%}
+  {%- endif -%}
   {%- assign bc_last = page.title -%}
+{%- elsif page.layout == 'hub' -%}
+  {%- capture bc_names %}{{ T.bc_home | default: TD.bc_home }}|{{ T.bc_guides | default: TD.bc_guides }}{% endcapture -%}
+  {%- capture bc_urls %}{% include l.html ref='home' %}|{% include l.html ref='guias' %}{% endcapture -%}
+  {%- assign bc_last = page.breadcrumb -%}
 {%- elsif page.breadcrumb -%}
   {%- assign bc_names = T.bc_home | default: TD.bc_home -%}
   {%- capture bc_urls %}{% include l.html ref='home' %}{% endcapture -%}
@@ -235,9 +244,9 @@
   "dateModified": {{ page.updated | date_to_xmlschema | jsonify }}{% endif %}
   {%- if page.cover %},
   "image": [
-    { "@type": "ImageObject", "contentUrl": {{ page.cover | absolute_url | jsonify }}{% if page.cover_alt %}, "caption": {{ page.cover_alt | jsonify }}{% endif %} }
+    { "@type": "ImageObject", "contentUrl": {{ page.cover | absolute_url | jsonify }}{% if page.cover_alt %}, "caption": {{ page.cover_alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} }, "representativeOfPage": true }
     {%- for g in page.gallery %}{% if g.image %},
-    { "@type": "ImageObject", "contentUrl": {{ g.image | absolute_url | jsonify }}{% if g.alt %}, "caption": {{ g.alt | jsonify }}{% endif %} }{% endif %}{% endfor %}
+    { "@type": "ImageObject", "contentUrl": {{ g.image | absolute_url | jsonify }}{% if g.caption or g.alt %}, "caption": {{ g.caption | default: g.alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} } }{% endif %}{% endfor %}
   ]{% endif %}
 }
 </script>
@@ -266,7 +275,79 @@
   "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
   "dateModified": {{ page.updated | default: page.date | date_to_xmlschema | jsonify }}{% endif %}
   {%- if page.cover %},
-  "image": [ { "@type": "ImageObject", "contentUrl": {{ page.cover | absolute_url | jsonify }}{% if page.cover_alt %}, "caption": {{ page.cover_alt | jsonify }}{% endif %} } ]{% endif %}
+  "image": [
+    { "@type": "ImageObject", "contentUrl": {{ page.cover | absolute_url | jsonify }}{% if page.cover_caption or page.cover_alt %}, "caption": {{ page.cover_caption | default: page.cover_alt | jsonify }}{% endif %}{% if page.cover_alt %}, "description": {{ page.cover_alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} }, "representativeOfPage": true }
+    {%- for f in page.galeria %}{% if f.image %},
+    { "@type": "ImageObject", "contentUrl": {{ f.image | absolute_url | jsonify }}{% if f.caption or f.alt %}, "caption": {{ f.caption | default: f.alt | jsonify }}{% endif %}{% if f.alt %}, "description": {{ f.alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} } }{% endif %}{% endfor %}
+    {%- if page.paleta.imagen %},
+    { "@type": "ImageObject", "contentUrl": {{ page.paleta.imagen | absolute_url | jsonify }}{% if page.paleta.imagen_alt %}, "caption": {{ page.paleta.imagen_alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} } }{% endif %}
+  ]{% endif %}
+}
+</script>
+{%- if page.layout == 'guia' and page.paleta.colores.size > 0 %}
+{%- comment -%} J. Paleta: ItemList con cada color (los mismos que se ven en la página) {%- endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": {{ canonical_url | append: '#paleta' | jsonify }},
+  "name": {{ page.paleta.titulo | default: page.title | jsonify }},
+  "numberOfItems": {{ page.paleta.colores.size }},
+  "itemListElement": [
+    {%- for c in page.paleta.colores %}
+    {%- assign cx = c.hex | hex_norm | upcase %}
+    { "@type": "ListItem", "position": {{ forloop.index }}, "name": {% capture cn %}{{ c.nombre }}{% if cx != '' %} {{ cx }}{% endif %}{% endcapture %}{{ cn | jsonify }}{% if c.uso %}, "description": {{ c.uso | jsonify }}{% endif %} }{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ]
+}
+</script>
+{%- endif -%}
+{%- endif -%}
+
+{%- comment -%} K. Tema (hub) {%- endcomment -%}
+{%- if page.layout == 'hub' %}
+{%- include hub-guides.html hub=page.hub -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": {{ canonical_url | jsonify }},
+  "url": {{ canonical_url | jsonify }},
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.description | jsonify }},
+  "inLanguage": {{ html_lang | jsonify }},
+  "isPartOf": { "@id": {{ website_id | jsonify }} },
+  "author": { "@id": {{ person_id | jsonify }} },
+  "publisher": { "@id": {{ org_id | jsonify }} },
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ hub_all.size }},
+    "itemListElement": [
+      {%- for g in hub_all %}
+      { "@type": "ListItem", "position": {{ forloop.index }}, "url": {{ g.url | absolute_url | jsonify }}, "name": {{ g.title | jsonify }} }{% unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    ]
+  }
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} L. Glosario {%- endcomment -%}
+{%- if page.layout == 'glosario' and page.terminos.size > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  "@id": {{ canonical_url | append: '#glosario' | jsonify }},
+  "name": {{ page.title | jsonify }},
+  "inLanguage": {{ html_lang | jsonify }},
+  "url": {{ canonical_url | jsonify }},
+  "hasDefinedTerm": [
+    {%- for t in page.terminos %}
+    {%- assign t_slug = t.termino | slugify %}
+    { "@type": "DefinedTerm", "name": {{ t.termino | jsonify }}, "description": {{ t.definicion | jsonify }}, "url": {{ canonical_url | append: '#' | append: t_slug | jsonify }}, "inDefinedTermSet": {{ canonical_url | append: '#glosario' | jsonify }} }{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ]
 }
 </script>
 {%- endif -%}

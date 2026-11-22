@@ -1,0 +1,14 @@
+{%- comment -%} Tarjetas de los temas (hubs) publicados en el idioma actual. No imprime nada si no hay ninguno. {%- endcomment -%}
+{%- unless L %}{% include loc.html %}{% endunless -%}
+{%- assign hc_live = site.hubs_live[lk] -%}
+{%- if hc_live and hc_live.size > 0 -%}
+<section class="section hub-topics">
+  <div class="section-head"><h2>{% include t.html k="hub_topics_h" %}</h2></div>
+  <ul class="topic-list">
+    {%- for pair in hc_live %}
+    {%- assign hc_d = site.data.hubs.hubs[pair[0]][lk] %}
+    <li><a href="{{ pair[1] | relative_url }}"><strong>{{ hc_d.nombre | escape }}</strong><span>{{ hc_d.intro | escape }}</span></a></li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endif -%}

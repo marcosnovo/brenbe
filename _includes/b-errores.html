@@ -1,0 +1,11 @@
+{%- comment -%} Errores comunes (front matter `errores:` [texto] o [{titulo, texto}]). {%- endcomment -%}
+{%- if page.errores.size > 0 -%}
+<section class="guide-block errores" id="errores">
+  <h2>{% include t.html k="idea_mistakes_h" %}</h2>
+  <ul class="mistakes">
+  {%- for e in page.errores %}
+    <li>{% if e.titulo or e.texto %}{% if e.titulo %}<strong>{{ e.titulo | escape }}</strong>{% endif %}{% if e.texto %} {{ e.texto | escape }}{% endif %}{% else %}{{ e | escape }}{% endif %}</li>
+  {%- endfor %}
+  </ul>
+</section>
+{%- endif -%}

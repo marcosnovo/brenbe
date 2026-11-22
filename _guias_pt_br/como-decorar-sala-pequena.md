@@ -2,6 +2,8 @@
 title: "Como decorar sala pequena: 12 ideias que funcionam"
 description: "Ideias práticas para decorar sala pequena sem obra: medir antes, cores, tapete, móveis leves, armazenamento, luz e como separar sala de estar e jantar."
 category: Espaços pequenos
+hub: depto-chico
+role: cluster
 ref: como-decorar-un-living-chico
 ready: true
 date: 2026-11-22
