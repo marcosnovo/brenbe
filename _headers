@@ -18,6 +18,14 @@ https://:project.pages.dev/*
 /brenbe.css
   Cache-Control: public, max-age=3600, must-revalidate
 
+/brenbe-lang.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Lista de idiomas publicados: la lee la Function de la raíz (functions/index.js). No se indexa.
+/locales.json
+  Cache-Control: public, max-age=300
+  X-Robots-Tag: noindex
+
 # Imágenes con nombre estable: revalidar tras una semana en vez de cachear un año.
 /*.webp
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400

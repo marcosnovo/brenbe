@@ -1,0 +1,6 @@
+---
+layout: null
+sitemap: false
+---
+{%- include locs.html -%}
+{"live":{ {%- for key in live_locs %}{{ key | jsonify }}:{{ live_homes[forloop.index0] | jsonify }}{% unless forloop.last %},{% endunless %}{% endfor -%} }}
