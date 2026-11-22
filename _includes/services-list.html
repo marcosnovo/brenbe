@@ -1,0 +1,21 @@
+{%- comment -%}
+  Lista de servicios puntuales del idioma de la página, ordenados por `order`.
+  heading=true: la envuelve en la sección "Otros servicios" (usada al pie de cada servicio); exclude=url omite una.
+  Páginas publicadas solo ven servicios publicados; en vista previa (placeholder) se ven todos los del idioma.
+{%- endcomment -%}
+{%- include loc.html -%}
+{%- assign sl_all = site.pages | where: 'layout', 'servicio' | where: 'locale', lk | sort: 'order' -%}
+{%- if include.heading %}
+<section class="section other-services">
+  <div class="section-head"><h2>{% include t.html k="service_others" %}</h2></div>
+{%- endif %}
+  <ul class="link-list">
+    {%- for o in sl_all %}
+    {%- if o.url == include.exclude %}{% continue %}{% endif %}
+    {%- unless page_preview %}{% if o.ready == false %}{% continue %}{% endif %}{% endunless %}
+    <li><a href="{{ o.url | relative_url }}"><strong>{{ o.breadcrumb | escape }}</strong><span>{{ o.card | escape }}</span></a></li>
+    {%- endfor %}
+  </ul>
+{%- if include.heading %}
+</section>
+{%- endif %}

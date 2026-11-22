@@ -1,5 +1,7 @@
 ---
 layout: servicio
+locale: es-ar
+ref: servicio-iluminacion
 title: Asesoría de iluminación, textiles y styling
 seo_title: Iluminación, textiles y styling para tu casa | BRENBE
 h1: Iluminación, textiles y styling

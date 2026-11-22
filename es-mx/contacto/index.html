@@ -1,0 +1,44 @@
+---
+layout: base
+locale: es-mx
+ref: contacto
+ready: true
+title: "Contacto"
+seo_title: "Contacto | Diseñadora de interiores en línea BRENBE"
+description: "Escríbele a Brenda para consultar por una asesoría de diseño de interiores en línea. Cuéntale qué espacio quieres renovar y qué fotos y medidas enviar."
+last_modified_at: 2026-11-22
+breadcrumb: "Contacto"
+# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
+index_when_any: [whatsapp, email]
+permalink: /es-mx/contacto/
+---
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Contacto</h1>
+    <p>Cuéntame qué espacio quieres renovar y vemos cómo ayudarte. La primera conversación sirve para entender tu punto de partida y definir si una asesoría es lo que necesitas.</p>
+  </div>
+  <section class="section copy">
+    <h2>Qué enviarme para empezar</h2>
+    <p>No hace falta tener todo resuelto. Con esto ya podemos arrancar:</p>
+    <ul>
+      <li><strong>Fotos del espacio</strong> desde varios ángulos y, si se puede, a distintas horas del día.</li>
+      <li><strong>Medidas aproximadas:</strong> largo, ancho y alto, y dónde están las puertas y ventanas.</li>
+      <li><strong>Qué quieres cambiar y qué quieres conservar:</strong> muebles, colores, piezas con valor para ti.</li>
+      <li><strong>Referencias</strong> que te gusten: fotos, colores, espacios.</li>
+      <li><strong>Tu presupuesto aproximado</strong> para muebles y objetos, aunque sea un rango.</li>
+    </ul>
+    <h2>Cómo sigue</h2>
+    <ol>
+      <li>Me escribes con tu consulta y las fotos del espacio.</li>
+      <li>Te cuento cómo trabajo y qué servicio se ajusta mejor a lo que necesitas.</li>
+      <li>Si te sirve, definimos el alcance y la fecha de la videollamada, en un horario que funcione con tu zona horaria.</li>
+    </ol>
+    <h2>Todo en línea</h2>
+    <p>La asesoría se hace a distancia desde Argentina y funciona para cualquier ciudad de México o de Estados Unidos. Puedes escribirme por WhatsApp o por correo, en español, inglés o portugués. Todos los servicios son sin remodelar: no incluyen obra ni dirección de obra, y no hay visitas a domicilio.</p>
+    <p>Para saber más antes de escribir, mira cómo funciona la <a href="{% include l.html ref='asesoria-online' %}">asesoría en línea</a> y los demás <a href="{% include l.html ref='servicios' %}">servicios</a>.</p>
+  </section>
+  {% include faq.html title=T.faq_title %}
+  {% include contact.html %}
+</main>

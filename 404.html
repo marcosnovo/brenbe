@@ -1,16 +1,42 @@
 ---
 layout: base
+locale: es-ar
 title: Página no encontrada | BRENBE Interiorismo
 description: La página que buscás no existe o cambió de lugar.
 indexable: false
 permalink: /404.html
 ---
+{%- comment -%}
+  Una sola 404 para todos los idiomas (Cloudflare Pages sirve /404.html para cualquier ruta inexistente).
+  Se ve en español (es-AR) y, si el visitante estaba bajo /es-mx/, /es-es/, /en/ o /pt-br/, un mini-script
+  muestra el mismo mensaje en ese idioma. Solo se imprimen los idiomas con la home publicada.
+{%- endcomment -%}
+{%- include locs.html -%}
 <main id="main">
-  <div class="section page-intro copy">
-    <h1>Esta página no existe</h1>
-    <p>Puede que el enlace haya cambiado o que la dirección tenga un error. Volvé al inicio o mirá los proyectos de BRENBE.</p>
-    <a class="button primary" href="{{ '/' | relative_url }}">Volver al inicio</a>
-    <a class="button" href="{{ '/proyectos/' | relative_url }}">Ver proyectos</a>
-    <a class="button" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Asesoría online</a>
+  <div class="section page-intro copy" id="nf-es-ar" lang="es-AR">
+    <h1>{% include t.html k="nf_h1" %}</h1>
+    <p>{% include t.html k="nf_p" %}</p>
+    <a class="button primary" href="{{ '/' | relative_url }}">{% include t.html k="nf_home" %}</a>
+    <a class="button" href="{{ '/proyectos/' | relative_url }}">{% include t.html k="nf_projects" %}</a>
+    <a class="button" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">{% include t.html k="nf_asesoria" %}</a>
   </div>
+  {%- for key in live_locs %}{% if key != 'es-ar' %}
+  {%- assign nf_L = site.data.locales[key] %}{% assign nf_T = site.data.i18n[key] %}
+  <div class="section page-intro copy" id="nf-{{ key }}" lang="{{ nf_L.html_lang }}" data-prefix="{{ nf_L.prefix }}/" hidden>
+    <h1>{{ nf_T.nf_h1 | default: TD.nf_h1 }}</h1>
+    <p>{{ nf_T.nf_p | default: TD.nf_p }}</p>
+    <a class="button primary" href="{{ live_homes[forloop.index0] }}">{{ nf_T.nf_home | default: TD.nf_home }}</a>
+  </div>
+  {%- endif %}{% endfor %}
+  {%- if live_locs.size > 1 %}
+  <script>
+    (function () {
+      var path = location.pathname.toLowerCase(), es = document.getElementById('nf-es-ar');
+      var els = document.querySelectorAll('[data-prefix]');
+      for (var i = 0; i < els.length; i++) {
+        if (path.indexOf(els[i].getAttribute('data-prefix')) === 0) { els[i].hidden = false; if (es) es.hidden = true; break; }
+      }
+    })();
+  </script>
+  {%- endif %}
 </main>

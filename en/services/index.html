@@ -1,0 +1,36 @@
+---
+layout: base
+locale: en
+ref: servicios
+ready: true
+title: "Interior design and decorating services"
+seo_title: "E-Design & Online Decorating Services | BRENBE"
+description: "Online interior design services from BRENBE: virtual consultation, paint color, wallpaper, furniture layout, lighting and small apartments."
+last_modified_at: 2026-11-22
+breadcrumb: "Services"
+permalink: /en/services/
+---
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Interior design and decorating services</h1>
+    <p>Everything I do starts from the same idea: refresh your home without renovating, with clear decisions on color, furniture, lighting and textiles. You can start with a full consultation or pick just the part you need most. It all happens online by video call, from anywhere in the US or beyond.</p>
+  </div>
+  <section class="section">
+    <div class="section-head"><h2>Full-room consultation</h2><p class="section-intro">If you want to review an entire room, this is the best place to start.</p></div>
+    <ul class="link-list">
+      <li><a href="{% include l.html ref='asesoria-online' %}"><strong>Online interior design consultation</strong><span>Layout, color, lighting, furniture and textiles for one room, by video call from Argentina and for clients anywhere.</span></a></li>
+    </ul>
+  </section>
+  <section class="section other-services">
+    <div class="section-head"><h2>Focused e-design services</h2><p class="section-intro">When you already know which part of the room you want to solve.</p></div>
+    {% include services-list.html %}
+  </section>
+  <section class="section copy">
+    <h2>Which service is right for me?</h2>
+    <p>If you are unsure, start with the <a href="{% include l.html ref='asesoria-online' %}">online consultation</a>. We look at the whole room and set priorities together. The focused services work best when you already know what you want to solve, such as a paint color or where the furniture should go. If your space is tiny, the <a href="{% include l.html ref='servicio-deptos' %}">small apartment and studio</a> service puts it all together for a few square feet.</p>
+    <p>Every service is no-renovation: no construction, no contractor management and no structural work. We work with decor, color, furniture, lighting and textiles, which is what lets you update a room without touching a wall, and it makes the whole approach renter-friendly. For inspiration, browse the <a href="{% include l.html ref='proyectos' %}">projects</a> or the <a href="{% include l.html ref='guias' %}">guides</a>.</p>
+  </section>
+  {% include contact.html %}
+</main>

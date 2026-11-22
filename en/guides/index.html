@@ -1,0 +1,31 @@
+---
+layout: base
+locale: en
+ref: guias
+ready: true
+title: "Interior design and decorating guides"
+seo_title: "Interior Design & Decorating Guides | BRENBE"
+description: "Practical decorating guides: small living rooms, studio apartments, paint colors and what an online interior designer costs. No renovation needed."
+last_modified_at: 2026-11-22
+breadcrumb: "Guides"
+collection_page: guias
+permalink: /en/guides/
+---
+{% include loc.html %}
+{%- assign g_coll = site[L.guias] %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Interior design and decorating guides</h1>
+    <p>Practical articles to help you decide how to decorate your home: color, small spaces, layout and how to work with an online designer. Written for real life, with no renovation required.</p>
+  </div>
+  <section class="section">
+    {%- assign grupos = g_coll | sort: 'date' | reverse | group_by: 'category' %}
+    {%- for grupo in grupos %}
+    <div class="section-head"><h2>{{ grupo.name | escape }}</h2></div>
+    {% include guias.html list=grupo.items %}
+    {%- unless forloop.last %}<div class="spacer"></div>{% endunless %}
+    {%- endfor %}
+  </section>
+  {% include contact.html %}
+</main>

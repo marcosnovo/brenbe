@@ -1,0 +1,16 @@
+# FAQ global es-MX (tuteo). Misma forma que _data/faq.yml.
+items:
+  - q: "¿Cómo funciona una asesoría de diseño de interiores en línea?"
+    a: "Me mandas fotos, medidas aproximadas y una lista de lo que quieres cambiar o conservar, y lo platicamos por videollamada. Con eso preparo una propuesta de distribución, color, muebles e iluminación que puedes llevar a la práctica a tu ritmo."
+  - q: "¿Qué conviene tener listo para la primera consulta?"
+    a: "Fotos del espacio desde varios ángulos, medidas aproximadas y una lista de lo que quieres cambiar o conservar. Si tienes referencias de colores o muebles que te gustan, también sirven."
+  - q: "¿Puedo renovar un espacio sin remodelar?"
+    a: "Sí. Podemos trabajar con la distribución, la pintura, la iluminación, los textiles y los muebles. El punto de partida es cómo usas el espacio y qué quieres mejorar."
+  - q: "¿Tengo que comprar muebles nuevos?"
+    a: "No necesariamente. Podemos partir de lo que ya tienes y decidir qué piezas conviene conservar, reacomodar o complementar, y tú eliges dónde comprar."
+  - q: "Vivo en México o en Estados Unidos, ¿puedes trabajar conmigo?"
+    a: "Sí. La asesoría se hace a distancia desde Argentina, por videollamada y mensajes. Cuéntame en qué ciudad vives y qué espacio quieres trabajar, y ajustamos las recomendaciones a lo que se consigue donde estás y a tu zona horaria."
+  - q: "¿Atiendes en español, inglés o portugués?"
+    a: "Sí, puedo atenderte en cualquiera de los tres idiomas. Esta versión del sitio está pensada para quienes prefieren trabajar en español."
+  - q: "¿Sirve si rento?"
+    a: "Sí. Trabajamos con soluciones reversibles como textiles, tapetes, lámparas, cortinas, muebles y objetos. Si quieres cambiar algo fijo, como pintar, consulta antes con tu arrendador."

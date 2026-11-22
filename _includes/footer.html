@@ -1,3 +1,4 @@
+{%- include loc.html -%}
 {%- include wa.html -%}
 {%- assign n = site.data.negocio -%}
 {%- assign t = site.data.sitio -%}
@@ -10,29 +11,30 @@
 {%- endfor -%}
 <footer>
   <div class="footer-brand">
-    <a class="footer-logo" href="{{ '/' | relative_url }}"><img src="{{ '/brenbe-logo.webp' | relative_url }}" alt="BRENBE Interiorismo" width="380" height="125" loading="lazy" decoding="async"></a>
-    <p>Interiorismo y decoración · Argentina y online. Asesorías sin obra.</p>
+    <a class="footer-logo" href="{% include l.html ref='home' %}"><img src="{{ '/brenbe-logo.webp' | relative_url }}" alt="BRENBE Interiorismo" width="380" height="125" loading="lazy" decoding="async"></a>
+    <p>{% include t.html k="footer_tagline" %}</p>
+    {% include lang-switcher.html variant="footer" %}
   </div>
-  <nav class="footer-col" aria-label="Servicios">
-    <h2>Servicios</h2>
-    <a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Asesoría online</a>
-    <a href="{{ '/servicios/asesoria-de-color/' | relative_url }}">Asesoría de color</a>
-    <a href="{{ '/servicios/papel-pintado-y-revestimientos/' | relative_url }}">Papel pintado</a>
-    <a href="{{ '/servicios/mobiliario-y-distribucion/' | relative_url }}">Mobiliario y distribución</a>
-    <a href="{{ '/servicios/iluminacion-textiles-y-styling/' | relative_url }}">Iluminación y textiles</a>
-    <a href="{{ '/servicios/decoracion-de-monoambientes-y-deptos-chicos/' | relative_url }}">Deptos chicos</a>
+  <nav class="footer-col" aria-label="{% include t.html k='footer_services_h' esc=true %}">
+    <h2>{% include t.html k="footer_services_h" %}</h2>
+    <a href="{% include l.html ref='asesoria-online' %}">{% include t.html k="footer_asesoria" %}</a>
+    <a href="{% include l.html ref='servicio-color' %}">{% include t.html k="footer_color" %}</a>
+    <a href="{% include l.html ref='servicio-empapelado' %}">{% include t.html k="footer_empapelado" %}</a>
+    <a href="{% include l.html ref='servicio-mobiliario' %}">{% include t.html k="footer_mobiliario" %}</a>
+    <a href="{% include l.html ref='servicio-iluminacion' %}">{% include t.html k="footer_iluminacion" %}</a>
+    <a href="{% include l.html ref='servicio-deptos' %}">{% include t.html k="footer_deptos" %}</a>
   </nav>
-  <nav class="footer-col" aria-label="El sitio">
-    <h2>BRENBE</h2>
-    <a href="{{ '/proyectos/' | relative_url }}">Proyectos</a>
-    <a href="{{ '/guias/' | relative_url }}">Guías</a>
-    <a href="{{ '/sobre-brenda/' | relative_url }}">Sobre mí</a>
-    <a href="{{ '/contacto/' | relative_url }}">Contacto</a>
+  <nav class="footer-col" aria-label="{% include t.html k='footer_site_aria' esc=true %}">
+    <h2>{% include t.html k="footer_site_h" %}</h2>
+    <a href="{% include l.html ref='proyectos' %}">{% include t.html k="footer_projects" %}</a>
+    <a href="{% include l.html ref='guias' %}">{% include t.html k="footer_guides" %}</a>
+    <a href="{% include l.html ref='sobre-brenda' %}">{% include t.html k="footer_about" %}</a>
+    <a href="{% include l.html ref='contacto' %}">{% include t.html k="footer_contact" %}</a>
   </nav>
   {% if f_has %}<div class="footer-col">
-    <h2>Seguime</h2>
+    <h2>{% include t.html k="footer_follow_h" %}</h2>
     {%- if wa_href != '' %}
-    <a href="{{ wa_href }}" rel="noopener">WhatsApp</a>{% endif %}
+    <a href="{{ wa_href }}" rel="noopener">{% include t.html k="wa_label" %}</a>{% endif %}
     {%- if f_mail != '' %}
     <a href="mailto:{{ f_mail | escape }}">{{ f_mail | escape }}</a>{% endif %}
     {%- assign redes = 'instagram:Instagram,pinterest:Pinterest,linkedin:LinkedIn,facebook:Facebook,behance:Behance' | split: ',' -%}

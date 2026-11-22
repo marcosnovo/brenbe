@@ -1,0 +1,35 @@
+---
+layout: base
+locale: es-mx
+ref: guias
+ready: true
+title: "Guías de interiorismo y decoración"
+seo_title: "Guías para decorar tu casa: sala, depa y color | BRENBE"
+description: "Guías prácticas para decorar tu casa en México: sala pequeña, departamento pequeño, colores y cuánto cuesta un diseñador de interiores. Sin remodelar."
+last_modified_at: 2026-11-22
+breadcrumb: "Guías"
+collection_page: guias
+permalink: /es-mx/guias/
+---
+{% include loc.html %}
+{%- assign g_coll = site[L.guias] %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Guías de interiorismo y decoración</h1>
+    <p>Artículos prácticos para decidir mejor cómo decorar tu casa: color, espacios pequeños, distribución y cómo trabajar con una profesional. Pensados para la vida real y para quienes rentan o viven en departamentos, sin remodelar de por medio.</p>
+  </div>
+  <section class="section">
+    {%- assign grupos = g_coll | sort: 'date' | reverse | group_by: 'category' %}
+    {%- for grupo in grupos %}
+    <div class="section-head"><h2>{{ grupo.name | escape }}</h2></div>
+    {% include guias.html list=grupo.items %}
+    {%- unless forloop.last %}<div class="spacer"></div>{% endunless %}
+    {%- endfor %}
+  </section>
+  <section class="section copy">
+    <h2>¿Prefieres resolverlo con ayuda?</h2>
+    <p>Las guías sirven para orientarte, pero cada casa es distinta. En una <a href="{% include l.html ref='asesoria-online' %}">asesoría de diseño de interiores en línea</a> revisamos tu espacio, tus medidas y lo que ya tienes, y armamos una propuesta a tu medida. También puedes mirar los <a href="{% include l.html ref='servicios' %}">servicios</a> para ver qué parte te conviene trabajar.</p>
+  </section>
+  {% include contact.html %}
+</main>

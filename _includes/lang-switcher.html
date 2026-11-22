@@ -1,0 +1,24 @@
+{%- comment -%}
+  Selector de idioma/región. variant="header" (desplegable <details>) o "footer" (enlaces en línea).
+  Cada opción es un enlace real a la página equivalente (mismo `ref`) o, si no existe, a la home de ese idioma.
+  Solo lista idiomas con la home publicada. Si hay uno solo (hoy: es-AR), no imprime nada.
+  Un pequeño JS (brenbe-lang.js) guarda la elección en la cookie `brenbe_loc` al hacer clic.
+{%- endcomment -%}
+{%- include loc.html -%}
+{%- include locs.html -%}
+{%- if live_locs.size > 1 -%}
+{%- include alts.html sw=true -%}
+{%- capture sw_items -%}
+{%- for key in live_locs -%}
+  {%- assign sw_L = site.data.locales[key] -%}
+  {%- assign sw_m = alt_list | where: 'locale', key | first -%}
+  {%- assign sw_url = sw_m.url | default: live_homes[forloop.index0] | replace: 'index.html', '' -%}
+<a href="{{ sw_url | relative_url }}" hreflang="{{ sw_L.hreflang[0] }}" lang="{{ sw_L.html_lang }}" data-loc="{{ key }}"{% if key == lk %} aria-current="true"{% endif %}>{{ sw_L.name }}</a>
+{%- endfor -%}
+{%- endcapture -%}
+{%- if include.variant == 'footer' -%}
+<nav class="lang-footer" aria-label="{{ T.sw_aria | default: TD.sw_aria | escape }}"><span class="lang-footer-label">{{ T.sw_label | default: TD.sw_label }}</span>{{ sw_items }}</nav>
+{%- else -%}
+<details class="lang-switch"><summary aria-label="{{ T.sw_aria | default: TD.sw_aria | escape }}">{{ L.name }}</summary><div class="lang-menu">{{ sw_items }}</div></details>
+{%- endif -%}
+{%- endif -%}

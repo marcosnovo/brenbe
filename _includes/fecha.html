@@ -1,3 +1,7 @@
-{%- assign f_meses = 'enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre' | split: ',' -%}
+{%- unless T %}{% include loc.html %}{% endunless -%}
 {%- assign f_m = include.d | date: '%-m' | minus: 1 -%}
-{{- include.d | date: '%-d' }} de {{ f_meses[f_m] }} de {{ include.d | date: '%Y' -}}
+{%- assign f_month = T.months[f_m] | default: TD.months[f_m] -%}
+{%- assign f_fmt = T.date_fmt | default: TD.date_fmt -%}
+{%- assign f_day = include.d | date: '%-d' -%}
+{%- assign f_year = include.d | date: '%Y' -%}
+{{- f_fmt | replace: '[d]', f_day | replace: '[month]', f_month | replace: '[y]', f_year -}}

@@ -1,0 +1,36 @@
+---
+layout: base
+locale: es-es
+ref: proyectos
+ready: true
+title: "Proyectos de interiorismo"
+seo_title: "Proyectos e ideas de interiorismo | BRENBE"
+description: "Proyectos de interiorismo de BRENBE e ideas para salones, comedores y dormitorios: color, mobiliario, iluminación y textiles pensados para cada espacio."
+last_modified_at: 2026-11-22
+breadcrumb: "Proyectos"
+collection_page: true
+permalink: /es-es/proyectos/
+---
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Proyectos de interiorismo</h1>
+    <p>Espacios, materiales y decisiones de diseño para vivir mejor en casa. Los textos de cada proyecto están en español de Argentina; aquí los encuentras con la interfaz adaptada a España.</p>
+  </div>
+  {% if site.proyectos.size > 0 %}
+  <section class="section">
+    <div class="section-head"><h2>{% include t.html k="projects_done_h2" %}</h2></div>
+    {% include proyectos.html limit=site.proyectos.size %}
+  </section>
+  {% endif %}
+  <section class="section">
+    <div class="section-head">
+      <h2>{% include t.html k="projects_ideas_h2" %}</h2>
+      <p class="section-intro">{% include t.html k="projects_ideas_intro" %}</p>
+    </div>
+    {% include referencias.html %}
+    <a class="button secondary after-grid" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="btn_online" %}</a>
+  </section>
+  {% include contact.html %}
+</main>

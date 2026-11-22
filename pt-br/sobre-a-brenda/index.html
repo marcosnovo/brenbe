@@ -1,0 +1,54 @@
+---
+layout: base
+locale: pt-br
+ref: sobre-brenda
+ready: true
+title: "Sobre a Brenda, designer de interiores"
+seo_title: "Sobre a Brenda, designer de interiores | BRENBE"
+description: "Conheça a Brenda, designer de interiores da BRENBE: como ela trabalha e como atende por videochamada, em português, quem quer renovar a casa sem obra."
+last_modified_at: 2026-11-22
+breadcrumb: "Sobre a Brenda"
+# Se indexa solo si Brenda cargó su nombre en Pages CMS > Mis datos (la bio de negocio.yml está en español: este idioma lleva su propio texto).
+index_when: [nombre_completo]
+permalink: /pt-br/sobre-a-brenda/
+---
+{%- assign n = site.data.negocio -%}
+{%- assign t = site.data.sitio -%}
+{%- assign s_nombre = n.nombre_completo | default: '' | append: '' | strip -%}
+{%- assign s_anio = t.anio_inicio | default: '' | append: '' | strip -%}
+{%- assign s_ciudad = t.ciudad | default: '' | append: '' | strip -%}
+{%- assign s_prov = t.provincia | default: '' | append: '' | strip -%}
+{%- assign s_ret = n.retrato | default: '' | append: '' | strip -%}
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro about-intro">
+    <div>
+      <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+      <div class="eyebrow">Designer de interiores · BRENBE</div>
+      <h1>{% if s_nombre != '' %}{{ s_nombre | escape }}{% else %}Sou a Brenda{% endif %}, designer de interiores</h1>
+      <p>Acompanho pessoas que querem renovar a casa com decisões claras de cores, móveis, iluminação e têxteis, sem precisar de obra. Moro na Argentina e atendo clientes do Brasil por videochamada, em português.</p>
+    </div>
+    {% if s_ret != '' %}<img class="about-portrait" src="{{ s_ret | relative_url | escape }}" alt="{{ s_nombre | default: 'Brenda' | escape }}, designer de interiores da BRENBE" width="640" height="800" decoding="async">{% endif %}
+  </div>
+  <section class="section copy">
+    <h2>Como eu trabalho</h2>
+    <p>Acredito que um ambiente tem que responder ao jeito como você vive, e não a uma foto de revista. Por isso eu começo ouvindo: como você usa cada espaço, o que você gosta, o que quer manter e o que te incomoda. Depois monto uma direção visual, com paleta, referências e uma seleção de peças, para que você possa levar tudo para a sua casa no seu ritmo.</p>
+    <p>Trabalho com consultorias, ou seja, sem obra: a mudança vem de cores, móveis, iluminação, têxteis e objetos. É uma forma mais ágil e acessível de renovar um espaço, e também a mais prática para quem mora de aluguel.</p>
+    <h2>Da Argentina para o Brasil</h2>
+    <p>Meu estúdio fica na Argentina, e o atendimento a clientes brasileiros é todo à distância: fotos, medidas e videochamada, em português. O horário de Brasília coincide com o da Argentina, o que facilita combinar as conversas. Você escolhe as lojas, os fornecedores e quem vai montar ou instalar; eu ajudo a decidir o que comprar e como combinar as peças.</p>
+    <h2>O que eu faço e o que não faço</h2>
+    <ul>
+      <li><strong>Faço:</strong> consultorias de decoração e design de interiores, online e presenciais na Argentina; propostas de cores e papel de parede; distribuição e seleção de móveis; iluminação, têxteis e styling.</li>
+      <li><strong>Não faço:</strong> acompanhamento de obra, reformas nem cálculo estrutural. Se o seu projeto precisar disso, eu aviso logo de cara.</li>
+    </ul>
+    {% if s_anio != '' or s_ciudad != '' %}
+    <h2>Dados da profissional</h2>
+    <ul>
+      {% if s_anio != '' %}<li><strong>Trabalho com design de interiores desde:</strong> {{ s_anio | escape }}</li>{% endif %}
+      {% if s_ciudad != '' %}<li><strong>Base:</strong> {{ s_ciudad | escape }}{% if s_prov != '' %}, {{ s_prov | escape }}{% endif %}, Argentina</li>{% endif %}
+    </ul>
+    {% endif %}
+    <p>Se quiser saber como é trabalhar juntas, conheça a <a href="{% include l.html ref='asesoria-online' %}">consultoria de decoração online</a>, veja os <a href="{% include l.html ref='servicios' %}">serviços</a> ou leia os <a href="{% include l.html ref='guias' %}">guias</a>.</p>
+  </section>
+  {% include contact.html %}
+</main>

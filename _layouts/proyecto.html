@@ -1,15 +1,18 @@
 ---
 layout: base
 ---
+{% include loc.html %}
 {%- assign p_alt = page.cover_alt | default: page.title -%}
 {%- assign p_loc = page.location | default: '' | append: '' | strip -%}
-{%- assign p_eyebrow = page.space | default: 'Proyecto' -%}
-{%- if p_loc != '' -%}{%- capture p_eyebrow %}{{ page.space }} · {{ p_loc }}{% endcapture -%}{%- endif -%}
+{%- capture p_default_eyebrow %}{% include t.html k="project_eyebrow" %}{% endcapture -%}
+{%- assign p_space = T.spaces[page.space] | default: TD.spaces[page.space] | default: page.space -%}
+{%- assign p_eyebrow = p_space | default: p_default_eyebrow -%}
+{%- if p_loc != '' -%}{%- capture p_eyebrow %}{{ p_space }} · {{ p_loc }}{% endcapture -%}{%- endif -%}
 {%- assign t_quote = page.testimonial.quote | default: '' | append: '' | strip -%}
 {%- assign t_author = page.testimonial.author | default: '' | append: '' | strip -%}
 <main id="main">
   <div class="section page-intro">
-    <p class="breadcrumb"><a href="{{ '/' | relative_url }}">Inicio</a> / <a href="{{ '/proyectos/' | relative_url }}">Proyectos</a> / {{ page.title | escape }}</p>
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / <a href="{% include l.html ref='proyectos' %}">{% include t.html k="bc_projects" %}</a> / {{ page.title | escape }}</p>
     <div class="eyebrow">{{ p_eyebrow | escape }}</div>
     <h1>{{ page.title | escape }}</h1>
     {% if page.description %}<p>{{ page.description | escape }}</p>{% endif %}
@@ -17,15 +20,15 @@ layout: base
   </div>
   <section class="section copy">
     {% if page.objective %}
-    <h2>El punto de partida</h2>
+    <h2>{% include t.html k="project_start" %}</h2>
     <p class="project-text">{{ page.objective | escape }}</p>
     {% endif %}
     {% if page.decisions %}
-    <h2>Las decisiones de diseño</h2>
+    <h2>{% include t.html k="project_decisions" %}</h2>
     <p class="project-text">{{ page.decisions | escape }}</p>
     {% endif %}
     {% if page.result %}
-    <h2>El resultado</h2>
+    <h2>{% include t.html k="project_result" %}</h2>
     <p class="project-text">{{ page.result | escape }}</p>
     {% endif %}
     {% if t_quote != '' %}
@@ -35,7 +38,7 @@ layout: base
     </figure>
     {% endif %}
     {% if page.gallery and page.gallery.size > 0 %}
-    <h2>Fotos del proyecto</h2>
+    <h2>{% include t.html k="project_photos" %}</h2>
     <div class="gallery">
       {%- for photo in page.gallery %}
       {%- if photo.image == nil or photo.image == '' %}{% continue %}{% endif %}
@@ -43,17 +46,17 @@ layout: base
       {%- assign g_etapa = photo.etapa | default: '' -%}
       <figure class="gallery-item">
         {% include foto.html src=photo.image alt=g_alt sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 380px" widths="480,800,1200" %}
-        {%- if g_etapa == 'antes' %}<span class="badge">Antes</span>{% elsif g_etapa == 'despues' %}<span class="badge badge-after">Después</span>{% endif %}
+        {%- if g_etapa == 'antes' %}<span class="badge">{% include t.html k="project_before" %}</span>{% elsif g_etapa == 'despues' %}<span class="badge badge-after">{% include t.html k="project_after" %}</span>{% endif %}
       </figure>
       {%- endfor %}
     </div>
     {% endif %}
     {% assign otros = site.proyectos | where_exp: 'p', 'p.url != page.url' %}
     {% if otros.size > 0 %}
-    <h2>Otros proyectos</h2>
+    <h2>{% include t.html k="project_others" %}</h2>
     {% include proyectos.html limit=3 exclude=page.url %}
     {% endif %}
-    <a class="button secondary after-grid" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Conocé la asesoría online</a>
+    <a class="button secondary after-grid" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="btn_online" %}</a>
   </section>
   {% include contact.html %}
 </main>

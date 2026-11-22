@@ -1,0 +1,36 @@
+---
+layout: base
+locale: es-es
+ref: servicios
+ready: true
+title: "Servicios de interiorismo y decoración"
+seo_title: "Servicios de interiorismo online para tu piso | BRENBE"
+description: "Servicios de BRENBE para tu casa en España: interiorismo online, color, papel pintado, mobiliario, iluminación y pisos pequeños. Todo sin obras."
+last_modified_at: 2026-11-22
+breadcrumb: "Servicios"
+permalink: /es-es/servicios/
+---
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Servicios de interiorismo y decoración</h1>
+    <p>Todo lo que hago parte de la misma idea: renovar tu casa sin obras, con decisiones claras de color, mobiliario, luz y textiles. Puedes empezar por el asesoramiento integral o elegir la parte que más necesitas.</p>
+  </div>
+  <section class="section">
+    <div class="section-head"><h2>Asesoramiento integral</h2><p class="section-intro">Si quieres revisar la habitación completa, es el mejor punto de partida.</p></div>
+    <ul class="link-list">
+      <li><a href="{% include l.html ref='asesoria-online' %}"><strong>Interiorismo online</strong><span>Distribución, color, iluminación, mobiliario y textiles para una habitación, por videollamada desde Argentina y para clientes en España.</span></a></li>
+    </ul>
+  </section>
+  <section class="section other-services">
+    <div class="section-head"><h2>Servicios puntuales</h2><p class="section-intro">Cuando ya sabes qué parte quieres resolver.</p></div>
+    {% include services-list.html %}
+  </section>
+  <section class="section copy">
+    <h2>¿Cuál me conviene?</h2>
+    <p>Si dudas, empieza por el <a href="{% include l.html ref='asesoria-online' %}">asesoramiento de interiorismo online</a>: ahí revisamos la habitación completa y definimos prioridades. Los servicios puntuales sirven cuando ya tienes claro qué quieres resolver, por ejemplo la paleta de color o la distribución de los muebles. Si tu casa tiene pocos metros, el servicio de <a href="{% include l.html ref='servicio-deptos' %}">pisos pequeños y de alquiler</a> reúne todo pensado para ese caso.</p>
+    <p>Todos los servicios son sin obras: no incluyen reformas, dirección de obra ni cálculo estructural. Se trabaja con decoración, color, mobiliario, iluminación y textiles, que es lo que permite renovar un espacio sin romper nada. Para inspirarte, mira los <a href="{% include l.html ref='proyectos' %}">proyectos</a> o las <a href="{% include l.html ref='guias' %}">guías</a>.</p>
+  </section>
+  {% include contact.html %}
+</main>

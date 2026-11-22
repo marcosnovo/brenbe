@@ -1,0 +1,40 @@
+{%- comment -%}
+  Grupo de traducción de la página actual (o include.p): todas las páginas con el mismo `ref` que están publicadas
+  e indexables, una por idioma. Define:
+    alt_list  (documentos del grupo, incluida la propia página si es indexable)
+    alt_xdef  (la versión es-AR del grupo, para x-default; vacío si no existe)
+  Guías: si no tienen `ref`, el grupo se arma con el nombre del archivo (slug) de la colección `guias` (es-AR),
+  así Brenda no tiene que cargar nada; las guías de otros idiomas llevan `ref: <slug de la guía en es-AR>`.
+  Con sw=true (switcher) los proyectos usan el listado de proyectos de cada idioma como equivalente.
+  Fuente única: head (hreflang) y sitemap.xml usan este include, por eso no pueden contradecirse.
+{%- endcomment -%}
+{%- assign al_p = include.p | default: page -%}
+{%- assign al_ref = al_p.ref | default: '' -%}
+{%- if al_ref == '' and al_p.collection == 'guias' -%}{%- assign al_ref = al_p.slug -%}{%- endif -%}
+{%- if include.sw and al_ref == '' and al_p.layout == 'proyecto' -%}{%- assign al_ref = 'proyectos' -%}{%- endif -%}
+{%- assign alt_list = '' | split: '' -%}
+{%- assign alt_xdef = nil -%}
+{%- assign al_seen = ',' -%}
+{%- unless include.sw -%}
+  {%- include indexable.html p=al_p quiet=true -%}
+  {%- if ix_res -%}
+    {%- assign al_loc = al_p.locale | default: 'es-ar' -%}
+    {%- assign al_seen = al_seen | append: al_loc | append: ',' -%}
+    {%- assign alt_list = alt_list | push: al_p -%}
+    {%- if al_loc == 'es-ar' -%}{%- assign alt_xdef = al_p -%}{%- endif -%}
+  {%- endif -%}
+{%- endunless -%}
+{%- if al_ref != '' -%}
+  {%- assign al_all = site.pages | concat: site.documents -%}
+  {%- assign al_cand = al_all | where_exp: 'd', 'd.ref == al_ref or d.collection == "guias" and d.slug == al_ref' -%}
+  {%- for c in al_cand -%}
+    {%- assign c_loc = c.locale | default: 'es-ar' -%}
+    {%- capture c_tag %},{{ c_loc }},{% endcapture -%}
+    {%- if al_seen contains c_tag -%}{%- continue -%}{%- endif -%}
+    {%- include indexable.html p=c quiet=true -%}
+    {%- unless ix_res -%}{%- continue -%}{%- endunless -%}
+    {%- assign al_seen = al_seen | append: c_loc | append: ',' -%}
+    {%- assign alt_list = alt_list | push: c -%}
+    {%- if c_loc == 'es-ar' -%}{%- assign alt_xdef = c -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}

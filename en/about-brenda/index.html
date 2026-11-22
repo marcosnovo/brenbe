@@ -1,0 +1,56 @@
+---
+layout: base
+locale: en
+ref: sobre-brenda
+ready: true
+title: "About Brenda"
+seo_title: "About Brenda, Online Design Consultant | BRENBE"
+description: "Meet Brenda, the interior design consultant behind BRENBE: how she works online with clients in the US and beyond, in English or Spanish."
+last_modified_at: 2026-11-22
+breadcrumb: "About Brenda"
+# Se indexa solo si Brenda cargó su nombre en Pages CMS > Mis datos (la bio de negocio.yml está en español: este idioma lleva su propio texto).
+index_when: [nombre_completo]
+permalink: /en/about-brenda/
+---
+{%- include loc.html -%}
+{%- assign n = site.data.negocio -%}
+{%- assign t = site.data.sitio -%}
+{%- assign s_nombre = n.nombre_completo | default: '' | append: '' | strip -%}
+{%- assign s_form = t.formacion | default: '' | append: '' | strip -%}
+{%- assign s_anio = t.anio_inicio | default: '' | append: '' | strip -%}
+{%- assign s_ciudad = t.ciudad | default: '' | append: '' | strip -%}
+{%- assign s_prov = t.provincia | default: '' | append: '' | strip -%}
+{%- assign s_ret = n.retrato | default: '' | append: '' | strip -%}
+<main id="main">
+  <div class="section page-intro about-intro">
+    <div>
+      <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+      <div class="eyebrow">Interior design consultant · BRENBE</div>
+      <h1>{% if s_nombre != '' %}{{ s_nombre | escape }}{% else %}Hi, I'm Brenda{% endif %}, interior design consultant</h1>
+      <p>I help people refresh their homes with clear decisions on color, furniture, lighting and textiles, without renovating. I'm based in Argentina and work online with clients in the US and around the world, in English or Spanish.</p>
+    </div>
+    {% if s_ret != '' %}<img class="about-portrait" src="{{ s_ret | relative_url | escape }}" alt="{{ s_nombre | default: 'Brenda' | escape }}, interior design consultant at BRENBE" width="640" height="800" decoding="async">{% endif %}
+  </div>
+  <section class="section copy">
+    <h2>How I work</h2>
+    <p>A room should respond to how you live, not to a magazine photo. So I start by listening: how you use each space, what you love, what you want to keep and what drives you crazy. Then I build a visual direction with a color palette, references and a curated selection of pieces, so you can bring it to life at your own pace and on your own budget.</p>
+    <p>My work is consultation-based, which means no renovation: the change comes from color, furniture, lighting, textiles and objects. It is a faster and more accessible way to update a space, and the most comfortable one if you rent.</p>
+    <h2>Why work with me online</h2>
+    <p>Working over video call means you can get a personal design plan wherever you live, with no travel and no minimum project size. We share photos, measurements and notes, talk through the room together, and you leave with a plan you understand and can carry out yourself. I speak English fluently, and I also work in Spanish, which is handy if you live in a bilingual household or prefer to discuss your home in Spanish.</p>
+    <h2>What I do and what I don't</h2>
+    <ul>
+      <li><strong>I do:</strong> online and in-person interior design and decorating consultations; paint color and wallpaper advice; furniture layout and selection; lighting, textiles and styling.</li>
+      <li><strong>I don't do:</strong> construction management, renovations or structural calculations. If your project needs those, I will tell you right away.</li>
+    </ul>
+    {% if s_form != '' or s_anio != '' or s_ciudad != '' %}
+    <h2>Background</h2>
+    <ul>
+      {% if s_form != '' %}<li><strong>Training:</strong> {{ s_form | escape }}</li>{% endif %}
+      {% if s_anio != '' %}<li><strong>Working in interior design since:</strong> {{ s_anio | escape }}</li>{% endif %}
+      {% if s_ciudad != '' %}<li><strong>Based in:</strong> {{ s_ciudad | escape }}{% if s_prov != '' %}, {{ s_prov | escape }}{% endif %}, Argentina</li>{% endif %}
+    </ul>
+    {% endif %}
+    <p>To see what working together looks like, read about the <a href="{% include l.html ref='asesoria-online' %}">online interior design consultation</a>, explore the <a href="{% include l.html ref='servicios' %}">services</a> or browse the <a href="{% include l.html ref='guias' %}">guides</a>.</p>
+  </section>
+  {% include contact.html %}
+</main>

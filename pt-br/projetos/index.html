@@ -1,0 +1,36 @@
+---
+layout: base
+locale: pt-br
+ref: proyectos
+ready: true
+title: "Projetos de design de interiores"
+seo_title: "Projetos e ideias de design de interiores | BRENBE"
+description: "Projetos e referências de decoração da BRENBE: ambientes com cores, móveis e iluminação pensados sem obra. Inspire-se antes de pedir a sua consultoria."
+last_modified_at: 2026-11-22
+breadcrumb: "Projetos"
+collection_page: true
+permalink: /pt-br/projetos/
+---
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Projetos de design de interiores</h1>
+    <p>Alguns ambientes e referências para você ver como cores, móveis, têxteis e iluminação se combinam sem precisar de obra. Os projetos realizados são descritos em espanhol, mas as fotos e as decisões de design falam por si.</p>
+  </div>
+  {% if site.proyectos.size > 0 %}
+  <section class="section">
+    <div class="section-head"><h2>{% include t.html k="projects_done_h2" %}</h2></div>
+    {% include proyectos.html limit=site.proyectos.size %}
+  </section>
+  {% endif %}
+  <section class="section">
+    <div class="section-head">
+      <h2>{% include t.html k="projects_ideas_h2" %}</h2>
+      <p class="section-intro">{% include t.html k="projects_ideas_intro" %}</p>
+    </div>
+    {% include referencias.html %}
+    <a class="button secondary after-grid" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="btn_online" %}</a>
+  </section>
+  {% include contact.html %}
+</main>

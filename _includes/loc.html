@@ -1,0 +1,12 @@
+{%- comment -%}
+  Idioma de la página actual (o de include.p). Define:
+    lk (clave: es-ar, es-mx, es-es, en, pt-br), L (_data/locales.yml), T (textos del idioma), TD (textos es-ar, respaldo),
+    page_preview (true si la página o su idioma todavía no están publicados: los enlaces internos no saltan a es-AR).
+  Cada plantilla/include que use textos debe empezar con {% include loc.html %} (los layouts se renderizan por separado del contenido).
+{%- endcomment -%}
+{%- assign lk = include.p.locale | default: page.locale | default: 'es-ar' -%}
+{%- assign L = site.data.locales[lk] -%}
+{%- assign T = site.data.i18n[lk] -%}
+{%- assign TD = site.data.i18n['es-ar'] -%}
+{%- assign page_preview = false -%}
+{%- if page.ready == false or L.ready == false -%}{%- assign page_preview = true -%}{%- endif -%}

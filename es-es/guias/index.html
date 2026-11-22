@@ -1,0 +1,35 @@
+---
+layout: base
+locale: es-es
+ref: guias
+ready: true
+title: "Guías de interiorismo y decoración"
+seo_title: "Guías de interiorismo y decoración para tu casa | BRENBE"
+description: "Guías prácticas de decoración para tu casa en España: salón pequeño, colores, estudios y pisos pequeños, y cuánto cuesta un interiorista. Sin obras."
+last_modified_at: 2026-11-22
+breadcrumb: "Guías"
+collection_page: guias
+permalink: /es-es/guias/
+---
+{% include loc.html %}
+{%- assign g_coll = site[L.guias] %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Guías de interiorismo y decoración</h1>
+    <p>Artículos prácticos para decidir mejor cómo decorar tu casa: color, salones y pisos pequeños, distribución y cómo trabajar con un profesional. Pensados para la vida real, sin obras de por medio.</p>
+  </div>
+  <section class="section">
+    {%- assign grupos = g_coll | sort: 'date' | reverse | group_by: 'category' %}
+    {%- for grupo in grupos %}
+    <div class="section-head"><h2>{{ grupo.name | escape }}</h2></div>
+    {% include guias.html list=grupo.items %}
+    {%- unless forloop.last %}<div class="spacer"></div>{% endunless %}
+    {%- endfor %}
+  </section>
+  <section class="section copy">
+    <h2>¿Prefieres resolverlo con ayuda?</h2>
+    <p>Las guías sirven para orientarte, pero cada casa es distinta. En un <a href="{% include l.html ref='asesoria-online' %}">asesoramiento de interiorismo online</a> revisamos tu habitación, tus medidas y lo que ya tienes, y preparamos una propuesta a tu medida. También puedes mirar los <a href="{% include l.html ref='servicios' %}">servicios</a> para ver qué parte te conviene trabajar.</p>
+  </section>
+  {% include contact.html %}
+</main>

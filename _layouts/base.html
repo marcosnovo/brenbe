@@ -1,5 +1,5 @@
-{% include indexable.html %}{% include wa.html %}<!doctype html>
-<html lang="es-AR">
+{% include loc.html %}{% include indexable.html %}{% include wa.html %}<!doctype html>
+<html lang="{{ L.html_lang }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +8,7 @@
   {% elsif page.layout == 'proyecto' %}{% capture seo_title %}{{ page.title }} | Proyecto de interiorismo | BRENBE{% endcapture %}
   {% elsif page.layout == 'guia' %}{% capture seo_title %}{{ page.title }} | BRENBE{% endcapture %}
   {% else %}{% assign seo_title = page.title %}{% endif %}
-  {% assign seo_desc = page.description | default: site.description %}
+  {% assign seo_desc = page.description | default: T.site_description | default: site.description %}
   {% assign canonical_url = page.url | replace: '/index.html', '/' | absolute_url %}
   {% assign social_image = page.cover | default: '/brenbe-vista-previa.jpg' %}
   {%- comment -%} Las fotos del panel pesan MB: para redes pedimos un JPG de 1200x630 a Cloudflare.
@@ -19,14 +19,26 @@
   <meta name="description" content="{{ seo_desc | strip_html | normalize_whitespace | truncate: 158 | escape }}">
   {% if is_indexable %}<link rel="canonical" href="{{ canonical_url | escape }}">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-  <link rel="alternate" hreflang="es-AR" href="{{ canonical_url | escape }}">
-  <link rel="alternate" hreflang="x-default" href="{{ canonical_url | escape }}">
+  {%- comment -%} hreflang: solo entre equivalentes publicados (mismo `ref`), recíproco y con la propia URL. Ver _includes/alts.html. {%- endcomment -%}
+  {%- include alts.html %}
+  {%- for a in alt_list %}
+  {%- assign a_key = a.locale | default: 'es-ar' %}
+  {%- assign a_url = a.url | replace: '/index.html', '/' | absolute_url %}
+  {%- for h in site.data.locales[a_key].hreflang %}
+  <link rel="alternate" hreflang="{{ h }}" href="{{ a_url | escape }}">
+  {%- endfor %}
+  {%- endfor %}
+  {%- if alt_xdef %}
+  <link rel="alternate" hreflang="x-default" href="{{ alt_xdef.url | replace: '/index.html', '/' | absolute_url | escape }}">
+  {%- endif %}
   {% else %}<meta name="robots" content="noindex,nofollow">{% endif %}
   {%- assign gsv = site.data.sitio.google_site_verification | default: '' | append: '' | strip %}
   {% if gsv != '' %}<meta name="google-site-verification" content="{{ gsv | escape }}">{% endif %}
   <meta property="og:type" content="{% if page.layout == 'guia' %}article{% else %}website{% endif %}">
   <meta property="og:site_name" content="BRENBE Interiorismo">
-  <meta property="og:locale" content="es_AR">
+  <meta property="og:locale" content="{{ L.og }}">
+  {%- if is_indexable %}{% for a in alt_list %}{% assign a_key = a.locale | default: 'es-ar' %}{% if a_key != lk %}
+  <meta property="og:locale:alternate" content="{{ site.data.locales[a_key].og }}">{% endif %}{% endfor %}{% endif %}
   <meta property="og:title" content="{{ seo_title | escape }}">
   <meta property="og:description" content="{{ seo_desc | strip_html | normalize_whitespace | truncate: 200 | escape }}">
   <meta property="og:url" content="{{ canonical_url | escape }}">
@@ -34,7 +46,7 @@
   {% unless page.cover %}<meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">{% endunless %}
-  <meta property="og:image:alt" content="{{ page.cover_alt | default: 'Living con sofá oliva, muebles de nogal y acentos granate' | escape }}">
+  <meta property="og:image:alt" content="{{ page.cover_alt | default: T.og_image_alt | default: TD.og_image_alt | escape }}">
   {% if page.layout == 'guia' %}{% if page.date %}<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">{% endif %}
   <meta property="article:modified_time" content="{{ page.updated | default: page.date | date_to_xmlschema }}">{% endif %}
   <meta name="twitter:card" content="summary_large_image">
@@ -49,11 +61,22 @@
 </head>
 
 <body{% if wa_href != '' %} class="has-wa"{% endif %}>
-  <a class="skip" href="#main">Saltar al contenido</a>
+  <a class="skip" href="#main">{% include t.html k="skip" %}</a>
   {% include header.html %}
   {{ content }}
   {% include footer.html %}
-  {% if wa_href != '' %}<a class="wa-float" href="{{ wa_href }}" rel="noopener" aria-label="Escribime por WhatsApp"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-4.2A8 8 0 1 1 8.3 18.8L4 20z"/><path d="M9 9.5c.3 2.4 2.6 4.7 5.5 5.5l1.5-1.5-2-1-1 .8c-.8-.4-1.7-1.3-2.1-2.1l.8-1-1-2L9 9.5z"/></svg><span>WhatsApp</span></a>{% endif %}
+  {% if wa_href != '' %}<a class="wa-float" href="{{ wa_href }}" rel="noopener" aria-label="{% include t.html k='wa_aria' esc=true %}"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-4.2A8 8 0 1 1 8.3 18.8L4 20z"/><path d="M9 9.5c.3 2.4 2.6 4.7 5.5 5.5l1.5-1.5-2-1-1 .8c-.8-.4-1.7-1.3-2.1-2.1l.8-1-1-2L9 9.5z"/></svg><span>{% include t.html k="wa_label" %}</span></a>{% endif %}
+  {%- include locs.html %}
+  {%- if live_locs.size > 1 %}
+  {%- include alts.html sw=true %}
+  <script id="brenbe-loc" type="application/json">{"current":{{ lk | jsonify }},"locales":{
+  {%- for key in live_locs %}
+  {%- assign cl = site.data.locales[key] %}{% assign ct = site.data.i18n[key] %}
+  {%- assign cm = alt_list | where: 'locale', key | first %}
+  {{ key | jsonify }}:{"url":{{ cm.url | default: live_homes[forloop.index0] | replace: 'index.html', '' | relative_url | jsonify }},"lang":{{ cl.html_lang | jsonify }},"text":{{ ct.banner_text | default: TD.banner_text | jsonify }},"go":{{ ct.banner_go | default: TD.banner_go | jsonify }},"stay":{{ ct.banner_stay | default: TD.banner_stay | jsonify }},"close":{{ ct.banner_close | default: TD.banner_close | jsonify }},"aria":{{ ct.banner_aria | default: TD.banner_aria | jsonify }}}{% unless forloop.last %},{% endunless %}
+  {%- endfor %}}}</script>
+  <script defer src="{{ '/brenbe-lang.js' | relative_url }}"></script>
+  {%- endif %}
   {%- assign cfa = site.data.sitio.cloudflare_analytics_token | default: '' | append: '' | strip %}
   {% if cfa != '' %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": {{ cfa | jsonify }}}'></script>{% endif %}
 </body>

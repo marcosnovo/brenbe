@@ -2,37 +2,57 @@
 layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 {%- comment -%}
-  Páginas: toda página con layout que no sea noindex ni `sitemap: false`.
-  Colecciones con salida (proyectos, guías...): todos los documentos indexables.
+  Páginas: toda página con layout que no sea noindex, `ready: false` ni `sitemap: false`.
+  Colecciones con salida (proyectos, guías de cada idioma...): todos los documentos indexables.
+  Idiomas: cada URL con equivalentes publicados (mismo `ref`, ver _includes/alts.html) lleva un <xhtml:link rel="alternate">
+  por cada equivalente, incluida ella misma, y x-default → es-AR. Es la misma fuente que los <link rel="alternate"> del <head>.
   lastmod: `last_modified_at` (páginas) o `updated` / `date` (documentos); nunca site.time.
 {%- endcomment -%}
 {%- assign last_project = site.proyectos | sort: 'date' | last -%}
-{%- assign last_guia = site.guias | sort: 'date' | last -%}
 {%- assign pages = site.pages | where_exp: 'p', 'p.layout and p.sitemap != false' | sort: 'url' -%}
-{%- for p in pages %}
+{%- assign docs = site.documents | where_exp: 'd', 'd.sitemap != false' | sort: 'url' -%}
+{%- assign items = pages | concat: docs -%}
+{%- for p in items %}
   {%- include indexable.html p=p -%}
   {%- unless is_indexable %}{% continue %}{% endunless -%}
-  {%- assign lm = p.last_modified_at -%}
+  {%- assign p_loc = p.locale | default: 'es-ar' -%}
+  {%- assign p_cname = site.data.locales[p_loc].guias -%}
+  {%- assign p_coll = site[p_cname] | default: site.guias -%}
+  {%- assign last_guia = p_coll | sort: 'date' | last -%}
+  {%- assign lm = p.updated | default: p.last_modified_at | default: p.date -%}
   {%- assign newest = nil -%}
-  {%- if p.url == '/' or p.url == '/proyectos/' -%}{%- assign newest = last_project -%}{%- endif -%}
-  {%- if p.url == '/guias/' -%}{%- assign newest = last_guia -%}{%- endif -%}
-  {%- if p.url == '/' and last_guia -%}
-    {%- assign lg_i = last_guia.updated | default: last_guia.date | date: '%s' | plus: 0 -%}
-    {%- assign nw_i = newest.updated | default: newest.date | date: '%s' | plus: 0 -%}
-    {%- if lg_i > nw_i or newest == nil -%}{%- assign newest = last_guia -%}{%- endif -%}
+  {%- if p.collection == nil -%}
+    {%- if p.ref == 'home' or p.ref == 'proyectos' -%}{%- assign newest = last_project -%}{%- endif -%}
+    {%- if p.ref == 'guias' -%}{%- assign newest = last_guia -%}{%- endif -%}
+    {%- if p.ref == 'home' and last_guia -%}
+      {%- assign lg_i = last_guia.updated | default: last_guia.date | date: '%s' | plus: 0 -%}
+      {%- assign nw_i = newest.updated | default: newest.date | date: '%s' | plus: 0 -%}
+      {%- if lg_i > nw_i or newest == nil -%}{%- assign newest = last_guia -%}{%- endif -%}
+    {%- endif -%}
+    {%- if newest and lm -%}
+      {%- assign lm_i = lm | date: '%s' | plus: 0 -%}
+      {%- assign nw_i = newest.updated | default: newest.date | date: '%s' | plus: 0 -%}
+      {%- if nw_i > lm_i -%}{%- assign lm = newest.updated | default: newest.date -%}{%- endif -%}
+    {%- endif -%}
   {%- endif -%}
-  {%- if newest and lm -%}
-    {%- assign lm_i = lm | date: '%s' | plus: 0 -%}
-    {%- assign nw_i = newest.updated | default: newest.date | date: '%s' | plus: 0 -%}
-    {%- if nw_i > lm_i -%}{%- assign lm = newest.updated | default: newest.date -%}{%- endif -%}
-  {%- endif %}
-  <url><loc>{{ p.url | absolute_url | xml_escape }}</loc>{% if lm %}<lastmod>{{ lm | date_to_xmlschema }}</lastmod>{% endif %}</url>
-{%- endfor %}
-{%- assign docs = site.documents | where_exp: 'd', 'd.indexable != false and d.sitemap != false' %}
-{%- for d in docs %}
-  {%- assign lm = d.updated | default: d.date %}
-  <url><loc>{{ d.url | absolute_url | xml_escape }}</loc>{% if lm %}<lastmod>{{ lm | date_to_xmlschema }}</lastmod>{% endif %}</url>
+  {%- include alts.html p=p %}
+  <url>
+    <loc>{{ p.url | replace: '/index.html', '/' | absolute_url | xml_escape }}</loc>{% if lm %}
+    <lastmod>{{ lm | date_to_xmlschema }}</lastmod>{% endif %}
+    {%- if alt_list.size > 1 %}
+    {%- for a in alt_list %}
+    {%- assign a_key = a.locale | default: 'es-ar' %}
+    {%- assign a_url = a.url | replace: '/index.html', '/' | absolute_url | xml_escape %}
+    {%- for h in site.data.locales[a_key].hreflang %}
+    <xhtml:link rel="alternate" hreflang="{{ h }}" href="{{ a_url }}"/>
+    {%- endfor %}
+    {%- endfor %}
+    {%- if alt_xdef %}
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ alt_xdef.url | replace: '/index.html', '/' | absolute_url | xml_escape }}"/>
+    {%- endif %}
+    {%- endif %}
+  </url>
 {%- endfor %}
 </urlset>

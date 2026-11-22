@@ -1,5 +1,7 @@
 ---
 layout: servicio
+locale: es-ar
+ref: servicio-deptos
 title: Decoración de monoambientes y departamentos chicos
 seo_title: Decoración de monoambientes y deptos chicos | BRENBE
 h1: Decoración de monoambientes y departamentos chicos

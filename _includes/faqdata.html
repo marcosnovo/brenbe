@@ -1,0 +1,10 @@
+{%- comment -%}
+  Lista de preguntas frecuentes: include.items > front matter `faq` de la página > FAQ global del idioma.
+  Global es-AR: _data/faq.yml (la edita Brenda). Otros idiomas: _data/faq_es_mx.yml, faq_es_es.yml, faq_en.yml, faq_pt_br.yml (clave `items`).
+{%- endcomment -%}
+{%- unless L %}{% include loc.html %}{% endunless -%}
+{%- assign faq_list = include.items | default: page.faq -%}
+{%- unless faq_list -%}
+  {%- if lk == 'es-ar' -%}{%- assign faq_list = site.data.faq.items -%}
+  {%- else -%}{%- assign faq_key = lk | replace: '-', '_' | prepend: 'faq_' -%}{%- assign faq_list = site.data[faq_key].items -%}{%- endif -%}
+{%- endunless -%}

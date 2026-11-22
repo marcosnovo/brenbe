@@ -1,0 +1,47 @@
+---
+layout: base
+locale: es-es
+ref: contacto
+ready: true
+title: "Contacto"
+seo_title: "Contacto | Interiorismo online BRENBE"
+description: "Escribe a Brenda para consultar por un asesoramiento de interiorismo online. Cuéntame qué habitación quieres renovar y qué conviene enviar para empezar."
+last_modified_at: 2026-11-22
+breadcrumb: "Contacto"
+# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
+index_when_any: [whatsapp, email]
+permalink: /es-es/contacto/
+---
+{%- assign t = site.data.sitio -%}
+{%- assign c_dur = t.duracion | default: '' | append: '' | strip -%}
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Contacto</h1>
+    <p>Cuéntame qué espacio quieres renovar y vemos cómo ayudarte. La primera conversación sirve para entender tu punto de partida y decidir si un asesoramiento es lo que necesitas.</p>
+  </div>
+  <section class="section copy">
+    <h2>Qué enviarme para empezar</h2>
+    <p>No hace falta tenerlo todo resuelto. Con esto ya podemos arrancar:</p>
+    <ul>
+      <li><strong>Fotos de la habitación</strong> desde varios ángulos y, si puede ser, a distintas horas del día.</li>
+      <li><strong>Medidas aproximadas:</strong> largo, ancho y alto, y dónde están las puertas y las ventanas.</li>
+      <li><strong>Qué quieres cambiar y qué quieres conservar:</strong> muebles, colores, piezas con valor para ti.</li>
+      <li><strong>Referencias</strong> que te gusten: fotos, colores, ambientes.</li>
+      <li><strong>Tu presupuesto aproximado</strong> para muebles y objetos, aunque sea un rango.</li>
+      <li><strong>Si vives de alquiler</strong>, qué te permite el contrato (pintar, taladrar, cambiar lámparas).</li>
+    </ul>
+    <h2>Cómo sigue</h2>
+    <ol>
+      <li>Me escribes con tu consulta y las fotos del espacio.</li>
+      <li>Te cuento cómo trabajo y qué servicio se ajusta mejor a lo que necesitas.</li>
+      <li>Si te encaja, definimos el alcance y empezamos.{% if c_dur != '' %} {{ c_dur | escape }}.{% endif %}</li>
+    </ol>
+    <h2>Videollamadas y horarios</h2>
+    <p>Trabajo desde Argentina, por lo que hay unas horas de diferencia con España. Las videollamadas se acuerdan en hora peninsular, en un horario que te venga bien; el resto de la comunicación se hace por escrito (WhatsApp o email), sin prisas. Todos los servicios son sin obras: no incluyen reformas ni dirección de obra.</p>
+    <p>Para saber más antes de escribir, mira cómo funciona el <a href="{% include l.html ref='asesoria-online' %}">asesoramiento de interiorismo online</a> y los demás <a href="{% include l.html ref='servicios' %}">servicios</a>.</p>
+  </section>
+  {% include faq.html title=T.faq_title %}
+  {% include contact.html %}
+</main>

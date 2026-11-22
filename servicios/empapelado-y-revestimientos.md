@@ -1,27 +1,29 @@
 ---
 layout: servicio
-title: Asesoría de papel pintado y revestimientos
-seo_title: "Papel pintado y revestimientos: asesoría para elegirlos | BRENBE"
-h1: Papel pintado y revestimientos
-description: "Asesoría para elegir papel pintado y revestimientos: dónde usarlos, qué escala de diseño conviene y cómo combinarlos con tu color, tu luz y tus muebles."
-intro: "El papel pintado y los revestimientos pueden cambiar un ambiente entero, pero elegirlos es difícil: el diseño, la escala y la pared importan. Te ayudo a decidir dónde, qué y cómo combinarlos."
-card: "Dónde conviene un papel o revestimiento, con qué escala y cómo combinarlo."
+locale: es-ar
+ref: servicio-empapelado
+title: Asesoría de empapelado y revestimientos
+seo_title: "Empapelado y revestimientos: asesoría para elegirlos | BRENBE"
+h1: Empapelado y revestimientos
+description: "Asesoría para elegir empapelado y revestimientos: dónde usarlos, qué escala de diseño conviene y cómo combinarlos con tu color, tu luz y tus muebles."
+intro: "El empapelado (papel pintado) y los revestimientos pueden cambiar un ambiente entero, pero elegirlos es difícil: el diseño, la escala y la pared importan. Te ayudo a decidir dónde, qué y cómo combinarlos."
+card: "Dónde conviene un empapelado o revestimiento, con qué escala y cómo combinarlo."
 order: 2
 last_modified_at: 2026-11-22
-permalink: /servicios/papel-pintado-y-revestimientos/
-breadcrumb: Papel pintado y revestimientos
+permalink: /servicios/empapelado-y-revestimientos/
+breadcrumb: Empapelado y revestimientos
 breadcrumb_parents:
   - name: Servicios
     url: /servicios/
 schema_service: true
-service_name: "Asesoría de papel pintado y revestimientos"
+service_name: "Asesoría de empapelado y revestimientos"
 service_type: "Asesoría de revestimientos"
-service_description: "Asesoría para elegir y combinar papel pintado y revestimientos de pared (papeles, paneles, texturas) según el ambiente, la luz y los muebles, sin obra."
+service_description: "Asesoría para elegir y combinar empapelado y revestimientos de pared (papeles, paneles, texturas) según el ambiente, la luz y los muebles, sin obra."
 service_price: false
 image: /comedor-en-nogal.webp
 related_guides: [colores-para-living]
 faq:
-  - q: "¿El papel pintado sirve en un departamento chico?"
+  - q: "¿El empapelado sirve en un departamento chico?"
     a: "Sí, si se elige con criterio. Un diseño de escala pequeña o una textura suave suele funcionar bien en espacios chicos, y en una sola pared (por ejemplo, detrás de la cama o del sofá) da carácter sin saturar. Los diseños muy grandes o muy oscuros conviene probarlos antes."
   - q: "¿Puedo usar papel si alquilo?"
     a: "Hay papeles autoadhesivos removibles pensados para eso, aunque su comportamiento depende de la pared y de la marca. Probá en un sector poco visible y revisá antes lo que dice tu contrato de alquiler."
@@ -30,14 +32,14 @@ faq:
   - q: "¿Hacés la colocación?"
     a: "El servicio es de asesoramiento: te ayudo a elegir y combinar. La colocación la hace un colocador a tu elección, y puedo darte recomendaciones sobre qué preguntarle."
 ---
-Un papel pintado bien elegido le da carácter a un ambiente de una forma que la pintura sola no logra: textura, dibujo, profundidad. Pero también es una de las decisiones más difíciles de visualizar en una pared y más costosas de corregir. Esta asesoría te acompaña desde la idea hasta la elección concreta.
+Un empapelado bien elegido le da carácter a un ambiente de una forma que la pintura sola no logra: textura, dibujo, profundidad. Pero también es una de las decisiones más difíciles de visualizar en una pared y más costosas de corregir. Esta asesoría te acompaña desde la idea hasta la elección concreta.
 
 ## Para quién es
 
 - Querés darle personalidad a una pared (cabecera, living, hall, escritorio) y no sabés qué diseño elegir.
-- Dudás entre papel pintado, pintura, paneles u otros revestimientos.
+- Dudás entre empapelado, pintura, paneles u otros revestimientos.
 - Tenés un ambiente chico y temés que un dibujo lo sature.
-- Ya elegiste un papel y querés confirmar que combina con tus muebles, tu luz y tu paleta.
+- Ya elegiste un empapelado y querés confirmar que combina con tus muebles, tu luz y tu paleta.
 
 ## Qué trabajamos
 

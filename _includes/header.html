@@ -1,12 +1,16 @@
-<div class="announcement">Asesorías de interiorismo · Argentina y online</div>
+{%- include loc.html -%}
+<div class="announcement">{% include t.html k="announcement" %}</div>
 <header>
-  <a class="logo" href="{{ '/' | relative_url }}"><img src="{{ '/brenbe-logo.webp' | relative_url }}" alt="BRENBE Interiorismo" width="380" height="125"></a>
-  <nav aria-label="Navegación principal">
-    <a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}"{% if page.url contains '/asesoria-de-interiorismo-online' %} aria-current="page"{% endif %}>Asesoría</a>
-    <a href="{{ '/servicios/' | relative_url }}"{% if page.url contains '/servicios/' %} aria-current="page"{% endif %}>Servicios</a>
-    <a href="{{ '/proyectos/' | relative_url }}"{% if page.url contains '/proyectos/' or page.layout == 'proyecto' %} aria-current="page"{% endif %}>Proyectos</a>
-    <a href="{{ '/guias/' | relative_url }}"{% if page.url contains '/guias/' or page.layout == 'guia' %} aria-current="page"{% endif %}>Guías</a>
-    <a href="{{ '/sobre-brenda/' | relative_url }}"{% if page.url contains '/sobre-brenda' %} aria-current="page"{% endif %}>Sobre mí</a>
+  <a class="logo" href="{% include l.html ref='home' %}"><img src="{{ '/brenbe-logo.webp' | relative_url }}" alt="BRENBE Interiorismo" width="380" height="125"></a>
+  <nav aria-label="{% include t.html k='nav_aria' esc=true %}">
+    <a href="{% include l.html ref='asesoria-online' %}"{% if page.ref == 'asesoria-online' %} aria-current="page"{% endif %}>{% include t.html k="nav_asesoria" %}</a>
+    <a href="{% include l.html ref='servicios' %}"{% if page.ref == 'servicios' or page.layout == 'servicio' %} aria-current="page"{% endif %}>{% include t.html k="nav_servicios" %}</a>
+    <a href="{% include l.html ref='proyectos' %}"{% if page.ref == 'proyectos' or page.layout == 'proyecto' %} aria-current="page"{% endif %}>{% include t.html k="nav_proyectos" %}</a>
+    <a href="{% include l.html ref='guias' %}"{% if page.ref == 'guias' or page.layout == 'guia' %} aria-current="page"{% endif %}>{% include t.html k="nav_guias" %}</a>
+    <a href="{% include l.html ref='sobre-brenda' %}"{% if page.ref == 'sobre-brenda' %} aria-current="page"{% endif %}>{% include t.html k="nav_sobre" %}</a>
   </nav>
-  <a class="nav-cta" href="{{ '/contacto/' | relative_url }}"{% if page.url contains '/contacto' %} aria-current="page"{% endif %}>Contacto</a>
+  <div class="header-actions">
+  {% include lang-switcher.html variant="header" %}
+  <a class="nav-cta" href="{% include l.html ref='contacto' %}"{% if page.ref == 'contacto' %} aria-current="page"{% endif %}>{% include t.html k="nav_contacto" %}</a>
+  </div>
 </header>

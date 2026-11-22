@@ -1,0 +1,84 @@
+---
+layout: base
+locale: pt-br
+ref: home
+ready: true
+title: "Consultoria de decoração online, sem obra"
+seo_title: "Consultoria de decoração online sem obra | BRENBE"
+description: "Consultoria de decoração e design de interiores online, por vídeo e em português: cores, móveis, iluminação e papel de parede, sem obra."
+last_modified_at: 2026-11-22
+preload_image:
+  src: /living-sofa-oliva-960.webp
+  srcset: "/living-sofa-oliva-640.webp 640w, /living-sofa-oliva-960.webp 960w, /living-sofa-oliva.webp 1440w"
+  sizes: "(max-width: 800px) 100vw, 55vw"
+---
+{% include loc.html %}
+{% include wa.html %}
+<main id="main">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">BRENBE · Brenda, designer de interiores</div>
+      <h1>Consultoria de decoração online para renovar a sua casa sem obra</h1>
+      <p class="lead">Interiores pensados para o seu jeito de viver.</p>
+      <p>Com uma consultoria de decoração online, eu te ajudo a escolher cores, móveis, papel de parede, iluminação e objetos para que o seu espaço tenha a sua cara. Moro e trabalho na Argentina e atendo clientes do Brasil por videochamada, em português, sem precisar de obra nem de reforma.</p>
+      <div class="actions">
+        <a class="button primary" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="btn_online" %}</a>
+        <a class="button secondary" href="{% include l.html ref='proyectos' %}">{% include t.html k="nav_proyectos" %}</a>
+        {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="noopener">{% include t.html k="contact_wa" %}</a>{% endif %}
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="{{ '/living-sofa-oliva-960.webp' | relative_url }}" srcset="{{ '/living-sofa-oliva-640.webp' | relative_url }} 640w, {{ '/living-sofa-oliva-960.webp' | relative_url }} 960w, {{ '/living-sofa-oliva.webp' | relative_url }} 1440w" sizes="(max-width: 800px) 100vw, 55vw" width="1440" height="810" fetchpriority="high" decoding="async" alt="{% include t.html k='og_image_alt' esc=true %}">
+      <div class="image-caption">Cores · móveis · objetos</div>
+    </div>
+  </section>
+  <div class="proofline"><span>Consultoria personalizada</span><span>Cores e papel de parede</span><span>Móveis e distribuição</span><span>Online, em português</span></div>
+  <section class="section" id="proyectos">
+    <div class="section-head">
+      <div><h2>{% if site.proyectos.size > 0 %}Projetos de design de interiores{% else %}Ideias de decoração para a sua casa{% endif %}</h2></div>
+      <p class="section-intro">{% if site.proyectos.size > 0 %}Veja o ponto de partida e as decisões de design de cada ambiente.{% else %}Referências visuais para combinar paletas, móveis, têxteis e iluminação.{% endif %}</p>
+    </div>
+    {% if site.proyectos.size > 0 %}{% include proyectos.html limit=3 %}{% else %}{% include referencias.html %}{% endif %}
+    <a class="button secondary after-grid" href="{% include l.html ref='proyectos' %}">Explore os projetos</a>
+  </section>
+  <section class="section services" id="servicios">
+    <div>
+      <div class="eyebrow">Design claro, decisões bem pensadas</div>
+      <h2>Decoração online sob medida para o seu espaço.</h2>
+      <p class="services-copy">Uma orientação profissional para transformar o ambiente com decoração, e não com reforma: você recebe um projeto de decoração online que dá para colocar em prática no seu ritmo, seja na casa própria ou em um apartamento alugado.</p>
+      <div class="actions"><a class="button service-link" href="{% include l.html ref='asesoria-online' %}">Como funciona a consultoria online</a><a class="button service-link" href="{% include l.html ref='servicios' %}">Ver todos os serviços</a></div>
+    </div>
+    <div class="service-list">
+      <article class="service"><span class="service-number">01</span><div><h3><a href="{% include l.html ref='asesoria-online' %}">Consultoria completa</a></h3><p>Olho o ambiente, a sua rotina e as peças que você já tem para definir um caminho claro.</p></div></article>
+      <article class="service"><span class="service-number">02</span><div><h3><a href="{% include l.html ref='servicio-color' %}">Cores</a> e <a href="{% include l.html ref='servicio-empapelado' %}">papel de parede</a></h3><p>Paletas, tinta e papel de parede escolhidos em função da luz, dos materiais e do uso do ambiente.</p></div></article>
+      <article class="service"><span class="service-number">03</span><div><h3><a href="{% include l.html ref='servicio-mobiliario' %}">Móveis</a> e <a href="{% include l.html ref='servicio-iluminacion' %}">styling</a></h3><p>Seleção de móveis, têxteis, iluminação e objetos, em uma proposta que você consegue executar.</p></div></article>
+      <article class="service"><span class="service-number">04</span><div><h3><a href="{% include l.html ref='servicio-deptos' %}">Apartamento pequeno, studio e kitnet</a></h3><p>Zonas, armazenamento e móveis certos para viver bem em poucos metros, inclusive em imóvel alugado.</p></div></article>
+    </div>
+  </section>
+  <section class="section process" id="estudio">
+    <img class="process-image" src="{{ '/rincon-de-lectura-720.webp' | relative_url }}" srcset="{{ '/rincon-de-lectura-480.webp' | relative_url }} 480w, {{ '/rincon-de-lectura-720.webp' | relative_url }} 720w, {{ '/rincon-de-lectura.webp' | relative_url }} 960w" sizes="(max-width: 800px) 100vw, 46vw" width="960" height="1200" loading="lazy" decoding="async" alt="{% include t.html k='ref3_alt' esc=true %}">
+    <div>
+      <div class="eyebrow">Como eu trabalho</div>
+      <h2>Sou a Brenda, designer de interiores: é assim que eu trabalho.</h2>
+      <div class="steps">
+        <div class="step"><span>01</span><p><strong>A gente se conhece.</strong> Conversamos por vídeo sobre o ambiente, o que você precisa e o que quer manter.</p></div>
+        <div class="step"><span>02</span><p><strong>Definimos o conceito.</strong> Monto uma direção visual, uma paleta e referências para o projeto.</p></div>
+        <div class="step"><span>03</span><p><strong>Você leva para o seu espaço.</strong> Recebe uma seleção de peças e recomendações claras para avançar no seu ritmo.</p></div>
+      </div>
+      <p class="services-copy">Atendo em português, por videochamada, e combinamos o horário que for melhor para você. Conheça mais <a href="{% include l.html ref='sobre-brenda' %}">sobre a Brenda</a>.</p>
+    </div>
+  </section>
+  {%- assign g_coll = site[L.guias] %}
+  {% if g_coll.size > 0 %}
+  <section class="section" id="guias">
+    <div class="section-head">
+      <div><h2>Guias para decorar a sua casa</h2></div>
+      <p class="section-intro">Ideias e critérios práticos para decidir melhor, pensados para a vida real.</p>
+    </div>
+    {%- assign ultimas = g_coll | sort: 'date' | reverse %}
+    {% include guias.html list=ultimas limit=3 %}
+    <a class="button secondary after-grid" href="{% include l.html ref='guias' %}">Ver todos os guias</a>
+  </section>
+  {% endif %}
+  {% include contact.html %}
+</main>

@@ -1,15 +1,19 @@
 {%- comment -%}
   Define `is_indexable` para la página actual o para `include.p`.
-  No indexable si: `indexable: false`, o falta alguno de los datos de `index_when`
-  (claves de _data/negocio.yml, todas requeridas), o faltan todos los de `index_when_any`.
+  No indexable si: `indexable: false`, `ready: false` (borrador / placeholder de un idioma), el idioma tiene `ready: false`
+  en _data/locales.yml, o falta alguno de los datos de `index_when` (claves de _data/negocio.yml, todas requeridas),
+  o faltan todos los de `index_when_any`.
   Así las páginas que dependen de datos de la dueña se activan solas al completarlos.
+  Con quiet=true no toca `is_indexable`: solo deja el resultado en `ix_res` (lo usan locs.html y alts.html).
 {%- endcomment -%}
 {%- assign ix_p = include.p | default: page -%}
-{%- assign is_indexable = true -%}
-{%- if ix_p.indexable == false -%}{%- assign is_indexable = false -%}{%- endif -%}
+{%- assign ix_res = true -%}
+{%- if ix_p.indexable == false or ix_p.ready == false -%}{%- assign ix_res = false -%}{%- endif -%}
+{%- assign ix_loc = ix_p.locale | default: 'es-ar' -%}
+{%- if site.data.locales[ix_loc].ready == false -%}{%- assign ix_res = false -%}{%- endif -%}
 {%- for k in ix_p.index_when -%}
   {%- assign ix_v = site.data.negocio[k] | default: '' | append: '' | strip -%}
-  {%- if ix_v == '' -%}{%- assign is_indexable = false -%}{%- endif -%}
+  {%- if ix_v == '' -%}{%- assign ix_res = false -%}{%- endif -%}
 {%- endfor -%}
 {%- if ix_p.index_when_any -%}
   {%- assign ix_any = false -%}
@@ -17,5 +21,6 @@
     {%- assign ix_v = site.data.negocio[k] | default: '' | append: '' | strip -%}
     {%- if ix_v != '' -%}{%- assign ix_any = true -%}{%- endif -%}
   {%- endfor -%}
-  {%- unless ix_any -%}{%- assign is_indexable = false -%}{%- endunless -%}
+  {%- unless ix_any -%}{%- assign ix_res = false -%}{%- endunless -%}
 {%- endif -%}
+{%- unless include.quiet -%}{%- assign is_indexable = ix_res -%}{%- endunless -%}

@@ -7,14 +7,17 @@
   G proyecto (layout proyecto), H colección (page.collection_page).
 {%- endcomment -%}
 {%- if is_indexable -%}
+{%- include loc.html -%}
 {%- assign n = site.data.negocio -%}
 {%- assign t = site.data.sitio -%}
 {%- assign org_id = '/#organization' | absolute_url -%}
 {%- assign person_id = '/#brenda' | absolute_url -%}
-{%- assign website_id = '/#website' | absolute_url -%}
+{%- assign home_path = L.prefix | append: '/' -%}
+{%- assign website_id = home_path | append: '#website' | absolute_url -%}
 {%- assign nombre = n.nombre_completo | default: '' | strip -%}
 {%- assign apellido = t.apellido | default: '' | strip -%}
-{%- assign cargo = t.cargo | default: 'Interiorista' | strip -%}
+{%- assign cargo = T.schema_job_title | default: TD.schema_job_title -%}
+{%- if lk == 'es-ar' -%}{%- assign cargo = t.cargo | default: cargo | strip -%}{%- endif -%}
 {%- assign ciudad = t.ciudad | default: '' | strip -%}
 {%- assign provincia = t.provincia | default: '' | strip -%}
 {%- assign direccion = t.direccion | default: '' | strip -%}
@@ -22,8 +25,11 @@
 {%- assign mail = n.email | default: '' | strip -%}
 {%- assign tel = t.telefono | default: '' | strip -%}
 {%- assign gbp = t.google_business_url | default: '' | strip -%}
-{%- assign moneda = n.moneda | default: 'ARS' | strip -%}
-{%- assign precio = n.precio_desde | default: '' | strip -%}
+{%- include precio.html -%}
+{%- assign moneda = price_cur -%}
+{%- assign precio = price_num -%}
+{%- assign html_lang = L.html_lang -%}
+{%- capture price_range_amount %}{{ moneda }} {{ precio }}{% endcapture -%}
 {%- assign formacion = t.formacion | default: '' | strip -%}
 {%- assign retrato = n.retrato | default: '' | strip -%}
 {%- assign same = '' -%}
@@ -45,13 +51,13 @@
   "url": {{ '/' | absolute_url | jsonify }},
   "logo": { "@type": "ImageObject", "url": {{ '/brenbe-logo-512.png' | absolute_url | jsonify }}, "width": 512, "height": 512 },
   "image": {{ '/brenbe-vista-previa.jpg' | absolute_url | jsonify }},
-  "description": "Asesorías de interiorismo y decoración, presenciales y online, para renovar espacios sin obra: color, mobiliario, iluminación y textiles.",
-  "slogan": "Interiores pensados para tu manera de vivir",
-  "inLanguage": "es-AR",
-  "knowsLanguage": "es-AR",
-  "serviceType": ["Asesoría de interiorismo", "Asesoría de decoración", "Diseño de interiores online"],
-  "knowsAbout": ["Interiorismo", "Decoración de interiores", "Diseño de interiores", "Paletas de color", "Iluminación", "Mobiliario", "Textiles"],
-  "areaServed": [{ "@type": "Country", "name": "Argentina" }{% for z in t.zona_presencial %}{% assign zona = z | strip %}{% if zona != '' %}, { "@type": "AdministrativeArea", "name": {{ zona | jsonify }} }{% endif %}{% endfor %}],
+  "description": {{ T.schema_org_description | default: TD.schema_org_description | jsonify }},
+  "slogan": {{ T.schema_slogan | default: TD.schema_slogan | jsonify }},
+  "inLanguage": {{ html_lang | jsonify }},
+  "knowsLanguage": {{ html_lang | jsonify }},
+  "serviceType": {{ T.schema_org_service_types | default: TD.schema_org_service_types | jsonify }},
+  "knowsAbout": {{ T.schema_knows_about | default: TD.schema_knows_about | jsonify }},
+  "areaServed": [{% for c in L.area_served %}{ "@type": "Country", "name": {{ c | jsonify }} }{% unless forloop.last %}, {% endunless %}{% endfor %}{% if lk == 'es-ar' %}{% for z in t.zona_presencial %}{% assign zona = z | strip %}{% if zona != '' %}, { "@type": "AdministrativeArea", "name": {{ zona | jsonify }} }{% endif %}{% endfor %}{% endif %}],
   "founder": { "@id": {{ person_id | jsonify }} }
   {%- if ciudad != '' %},
   "address": { "@type": "PostalAddress", "addressLocality": {{ ciudad | jsonify }}{% if provincia != '' %}, "addressRegion": {{ provincia | jsonify }}{% endif %}{% if direccion != '' %}, "streetAddress": {{ direccion | jsonify }}{% endif %}{% if cp != '' %}, "postalCode": {{ cp | jsonify }}{% endif %}, "addressCountry": "AR" }{% endif %}
@@ -59,18 +65,18 @@
   "email": {{ mail | jsonify }}{% endif %}
   {%- if tel != '' %},
   "telephone": {{ tel | jsonify }},
-  "contactPoint": { "@type": "ContactPoint", "contactType": "consultas", "telephone": {{ tel | jsonify }}, "availableLanguage": "es-AR", "areaServed": "AR" }{% endif %}
+  "contactPoint": { "@type": "ContactPoint", "contactType": "consultas", "telephone": {{ tel | jsonify }}, "availableLanguage": {{ html_lang | jsonify }}, "areaServed": "AR" }{% endif %}
   {%- if same_list.size > 0 %},
   "sameAs": {{ same_list | jsonify }}{% endif %}
   {%- if gbp != '' %},
   "hasMap": {{ gbp | jsonify }}{% endif %}
   {%- if precio != '' %},
-  "priceRange": {{ precio | prepend: ' ' | prepend: moneda | prepend: 'Desde ' | jsonify }}{% endif %}
+  "priceRange": {{ T.price_from | default: TD.price_from | replace: '%s', price_range_amount | jsonify }}{% endif %}
 }
 </script>
 
 {%- comment -%} B. Persona {%- endcomment -%}
-{%- if page.url == '/' or page.url contains '/sobre-brenda' or page.layout == 'guia' %}
+{%- if page.ref == 'home' or page.ref == 'sobre-brenda' or page.layout == 'guia' %}
 {%- assign person_name = nombre | default: 'Brenda' -%}
 {%- if nombre == '' -%}{%- assign person_name = 'Brenda' -%}{%- endif -%}
 <script type="application/ld+json">
@@ -83,10 +89,10 @@
   {%- if apellido != '' %},
   "familyName": {{ apellido | jsonify }}{% endif %},
   "jobTitle": {{ cargo | jsonify }},
-  "description": "Interiorista argentina, fundadora de BRENBE Interiorismo. Asesora a distancia y de forma presencial en decoración y diseño de interiores.",
+  "description": {{ T.schema_person_description | default: TD.schema_person_description | jsonify }},
   "worksFor": { "@id": {{ org_id | jsonify }} },
-  "knowsAbout": ["Interiorismo", "Decoración", "Color", "Iluminación"]
-  {%- if page.url contains '/sobre-brenda' %},
+  "knowsAbout": {{ T.schema_person_knows | default: TD.schema_person_knows | jsonify }}
+  {%- if page.ref == 'sobre-brenda' %},
   "url": {{ canonical_url | jsonify }}{% endif %}
   {%- if retrato != '' %},
   "image": {{ retrato | absolute_url | jsonify }}{% endif %}
@@ -99,16 +105,16 @@
 {%- endif -%}
 
 {%- comment -%} C. WebSite {%- endcomment -%}
-{%- if page.url == '/' %}
+{%- if page.ref == 'home' %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": {{ website_id | jsonify }},
-  "url": {{ '/' | absolute_url | jsonify }},
+  "url": {{ home_path | absolute_url | jsonify }},
   "name": "BRENBE Interiorismo",
   "alternateName": "BRENBE",
-  "inLanguage": "es-AR",
+  "inLanguage": {{ html_lang | jsonify }},
   "publisher": { "@id": {{ org_id | jsonify }} }
 }
 </script>
@@ -121,13 +127,14 @@
   "@context": "https://schema.org",
   "@type": "Service",
   "@id": {{ canonical_url | append: '#service' | jsonify }},
-  "name": {{ page.service_name | default: 'Asesoría de interiorismo y decoración online' | jsonify }},
-  "serviceType": {{ page.service_type | default: 'Asesoría de interiorismo' | jsonify }},
-  "description": {{ page.service_description | default: 'Asesoría de diseño de interiores a distancia: distribución, color, iluminación, mobiliario y textiles para renovar un ambiente sin obra, con recomendaciones concretas para llevar a la práctica.' | jsonify }},
+  "name": {{ page.service_name | default: T.schema_service_name | default: TD.schema_service_name | jsonify }},
+  "serviceType": {{ page.service_type | default: T.schema_service_type | default: TD.schema_service_type | jsonify }},
+  "description": {{ page.service_description | default: T.schema_service_description | default: TD.schema_service_description | jsonify }},
   "provider": { "@id": {{ org_id | jsonify }} },
-  "areaServed": [{ "@type": "Country", "name": "Argentina" }, { "@type": "Place", "name": "Online, para cualquier país" }],
-  "availableChannel": { "@type": "ServiceChannel", "serviceUrl": {{ canonical_url | jsonify }}, "availableLanguage": "es-AR" },
-  "audience": { "@type": "Audience", "audienceType": "Personas que quieren renovar su casa sin obra" },
+  "inLanguage": {{ html_lang | jsonify }},
+  "areaServed": [{% for c in L.area_served %}{ "@type": "Country", "name": {{ c | jsonify }} }, {% endfor %}{ "@type": "Place", "name": {{ T.schema_area_online | default: TD.schema_area_online | jsonify }} }],
+  "availableChannel": { "@type": "ServiceChannel", "serviceUrl": {{ canonical_url | jsonify }}, "availableLanguage": {{ html_lang | jsonify }} },
+  "audience": { "@type": "Audience", "audienceType": {{ T.schema_audience | default: TD.schema_audience | jsonify }} },
   "url": {{ canonical_url | jsonify }}
   {%- if precio != '' and page.service_price != false %},
   "offers": {
@@ -144,14 +151,14 @@
 {%- comment -%} E. FAQPage (misma fuente que el bloque visible) {%- endcomment -%}
 {%- comment -%} FAQ propia de la página (front matter `faq`) o, con `faq_schema: true`, la global de _data/faq.yml {%- endcomment -%}
 {%- assign faq_items = page.faq -%}
-{%- if page.faq_schema and faq_items == nil %}{%- assign faq_items = site.data.faq.items -%}{%- endif -%}
+{%- if page.faq_schema and faq_items == nil %}{%- include faqdata.html -%}{%- assign faq_items = faq_list -%}{%- endif -%}
 {%- if faq_items.size > 0 %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "@id": {{ canonical_url | append: '#faq' | jsonify }},
-  "inLanguage": "es-AR",
+  "inLanguage": {{ html_lang | jsonify }},
   "mainEntity": [
     {%- for f in faq_items %}
     { "@type": "Question", "name": {{ f.q | jsonify }}, "acceptedAnswer": { "@type": "Answer", "text": {{ f.a | jsonify }} } }{% unless forloop.last %},{% endunless %}
@@ -169,16 +176,16 @@
 {%- assign bc_urls = '' -%}
 {%- assign bc_last = '' -%}
 {%- if page.layout == 'proyecto' -%}
-  {%- assign bc_names = 'Inicio|Proyectos' -%}
-  {%- assign bc_urls = '/|/proyectos/' -%}
+  {%- capture bc_names %}{{ T.bc_home | default: TD.bc_home }}|{{ T.bc_projects | default: TD.bc_projects }}{% endcapture -%}
+  {%- capture bc_urls %}{% include l.html ref='home' %}|{% include l.html ref='proyectos' %}{% endcapture -%}
   {%- assign bc_last = page.title -%}
 {%- elsif page.layout == 'guia' -%}
-  {%- assign bc_names = 'Inicio|Guías' -%}
-  {%- assign bc_urls = '/|/guias/' -%}
+  {%- capture bc_names %}{{ T.bc_home | default: TD.bc_home }}|{{ T.bc_guides | default: TD.bc_guides }}{% endcapture -%}
+  {%- capture bc_urls %}{% include l.html ref='home' %}|{% include l.html ref='guias' %}{% endcapture -%}
   {%- assign bc_last = page.title -%}
 {%- elsif page.breadcrumb -%}
-  {%- assign bc_names = 'Inicio' -%}
-  {%- assign bc_urls = '/' -%}
+  {%- assign bc_names = T.bc_home | default: TD.bc_home -%}
+  {%- capture bc_urls %}{% include l.html ref='home' %}{% endcapture -%}
   {%- for parent in page.breadcrumb_parents -%}
     {%- assign bc_names = bc_names | append: '|' | append: parent.name -%}
     {%- assign bc_urls = bc_urls | append: '|' | append: parent.url -%}
@@ -210,7 +217,7 @@
   "@type": "CreativeWork",
   "@id": {{ canonical_url | append: '#project' | jsonify }},
   "name": {{ page.title | jsonify }},
-  "inLanguage": "es-AR",
+  "inLanguage": {{ html_lang | jsonify }},
   "url": {{ canonical_url | jsonify }},
   "mainEntityOfPage": {{ canonical_url | jsonify }},
   "creator": { "@id": {{ person_id | jsonify }} },
@@ -246,12 +253,12 @@
   "@id": {{ canonical_url | append: '#article' | jsonify }},
   "headline": {{ page.title | jsonify }},
   "description": {{ page.description | jsonify }},
-  "inLanguage": "es-AR",
+  "inLanguage": {{ html_lang | jsonify }},
   "mainEntityOfPage": {{ canonical_url | jsonify }},
   "url": {{ canonical_url | jsonify }},
   "author": { "@id": {{ person_id | jsonify }} },
   "publisher": { "@id": {{ org_id | jsonify }} },
-  "isPartOf": { "@type": "CollectionPage", "@id": {{ '/guias/' | absolute_url | jsonify }} },
+  "isPartOf": { "@type": "CollectionPage", "@id": {% capture g_idx %}{% include l.html ref='guias' %}{% endcapture %}{{ g_idx | absolute_url | jsonify }} },
   "wordCount": {{ g_words }}
   {%- if page.category %},
   "articleSection": {{ page.category | jsonify }}{% endif %}
@@ -265,20 +272,21 @@
 {%- endif -%}
 
 {%- comment -%} H2. Listado de guías {%- endcomment -%}
-{%- if page.collection_page == 'guias' and site.guias.size > 0 %}
+{%- assign g_coll = site[L.guias] | default: site.guias -%}
+{%- if page.collection_page == 'guias' and g_coll.size > 0 %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "@id": {{ canonical_url | jsonify }},
   "url": {{ canonical_url | jsonify }},
-  "name": "Guías de interiorismo y decoración",
-  "inLanguage": "es-AR",
+  "name": {{ T.schema_guides_name | default: TD.schema_guides_name | jsonify }},
+  "inLanguage": {{ html_lang | jsonify }},
   "isPartOf": { "@id": {{ website_id | jsonify }} },
   "mainEntity": {
     "@type": "ItemList",
     "itemListElement": [
-      {%- assign g_sorted = site.guias | sort: 'date' | reverse %}
+      {%- assign g_sorted = g_coll | sort: 'date' | reverse %}
       {%- for g in g_sorted %}
       { "@type": "ListItem", "position": {{ forloop.index }}, "url": {{ g.url | absolute_url | jsonify }}, "name": {{ g.title | jsonify }} }{% unless forloop.last %},{% endunless %}
       {%- endfor %}
@@ -296,8 +304,8 @@
   "@type": "CollectionPage",
   "@id": {{ canonical_url | jsonify }},
   "url": {{ canonical_url | jsonify }},
-  "name": "Proyectos de interiorismo",
-  "inLanguage": "es-AR",
+  "name": {{ T.schema_projects_name | default: TD.schema_projects_name | jsonify }},
+  "inLanguage": {{ html_lang | jsonify }},
   "isPartOf": { "@id": {{ website_id | jsonify }} },
   "mainEntity": {
     "@type": "ItemList",
