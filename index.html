@@ -8,6 +8,7 @@ preload_image:
   srcset: "/living-sofa-oliva-640.webp 640w, /living-sofa-oliva-960.webp 960w, /living-sofa-oliva.webp 1440w"
   sizes: "(max-width: 800px) 100vw, 55vw"
 ---
+  {% include wa.html %}
   <main id="main">
     <section class="hero">
       <div class="hero-copy">
@@ -18,6 +19,7 @@ preload_image:
         <div class="actions">
           <a class="button primary" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Conocé la asesoría online</a>
           <a class="button secondary" href="{{ '/proyectos/' | relative_url }}">Ver proyectos</a>
+          {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="noopener">Escribime por WhatsApp</a>{% endif %}
         </div>
       </div>
       <div class="hero-image">
@@ -41,11 +43,11 @@ preload_image:
     </section>
 
     <section class="section services" id="servicios">
-      <div><div class="eyebrow">Diseño claro, decisiones cuidadas</div><h2>Asesoría de interiorismo a tu medida.</h2><p class="services-copy">Una guía profesional para transformar el ambiente con recursos de decoración, sin necesidad de hacer obra.</p><a class="button service-link" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Cómo funciona la asesoría online</a></div>
+      <div><div class="eyebrow">Diseño claro, decisiones cuidadas</div><h2>Asesoría de interiorismo a tu medida.</h2><p class="services-copy">Una guía profesional para transformar el ambiente con recursos de decoración, sin necesidad de hacer obra.</p><div class="actions"><a class="button service-link" href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Cómo funciona la asesoría online</a><a class="button service-link" href="{{ '/servicios/' | relative_url }}">Ver todos los servicios</a></div></div>
       <div class="service-list">
-        <article class="service"><span class="service-number">01</span><div><h3>Asesoría integral</h3><p>Reviso el espacio, tus necesidades y las piezas que ya tenés para definir un rumbo claro.</p></div></article>
-        <article class="service"><span class="service-number">02</span><div><h3>Color y revestimientos</h3><p>Paletas, pintura y papeles pintados elegidos en relación con la luz, los materiales y el uso del ambiente.</p></div></article>
-        <article class="service"><span class="service-number">03</span><div><h3>Mobiliario y styling</h3><p>Selección de muebles, textiles, iluminación y objetos; una propuesta que puedas llevar a la práctica.</p></div></article>
+        <article class="service"><span class="service-number">01</span><div><h3><a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Asesoría integral</a></h3><p>Reviso el espacio, tus necesidades y las piezas que ya tenés para definir un rumbo claro.</p></div></article>
+        <article class="service"><span class="service-number">02</span><div><h3><a href="{{ '/servicios/asesoria-de-color/' | relative_url }}">Color</a> y <a href="{{ '/servicios/papel-pintado-y-revestimientos/' | relative_url }}">revestimientos</a></h3><p>Paletas, pintura y papeles pintados elegidos en relación con la luz, los materiales y el uso del ambiente.</p></div></article>
+        <article class="service"><span class="service-number">03</span><div><h3><a href="{{ '/servicios/mobiliario-y-distribucion/' | relative_url }}">Mobiliario</a> y <a href="{{ '/servicios/iluminacion-textiles-y-styling/' | relative_url }}">styling</a></h3><p>Selección de muebles, textiles, iluminación y objetos; una propuesta que puedas llevar a la práctica.</p></div></article>
       </div>
     </section>
 
@@ -57,6 +59,18 @@ preload_image:
         <div class="step"><span>03</span><p><strong>Lo llevás a tu espacio.</strong> Te llevás una selección de piezas y recomendaciones claras para avanzar a tu ritmo.</p></div>
       </div></div>
     </section>
+
+    {% if site.guias.size > 0 %}
+    <section class="section" id="guias">
+      <div class="section-head">
+        <div><h2>Guías para decorar tu casa</h2></div>
+        <p class="section-intro">Ideas y criterios prácticos para decidir mejor, escritos pensando en la vida real.</p>
+      </div>
+      {%- assign ultimas = site.guias | sort: 'date' | reverse %}
+      {% include guias.html list=ultimas limit=3 %}
+      <a class="button secondary after-grid" href="{{ '/guias/' | relative_url }}">Ver todas las guías</a>
+    </section>
+    {% endif %}
 
     {% include contact.html %}
   </main>
