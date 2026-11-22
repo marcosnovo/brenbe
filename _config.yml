@@ -2,7 +2,15 @@ collections:
   proyectos:
     output: true
     permalink: /proyectos/:name/
+  guias:
+    output: true
+    permalink: /guias/:name/
 defaults:
+  - scope:
+      path: ""
+      type: guias
+    values:
+      layout: guia
   - scope:
       path: ""
       type: proyectos

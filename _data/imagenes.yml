@@ -1,0 +1,22 @@
+# Imágenes del sitio con variantes responsive (nombre-480.webp, etc.). Clave = nombre de archivo sin extensión.
+# Las usa _includes/imagen.html para armar srcset, ancho y alto.
+living-sofa-oliva:
+  w: 1440
+  h: 810
+  variantes: [640, 960]
+  alt: "Living cálido con sofá oliva, muebles de nogal y acentos color granate"
+comedor-en-nogal:
+  w: 960
+  h: 1200
+  variantes: [480, 720]
+  alt: "Comedor en nogal con textiles y acentos oliva"
+dormitorio-tonos-calidos:
+  w: 960
+  h: 1200
+  variantes: [480, 720]
+  alt: "Dormitorio en tonos crema, oliva y granate"
+rincon-de-lectura:
+  w: 960
+  h: 1200
+  variantes: [480, 720]
+  alt: "Rincón de lectura con sillón oliva y lámpara de travertino"

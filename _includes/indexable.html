@@ -1,0 +1,21 @@
+{%- comment -%}
+  Define `is_indexable` para la página actual o para `include.p`.
+  No indexable si: `indexable: false`, o falta alguno de los datos de `index_when`
+  (claves de _data/negocio.yml, todas requeridas), o faltan todos los de `index_when_any`.
+  Así las páginas que dependen de datos de la dueña se activan solas al completarlos.
+{%- endcomment -%}
+{%- assign ix_p = include.p | default: page -%}
+{%- assign is_indexable = true -%}
+{%- if ix_p.indexable == false -%}{%- assign is_indexable = false -%}{%- endif -%}
+{%- for k in ix_p.index_when -%}
+  {%- assign ix_v = site.data.negocio[k] | default: '' | append: '' | strip -%}
+  {%- if ix_v == '' -%}{%- assign is_indexable = false -%}{%- endif -%}
+{%- endfor -%}
+{%- if ix_p.index_when_any -%}
+  {%- assign ix_any = false -%}
+  {%- for k in ix_p.index_when_any -%}
+    {%- assign ix_v = site.data.negocio[k] | default: '' | append: '' | strip -%}
+    {%- if ix_v != '' -%}{%- assign ix_any = true -%}{%- endif -%}
+  {%- endfor -%}
+  {%- unless ix_any -%}{%- assign is_indexable = false -%}{%- endunless -%}
+{%- endif -%}

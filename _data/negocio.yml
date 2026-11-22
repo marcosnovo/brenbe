@@ -6,6 +6,7 @@ cargo:
 formacion:
 anio_inicio:
 retrato:
+bio:
 ciudad:
 provincia:
 zona_presencial: []
@@ -24,3 +25,8 @@ google_business_url:
 moneda:
 precio_desde:
 duracion:
+# Medición y verificación (opcionales; vacío = no se publica nada)
+# Token de Cloudflare Web Analytics (también se puede activar desde el panel de Cloudflare sin tocar el sitio).
+cloudflare_analytics_token:
+# Código de verificación de Search Console (solo el valor de content="..." de la metaetiqueta).
+google_site_verification:

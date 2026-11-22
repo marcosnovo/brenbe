@@ -2,9 +2,11 @@
 <header>
   <a class="logo" href="{{ '/' | relative_url }}"><img src="{{ '/brenbe-logo.webp' | relative_url }}" alt="BRENBE Interiorismo" width="380" height="125"></a>
   <nav aria-label="Navegación principal">
-    <a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}"{% if page.url contains '/asesoria-de-interiorismo-online' %} aria-current="page"{% endif %}>Asesoría online</a>
+    <a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}"{% if page.url contains '/asesoria-de-interiorismo-online' %} aria-current="page"{% endif %}>Asesoría</a>
+    <a href="{{ '/servicios/' | relative_url }}"{% if page.url contains '/servicios/' %} aria-current="page"{% endif %}>Servicios</a>
     <a href="{{ '/proyectos/' | relative_url }}"{% if page.url contains '/proyectos/' or page.layout == 'proyecto' %} aria-current="page"{% endif %}>Proyectos</a>
-    <a href="{{ '/' | relative_url }}#estudio">El estudio</a>
+    <a href="{{ '/guias/' | relative_url }}"{% if page.url contains '/guias/' or page.layout == 'guia' %} aria-current="page"{% endif %}>Guías</a>
+    <a href="{{ '/sobre-brenda/' | relative_url }}"{% if page.url contains '/sobre-brenda' %} aria-current="page"{% endif %}>Sobre mí</a>
   </nav>
-  <a class="nav-cta" href="{{ '/' | relative_url }}#contacto">Contacto</a>
+  <a class="nav-cta" href="{{ '/contacto/' | relative_url }}"{% if page.url contains '/contacto' %} aria-current="page"{% endif %}>Contacto</a>
 </header>

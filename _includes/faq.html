@@ -1,7 +1,10 @@
+{%- comment -%} Usa include.items, o page.faq, o los datos globales de _data/faq.yml. {%- endcomment -%}
+{%- assign faq_list = include.items | default: page.faq | default: site.data.faq.items -%}
+{%- if faq_list.size > 0 -%}
 <section class="section faq" id="preguntas">
-  <h2>Preguntas sobre la asesoría online</h2>
+  <h2>{{ include.title | default: 'Preguntas sobre la asesoría online' }}</h2>
   <div class="faq-list">
-    {%- for item in site.data.faq.items %}
+    {%- for item in faq_list %}
     <details>
       <summary>{{ item.q | escape }}</summary>
       <p>{{ item.a | escape }}</p>
@@ -9,3 +12,4 @@
     {%- endfor %}
   </div>
 </section>
+{%- endif -%}

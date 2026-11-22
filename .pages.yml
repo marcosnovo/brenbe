@@ -1,7 +1,14 @@
 media:
-  input: media/proyectos
-  output: /media/proyectos
-  categories: [image]
+  - name: proyectos
+    label: Fotos de proyectos
+    input: media/proyectos
+    output: /media/proyectos
+    categories: [image]
+  - name: guias
+    label: Imágenes de guías
+    input: media/guias
+    output: /media/guias
+    categories: [image]
 content:
   - name: proyectos
     label: Proyectos
@@ -44,6 +51,7 @@ content:
         type: image
         required: true
         options:
+          media: proyectos
           extensions: [jpg, jpeg, png, webp]
           rename: safe
       - name: cover_alt
@@ -74,12 +82,79 @@ content:
             type: image
             required: true
             options:
+              media: proyectos
               extensions: [jpg, jpeg, png, webp]
               rename: safe
           - name: alt
             label: Qué se ve en la foto
             type: string
             required: true
+  - name: guias
+    label: Guías
+    type: collection
+    path: _guias
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      primary: title
+      fields: [title, category, date]
+    fields:
+      - name: title
+        label: Título de la guía
+        description: Es el título que se ve en la página y en Google. Incluí la búsqueda principal, por ejemplo "Cómo decorar un living chico".
+        type: string
+        required: true
+      - name: description
+        label: Resumen breve
+        description: Una o dos frases que resuman la guía. Es el texto que se ve en Google (120 a 155 caracteres).
+        type: text
+        required: true
+        options:
+          maxlength: 155
+      - name: category
+        label: Categoría
+        type: select
+        required: true
+        options:
+          values: [Espacios chicos, Color, Muebles y distribución, Iluminación, Papel pintado, Tendencias, Proceso]
+      - name: date
+        label: Fecha de publicación
+        type: date
+        required: true
+      - name: updated
+        label: Última actualización
+        description: Completalo cuando revises o ampliés la guía. Se muestra en la página y se avisa a Google.
+        type: date
+      - name: cover
+        label: Imagen de portada
+        type: image
+        required: true
+        options:
+          media: guias
+          extensions: [jpg, jpeg, png, webp]
+          rename: safe
+      - name: cover_alt
+        label: Descripción de la portada
+        description: Contá qué se ve en la imagen (ambiente, color, materiales), en unos 80 a 125 caracteres, sin empezar con "imagen de".
+        type: string
+        required: true
+      - name: related
+        label: Guías relacionadas (opcional)
+        description: Nombre del archivo de otras guías, sin el .md, por ejemplo colores-para-living. Si queda vacío se muestran las más recientes.
+        type: string
+        list: true
+      - name: body
+        label: Contenido
+        description: Usá títulos de nivel 2 para las secciones. Podés enlazar a otras guías y a la asesoría.
+        type: rich-text
+      - name: faq
+        label: Preguntas frecuentes (opcional)
+        description: De 3 a 4 preguntas con respuestas de 40 a 80 palabras. Se muestran al final y ayudan a aparecer en Google.
+        type: object
+        list: true
+        fields:
+          - { name: q, label: Pregunta, type: string, required: true }
+          - { name: a, label: Respuesta, type: text, required: true }
   - name: negocio
     label: Datos del negocio
     type: file
@@ -95,8 +170,13 @@ content:
         label: Foto retrato
         type: image
         options:
+          media: proyectos
           extensions: [jpg, jpeg, png, webp]
           rename: safe
+      - name: bio
+        label: Tu historia (aparece en "Sobre Brenda"; con nombre y bio la página se publica en Google)
+        description: Dos o tres párrafos sobre cómo llegaste al interiorismo y cómo trabajás. Usá solo datos reales.
+        type: text
       - { name: ciudad, label: Ciudad base, type: string }
       - { name: provincia, label: Provincia, type: string }
       - name: zona_presencial
@@ -121,6 +201,8 @@ content:
       - { name: google_business_url, label: Link de tu perfil de Google Business, type: string }
       - { name: moneda, label: "Moneda del precio (ARS o USD)", type: string }
       - { name: precio_desde, label: "Precio desde de la asesoría (solo el número). Vacío = no se publica precio", type: string }
+      - { name: cloudflare_analytics_token, label: "Token de Cloudflare Web Analytics (opcional; vacío = no se mide)", type: string }
+      - { name: google_site_verification, label: "Código de verificación de Google Search Console (opcional)", type: string }
       - { name: duracion, label: "Duración o plazo, por ejemplo: Reunión de 60 minutos y propuesta en 7 días", type: string }
   - name: faq
     label: Preguntas frecuentes

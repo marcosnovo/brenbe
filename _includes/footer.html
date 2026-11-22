@@ -1,0 +1,45 @@
+{%- include wa.html -%}
+{%- assign n = site.data.negocio -%}
+{%- assign f_mail = n.email | default: '' | append: '' | strip -%}
+{%- assign f_has = false -%}
+{%- if wa_href != '' or f_mail != '' -%}{%- assign f_has = true -%}{%- endif -%}
+{%- for k in 'instagram,pinterest,linkedin,facebook,behance' | split: ',' -%}
+  {%- assign kv = n[k] | default: '' | append: '' | strip -%}
+  {%- if kv != '' -%}{%- assign f_has = true -%}{%- endif -%}
+{%- endfor -%}
+<footer>
+  <div class="footer-brand">
+    <a class="footer-logo" href="{{ '/' | relative_url }}"><img src="{{ '/brenbe-logo.webp' | relative_url }}" alt="BRENBE Interiorismo" width="380" height="125" loading="lazy" decoding="async"></a>
+    <p>Interiorismo y decoración · Argentina y online. Asesorías sin obra.</p>
+  </div>
+  <nav class="footer-col" aria-label="Servicios">
+    <h2>Servicios</h2>
+    <a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">Asesoría online</a>
+    <a href="{{ '/servicios/asesoria-de-color/' | relative_url }}">Asesoría de color</a>
+    <a href="{{ '/servicios/papel-pintado-y-revestimientos/' | relative_url }}">Papel pintado</a>
+    <a href="{{ '/servicios/mobiliario-y-distribucion/' | relative_url }}">Mobiliario y distribución</a>
+    <a href="{{ '/servicios/iluminacion-textiles-y-styling/' | relative_url }}">Iluminación y textiles</a>
+    <a href="{{ '/servicios/decoracion-de-monoambientes-y-deptos-chicos/' | relative_url }}">Deptos chicos</a>
+  </nav>
+  <nav class="footer-col" aria-label="El sitio">
+    <h2>BRENBE</h2>
+    <a href="{{ '/proyectos/' | relative_url }}">Proyectos</a>
+    <a href="{{ '/guias/' | relative_url }}">Guías</a>
+    <a href="{{ '/sobre-brenda/' | relative_url }}">Sobre mí</a>
+    <a href="{{ '/contacto/' | relative_url }}">Contacto</a>
+  </nav>
+  {% if f_has %}<div class="footer-col">
+    <h2>Seguime</h2>
+    {%- if wa_href != '' %}
+    <a href="{{ wa_href }}" rel="noopener">WhatsApp</a>{% endif %}
+    {%- if f_mail != '' %}
+    <a href="mailto:{{ f_mail | escape }}">{{ f_mail | escape }}</a>{% endif %}
+    {%- assign redes = 'instagram:Instagram,pinterest:Pinterest,linkedin:LinkedIn,facebook:Facebook,behance:Behance' | split: ',' -%}
+    {%- for r in redes -%}
+      {%- assign rp = r | split: ':' -%}
+      {%- assign r_url = n[rp[0]] | default: '' | append: '' | strip -%}
+      {%- if r_url != '' %}
+    <a href="{{ r_url | escape }}" rel="me noopener" target="_blank">{{ rp[1] }}</a>{% endif -%}
+    {%- endfor %}
+  </div>{% endif %}
+</footer>
