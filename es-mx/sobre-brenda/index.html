@@ -2,35 +2,42 @@
 layout: base
 locale: es-mx
 ref: sobre-brenda
-# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
-# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
-ready: false
+ready: true
 title: "Sobre Brenda, diseñadora de interiores"
-seo_title: "Sobre Brenda, diseñadora de interiores | BRENBE"
-description: "TODO(i18n) meta description (es-mx)."
+seo_title: "Sobre Brenda, diseñadora de interiores en línea | BRENBE"
+description: "Conoce a Brenda, la diseñadora de interiores detrás de BRENBE: cómo trabaja en línea desde Argentina para México y EE. UU., sin remodelar."
 last_modified_at: 2026-11-22
 breadcrumb: "Sobre Brenda"
 # Se indexa solo si Brenda cargó su nombre en Pages CMS > Mis datos (la bio de negocio.yml está en español: este idioma lleva su propio texto).
 index_when: [nombre_completo]
 permalink: /es-mx/sobre-brenda/
 ---
-{%- comment -%}
-  TODO(i18n) es-mx: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /sobre-brenda/
-  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
-  Keywords del mercado: asesoría de interiorismo en línea · diseñadora de interiores en línea · decoración de recámara · departamento pequeño · diseño de interiores sin remodelar
-  Notas: Transcrear al español de México (tuteo, sala/recámara/clóset, "en línea", "sin remodelar"); precio como "US$ X"; horarios en hora CDMX.
-{%- endcomment -%}
 {% include loc.html %}
+{%- assign n = site.data.negocio -%}
+{%- assign s_nombre = n.nombre_completo | default: '' | append: '' | strip -%}
+{%- assign s_ret = n.retrato | default: '' | append: '' | strip -%}
 <main id="main">
-  <div class="section page-intro">
-    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
-    <h1>Sobre Brenda, diseñadora de interiores</h1>
-    <p>TODO(i18n) intro.</p>
+  <div class="section page-intro about-intro">
+    <div>
+      <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+      <div class="eyebrow">{{ T.schema_job_title | default: 'Diseñadora de interiores' }} · BRENBE</div>
+      <h1>{% if s_nombre != '' %}{{ s_nombre | escape }}{% else %}Soy Brenda{% endif %}, diseñadora de interiores</h1>
+      <p>Acompaño a personas que quieren renovar su casa con decisiones claras de color, muebles, iluminación y textiles, sin necesidad de remodelar. Vivo y trabajo en Argentina, y atiendo a mis clientas y clientes en línea, también en México y Estados Unidos.</p>
+    </div>
+    {% if s_ret != '' %}<img class="about-portrait" src="{{ s_ret | relative_url | escape }}" alt="{{ s_nombre | default: 'Brenda' | escape }}, diseñadora de interiores de BRENBE" width="640" height="800" decoding="async">{% endif %}
   </div>
   <section class="section copy">
-    <h2>TODO(i18n) mi historia</h2>
-    <p>TODO(i18n)</p>
-    <p>TODO(i18n) enlaces a <a href="{% include l.html ref='asesoria-online' %}">{% include t.html k="nav_asesoria" %}</a>, <a href="{% include l.html ref='servicios' %}">{% include t.html k="nav_servicios" %}</a>, <a href="{% include l.html ref='guias' %}">{% include t.html k="nav_guias" %}</a>.</p>
+    <h2>Cómo trabajo</h2>
+    <p>Creo que un espacio tiene que responder a cómo vives, no a una foto de revista. Por eso empiezo escuchando: cómo usas cada cuarto, qué te gusta, qué quieres conservar y qué te molesta. Después armo una dirección visual con paleta, referencias y una selección de piezas, para que puedas llevarla a tu casa a tu ritmo.</p>
+    <p>Trabajo con asesorías, es decir, sin remodelar: el cambio se logra con color, muebles, iluminación, textiles y objetos. Es una forma más ágil y accesible de renovar un espacio, y también la más cómoda si rentas.</p>
+    <h2>Trabajar en línea desde Argentina</h2>
+    <p>Todo el proceso es a distancia: fotos, medidas, videollamadas y una propuesta que recibes por escrito. Te lo digo con transparencia: no estoy en México ni hago visitas a domicilio allá. Lo que sí hago es adaptar la propuesta a lo que se consigue y se usa donde tú vives, y coordinar las videollamadas en un horario que funcione con tu zona horaria. Atiendo en español, inglés y portugués.</p>
+    <h2>Qué hago y qué no</h2>
+    <ul>
+      <li><strong>Hago:</strong> asesorías de interiorismo y decoración en línea; propuestas de color; distribución y selección de muebles; iluminación, textiles y styling.</li>
+      <li><strong>No hago:</strong> dirección de obra, remodelaciones ni cálculo estructural. Si tu proyecto lo requiere, te lo digo de entrada.</li>
+    </ul>
+    <p>Si quieres ver cómo es trabajar juntas, conoce la <a href="{% include l.html ref='asesoria-online' %}">asesoría de diseño de interiores en línea</a>, mira los <a href="{% include l.html ref='servicios' %}">servicios</a> o lee las <a href="{% include l.html ref='guias' %}">guías</a>.</p>
   </section>
   {% include contact.html %}
 </main>

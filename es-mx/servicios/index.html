@@ -2,38 +2,35 @@
 layout: base
 locale: es-mx
 ref: servicios
-# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
-# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
-ready: false
-title: "Servicios de interiorismo y decoración"
-seo_title: "Servicios de interiorismo y decoración en línea | BRENBE"
-description: "TODO(i18n) meta description (es-mx)."
+ready: true
+title: "Servicios de interiorismo y decoración en línea"
+seo_title: "Servicios de interiorismo en línea, sin remodelar | BRENBE"
+description: "Servicios de interiorismo de BRENBE en línea: asesoría integral, color, papel tapiz, muebles, iluminación y departamentos pequeños. Todo sin remodelar."
 last_modified_at: 2026-11-22
 breadcrumb: "Servicios"
 permalink: /es-mx/servicios/
 ---
-{%- comment -%}
-  TODO(i18n) es-mx: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /servicios/
-  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
-  Keywords del mercado: asesoría de interiorismo en línea · diseñadora de interiores en línea · decoración de recámara · departamento pequeño · diseño de interiores sin remodelar
-  Notas: Transcrear al español de México (tuteo, sala/recámara/clóset, "en línea", "sin remodelar"); precio como "US$ X"; horarios en hora CDMX.
-{%- endcomment -%}
 {% include loc.html %}
 <main id="main">
   <div class="section page-intro">
     <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
-    <h1>Servicios de interiorismo y decoración</h1>
-    <p>TODO(i18n) intro.</p>
+    <h1>Servicios de interiorismo y decoración en línea</h1>
+    <p>Todo lo que hago parte de la misma idea: renovar tu casa sin remodelar, con decisiones claras de color, muebles, luz y textiles. Trabajo por videollamada desde Argentina, con clientes en México y Estados Unidos. Puedes empezar por la asesoría integral o elegir solo la parte que más necesitas.</p>
   </div>
   <section class="section">
-    <div class="section-head"><h2>TODO(i18n) asesoría integral</h2></div>
+    <div class="section-head"><h2>Asesoría integral</h2><p class="section-intro">Si quieres revisar el espacio completo, es el mejor punto de partida.</p></div>
     <ul class="link-list">
-      <li><a href="{% include l.html ref='asesoria-online' %}"><strong>TODO(i18n) {% include t.html k="nav_asesoria" %}</strong><span>TODO(i18n)</span></a></li>
+      <li><a href="{% include l.html ref='asesoria-online' %}"><strong>Asesoría de diseño de interiores en línea</strong><span>Distribución, color, iluminación, muebles y textiles para uno o varios espacios de tu casa, por videollamada y con recomendaciones concretas.</span></a></li>
     </ul>
   </section>
   <section class="section other-services">
-    <div class="section-head"><h2>TODO(i18n) servicios puntuales</h2></div>
+    <div class="section-head"><h2>Servicios puntuales</h2><p class="section-intro">Cuando ya sabes qué parte del espacio quieres resolver.</p></div>
     {% include services-list.html %}
+  </section>
+  <section class="section copy">
+    <h2>¿Cuál me conviene?</h2>
+    <p>Si tienes dudas, empieza por la <a href="{% include l.html ref='asesoria-online' %}">asesoría en línea</a>: ahí revisamos el espacio completo y definimos prioridades. Los servicios puntuales funcionan cuando ya tienes claro qué quieres resolver, por ejemplo la paleta de color de la sala o la distribución de los muebles. Si vives en un departamento pequeño o en uno tipo estudio, el servicio de <a href="{% include l.html ref='servicio-deptos' %}">decoración de departamentos pequeños</a> reúne todo lo pensado para pocos metros.</p>
+    <p>Todos los servicios son sin remodelar: no incluyen obra, dirección de obra ni cálculo estructural. Se trabaja con decoración, color, muebles, iluminación y textiles, que es lo que permite renovar un espacio sin romper nada, algo especialmente útil si rentas. Para inspirarte, mira los <a href="{% include l.html ref='proyectos' %}">proyectos</a> o las <a href="{% include l.html ref='guias' %}">guías</a>.</p>
   </section>
   {% include contact.html %}
 </main>

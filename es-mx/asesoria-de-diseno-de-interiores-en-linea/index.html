@@ -2,37 +2,43 @@
 layout: base
 locale: es-mx
 ref: asesoria-online
-# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
-# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
-ready: false
+ready: true
 title: "Asesoría de diseño de interiores en línea"
-seo_title: "Asesoría de diseño de interiores en línea, sin obra | BRENBE"
-description: "TODO(i18n) meta description (es-mx)."
+seo_title: "Asesoría de diseño de interiores en línea | BRENBE"
+description: "Cómo funciona una asesoría de diseño de interiores por videollamada: distribución, color, muebles e iluminación para tu casa, sin remodelar. Con Brenda."
 last_modified_at: 2026-11-22
 breadcrumb: "Asesoría en línea"
 schema_service: true
 faq_schema: true     # usa _data/faq_es_mx.yml (clave `items`) o define `faq:` en esta página
 permalink: /es-mx/asesoria-de-diseno-de-interiores-en-linea/
 ---
-{%- comment -%}
-  TODO(i18n) es-mx: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /asesoria-de-interiorismo-online/
-  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
-  Keywords del mercado: asesoría de interiorismo en línea · diseñadora de interiores en línea · decoración de recámara · departamento pequeño · diseño de interiores sin remodelar
-  Notas: Transcrear al español de México (tuteo, sala/recámara/clóset, "en línea", "sin remodelar"); precio como "US$ X"; horarios en hora CDMX.
-{%- endcomment -%}
 {% include loc.html %}
 <main id="main">
   <div class="section page-intro">
     <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
     <h1>Asesoría de diseño de interiores en línea</h1>
-    <p>TODO(i18n) intro. Precio desde: {% include precio.html %}{{ price_label }}</p>
+    <p>Una asesoría a distancia para ordenar tus ideas y decidir cómo renovar tu casa sin remodelar. Soy Brenda, diseñadora de interiores y trabajo desde Argentina: nos conectamos por videollamada, desde donde estés, y armamos la propuesta alrededor del espacio que quieres mejorar. {% include precio.html %}{{ price_label }}.</p>
     <a class="button primary" href="#contacto">{% include t.html k="service_btn_consult" %}</a>
   </div>
   <section class="section copy">
-    <h2>TODO(i18n) qué incluye</h2>
-    <p>TODO(i18n)</p>
-    <h2>TODO(i18n) cómo es el proceso (horarios en hora local, enlace de agenda)</h2>
-    <p>TODO(i18n)</p>
+    <h2>Qué incluye la asesoría de interiorismo en línea</h2>
+    <p>Si tu sala, tu comedor, tu recámara o tu rincón de trabajo necesita un cambio, revisamos cómo lo usas y qué ajustes tendrían más impacto. Es una asesoría pensada para decorar y renovar, no para construir: se trabaja con lo que ya tienes y con piezas que tú eliges comprar donde prefieras.</p>
+    <ul>
+      <li><strong>Distribución y muebles.</strong> Revisamos la circulación, las medidas y qué muebles pueden seguir funcionando.</li>
+      <li><strong>Color y papel tapiz.</strong> Definimos una paleta según la luz y las superficies de tu espacio, para pintar con seguridad.</li>
+      <li><strong>Iluminación, textiles y objetos.</strong> Combinamos lámparas, cortinas, tapetes, cojines y accesorios que respondan al uso del espacio y al estilo que buscas.</li>
+    </ul>
+    <h2>Cómo funciona una asesoría en línea</h2>
+    <ol>
+      <li><strong>Compartes tu punto de partida.</strong> Me mandas fotos, medidas aproximadas y tus prioridades, y lo platicamos por videollamada.</li>
+      <li><strong>Definimos una dirección visual.</strong> Armamos una paleta y seleccionamos referencias para decidir con un criterio común.</li>
+      <li><strong>Recibes recomendaciones concretas.</strong> Con la selección de piezas y los ajustes de decoración avanzas a tu ritmo, en el orden que más te convenga.</li>
+    </ol>
+    <h2>Para quién es y cómo nos coordinamos</h2>
+    <p>Atiendo a personas que viven en México y también a quienes están en Estados Unidos y prefieren trabajar en español; si te resulta más cómodo, también puedo atenderte en inglés o portugués. Como trabajo desde Argentina, las videollamadas se agendan de común acuerdo, en un horario que funcione con tu zona horaria. No hay visitas a domicilio: todo se resuelve a distancia, con fotos, medidas y conversación.</p>
+    <p>Es un servicio sin remodelar: no incluye obra, dirección de obra, planos de construcción ni cálculo estructural. Si tu proyecto lo requiere, te lo digo desde el principio.</p>
+    <p>Si prefieres empezar leyendo, tenemos guías sobre <a href="{{ '/es-mx/guias/como-decorar-una-sala-pequena/' | relative_url }}">cómo decorar una sala pequeña</a> y <a href="{{ '/es-mx/guias/como-decorar-un-departamento-pequeno/' | relative_url }}">cómo decorar un departamento pequeño</a>.</p>
+    <a class="button secondary" href="{% include l.html ref='proyectos' %}">Ver proyectos e ideas</a>
   </section>
   {% include faq.html %}
   {% include contact.html %}
