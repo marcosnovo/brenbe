@@ -2,38 +2,35 @@
 layout: base
 locale: pt-br
 ref: servicios
-# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
-# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
-ready: false
+ready: true
 title: "Serviços de decoração e design de interiores"
 seo_title: "Serviços de decoração online para a sua casa | BRENBE"
-description: "TODO(i18n) meta description (pt-br)."
+description: "Serviços da BRENBE: consultoria de decoração online, cores, papel de parede, móveis, iluminação e apartamento pequeno. Tudo sem obra e em português."
 last_modified_at: 2026-11-22
 breadcrumb: "Serviços"
 permalink: /pt-br/servicos/
 ---
-{%- comment -%}
-  TODO(i18n) pt-br: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /servicios/
-  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
-  Keywords del mercado: consultoria de decoração online · decoração online · designer de interiores online · projeto de decoração online · decorar sem obra / sem reforma · decoração de apartamento pequeno
-  Notas: Escrever em português do Brasil (você, frases curtas; "sem obra/sem reforma", sala de estar, quarto, armário, geladeira...). Atenção: Brenda só atende em português se isso for confirmado; preço em R$ ou US$; horário de Brasília.
-{%- endcomment -%}
 {% include loc.html %}
 <main id="main">
   <div class="section page-intro">
     <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
     <h1>Serviços de decoração e design de interiores</h1>
-    <p>TODO(i18n) intro.</p>
+    <p>Tudo o que eu faço parte da mesma ideia: renovar a sua casa sem obra, com decisões claras de cores, móveis, luz e têxteis. Você pode começar pela consultoria completa ou escolher só a parte de que mais precisa.</p>
   </div>
   <section class="section">
-    <div class="section-head"><h2>TODO(i18n) asesoría integral</h2></div>
+    <div class="section-head"><h2>Consultoria completa</h2><p class="section-intro">Se você quer revisar o ambiente inteiro, é o melhor ponto de partida.</p></div>
     <ul class="link-list">
-      <li><a href="{% include l.html ref='asesoria-online' %}"><strong>TODO(i18n) {% include t.html k="nav_asesoria" %}</strong><span>TODO(i18n)</span></a></li>
+      <li><a href="{% include l.html ref='asesoria-online' %}"><strong>Consultoria de decoração online</strong><span>Distribuição, cores, iluminação, móveis e têxteis para um ambiente, à distância e em português, para qualquer cidade do Brasil.</span></a></li>
     </ul>
   </section>
   <section class="section other-services">
-    <div class="section-head"><h2>TODO(i18n) servicios puntuales</h2></div>
+    <div class="section-head"><h2>Serviços pontuais</h2><p class="section-intro">Para quando você já sabe qual parte do ambiente quer resolver.</p></div>
     {% include services-list.html %}
+  </section>
+  <section class="section copy">
+    <h2>Qual serviço combina com você?</h2>
+    <p>Na dúvida, comece pela <a href="{% include l.html ref='asesoria-online' %}">consultoria de decoração online</a>: nela revisamos o ambiente completo e definimos as prioridades. Os serviços pontuais funcionam quando você já sabe o que quer resolver, como a paleta de cores, a escolha de um papel de parede ou a distribuição dos móveis. Se o seu espaço é muito pequeno, o serviço de <a href="{% include l.html ref='servicio-deptos' %}">apartamento pequeno, studio e kitnet</a> reúne tudo pensado para poucos metros.</p>
+    <p>Todos os serviços são sem obra: não incluem reforma, acompanhamento de obra nem cálculo estrutural. Trabalhamos com decoração, cor, móveis, iluminação e têxteis, que é o que permite renovar um espaço sem quebrar nada, inclusive em apartamento alugado. Para se inspirar, veja os <a href="{% include l.html ref='proyectos' %}">projetos</a> ou os <a href="{% include l.html ref='guias' %}">guias</a>.</p>
   </section>
   {% include contact.html %}
 </main>

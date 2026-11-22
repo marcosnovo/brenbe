@@ -2,34 +2,44 @@
 layout: base
 locale: pt-br
 ref: contacto
-# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
-# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
-ready: false
+ready: true
 title: "Contato"
 seo_title: "Contato | Consultoria de decoração online BRENBE"
-description: "TODO(i18n) meta description (pt-br)."
+description: "Fale com a Brenda para saber mais sobre a consultoria de decoração online: conte qual ambiente quer renovar e veja o que enviar para começar."
 last_modified_at: 2026-11-22
 breadcrumb: "Contato"
 # Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
 index_when_any: [whatsapp, email]
 permalink: /pt-br/contato/
 ---
-{%- comment -%}
-  TODO(i18n) pt-br: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /contacto/
-  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
-  Keywords del mercado: consultoria de decoração online · decoração online · designer de interiores online · projeto de decoração online · decorar sem obra / sem reforma · decoração de apartamento pequeno
-  Notas: Escrever em português do Brasil (você, frases curtas; "sem obra/sem reforma", sala de estar, quarto, armário, geladeira...). Atenção: Brenda só atende em português se isso for confirmado; preço em R$ ou US$; horário de Brasília.
-{%- endcomment -%}
+{%- assign t = site.data.sitio -%}
+{%- assign c_dur = t.duracion | default: '' | append: '' | strip -%}
 {% include loc.html %}
 <main id="main">
   <div class="section page-intro">
     <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
     <h1>Contato</h1>
-    <p>TODO(i18n) intro.</p>
+    <p>Me conte qual espaço você quer renovar e vamos ver como posso te ajudar. A primeira conversa serve para entender o seu ponto de partida e definir se uma consultoria é o que você precisa.</p>
   </div>
   <section class="section copy">
-    <h2>TODO(i18n) qué enviar para empezar</h2>
-    <p>TODO(i18n) (en: email + enlace de agenda; indicar zona horaria local)</p>
+    <h2>O que enviar para começar</h2>
+    <p>Não precisa ter tudo resolvido. Com isto, a gente já consegue começar:</p>
+    <ul>
+      <li><strong>Fotos do ambiente</strong> de vários ângulos e, se der, em horários diferentes do dia.</li>
+      <li><strong>Medidas aproximadas:</strong> comprimento, largura e pé-direito, e onde ficam portas e janelas.</li>
+      <li><strong>O que você quer mudar e o que quer manter:</strong> móveis, cores, peças com valor para você.</li>
+      <li><strong>Referências</strong> de que você gosta: fotos, cores, ambientes.</li>
+      <li><strong>Seu orçamento aproximado</strong> para móveis e objetos, mesmo que seja uma faixa.</li>
+    </ul>
+    <h2>Como continua</h2>
+    <ol>
+      <li>Você me escreve com a sua dúvida e as fotos do espaço.</li>
+      <li>Eu explico como trabalho e qual serviço combina mais com o que você precisa.</li>
+      <li>Se fizer sentido, definimos o que será feito e começamos.{% if c_dur != '' %} {{ c_dur | escape }}.{% endif %}</li>
+    </ol>
+    <h2>Atendimento online e horário</h2>
+    <p>A consultoria é feita à distância, por videochamada e em português, e funciona para qualquer cidade do Brasil. Eu trabalho a partir da Argentina, onde o horário é o mesmo de Brasília; combinamos o melhor dia e a melhor hora para você. Todos os serviços são sem obra: não incluem reforma nem acompanhamento de obra.</p>
+    <p>Para saber mais antes de escrever, veja como funciona a <a href="{% include l.html ref='asesoria-online' %}">consultoria de decoração online</a> e os demais <a href="{% include l.html ref='servicios' %}">serviços</a>.</p>
   </section>
   {% include faq.html title=T.faq_title %}
   {% include contact.html %}

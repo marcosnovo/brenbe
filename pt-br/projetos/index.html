@@ -2,29 +2,21 @@
 layout: base
 locale: pt-br
 ref: proyectos
-# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
-# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
-ready: false
+ready: true
 title: "Projetos de design de interiores"
 seo_title: "Projetos e ideias de design de interiores | BRENBE"
-description: "TODO(i18n) meta description (pt-br)."
+description: "Projetos e referências de decoração da BRENBE: ambientes com cores, móveis e iluminação pensados sem obra. Inspire-se antes de pedir a sua consultoria."
 last_modified_at: 2026-11-22
 breadcrumb: "Projetos"
 collection_page: true
 permalink: /pt-br/projetos/
 ---
-{%- comment -%}
-  TODO(i18n) pt-br: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /proyectos/
-  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
-  Keywords del mercado: consultoria de decoração online · decoração online · designer de interiores online · projeto de decoração online · decorar sem obra / sem reforma · decoração de apartamento pequeno
-  Notas: Escrever em português do Brasil (você, frases curtas; "sem obra/sem reforma", sala de estar, quarto, armário, geladeira...). Atenção: Brenda só atende em português se isso for confirmado; preço em R$ ou US$; horário de Brasília.
-{%- endcomment -%}
 {% include loc.html %}
 <main id="main">
   <div class="section page-intro">
     <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
     <h1>Projetos de design de interiores</h1>
-    <p>TODO(i18n) intro. Los proyectos son una sola colección en español (la carga Brenda): aquí se listan con textos de interfaz localizados y enlazan a su URL original.</p>
+    <p>Alguns ambientes e referências para você ver como cores, móveis, têxteis e iluminação se combinam sem precisar de obra. Os projetos realizados são descritos em espanhol, mas as fotos e as decisões de design falam por si.</p>
   </div>
   {% if site.proyectos.size > 0 %}
   <section class="section">
