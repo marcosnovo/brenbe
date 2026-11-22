@@ -1,12 +1,12 @@
 # Textos de interfaz (es-MX, tuteo; recámara/sala/clóset). Lo que falte cae a es-ar.
 skip: Saltar al contenido
-announcement: Asesorías de interiorismo en línea · desde Argentina para México
+announcement: Asesorías de interiorismo en línea · desde Argentina para México y EE. UU.
 nav_aria: Navegación principal
 nav_asesoria: Asesoría
 nav_servicios: Servicios
 nav_proyectos: Proyectos
 nav_guias: Guías
-nav_sobre: Sobre mí
+nav_sobre: Sobre Brenda
 nav_contacto: Contacto
 wa_aria: Escríbeme por WhatsApp
 wa_label: WhatsApp
@@ -20,7 +20,7 @@ contact_wa: Escríbeme por WhatsApp
 contact_email: Escríbele a Brenda
 btn_online: Conoce la asesoría en línea
 btn_how_online: Cómo funciona la asesoría en línea
-footer_tagline: Interiorismo y decoración · Asesorías en línea, sin obra, desde Argentina para México.
+footer_tagline: Interiorismo y decoración · Asesorías en línea, sin remodelar, desde Argentina para México y EE. UU.
 footer_services_h: Servicios
 footer_site_aria: El sitio
 footer_site_h: BRENBE
@@ -33,7 +33,7 @@ footer_iluminacion: Iluminación y textiles
 footer_deptos: Departamentos pequeños
 footer_projects: Proyectos
 footer_guides: Guías
-footer_about: Sobre mí
+footer_about: Sobre Brenda
 footer_contact: Contacto
 faq_title: Preguntas frecuentes
 faq_title_asesoria: Preguntas sobre la asesoría en línea
