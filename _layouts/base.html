@@ -4,45 +4,47 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f1e9">
-  {% assign seo_title = page.seo_title | default: page.title %}
+  {% if page.seo_title %}{% assign seo_title = page.seo_title %}
+  {% elsif page.layout == 'proyecto' %}{% capture seo_title %}{{ page.title }} | Proyecto de interiorismo | BRENBE{% endcapture %}
+  {% else %}{% assign seo_title = page.title %}{% endif %}
+  {% assign seo_desc = page.description | default: site.description %}
+  {% assign canonical_url = page.url | replace: '/index.html', '/' | absolute_url %}
   {% assign social_image = page.cover | default: '/brenbe-vista-previa.jpg' %}
   <title>{{ seo_title | escape }}</title>
-  <meta name="description" content="{{ page.description | escape }}">
-  {% unless page.indexable == false %}<link rel="canonical" href="{{ page.url | replace: '/index.html', '/' | absolute_url | escape }}">
-  {% else %}<meta name="robots" content="noindex,follow">{% endunless %}
+  <meta name="description" content="{{ seo_desc | strip_html | normalize_whitespace | truncate: 158 | escape }}">
+  {% unless page.indexable == false %}<link rel="canonical" href="{{ canonical_url | escape }}">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="alternate" hreflang="es-AR" href="{{ canonical_url | escape }}">
+  <link rel="alternate" hreflang="x-default" href="{{ canonical_url | escape }}">
+  {% else %}<meta name="robots" content="noindex,nofollow">{% endunless %}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="BRENBE Interiorismo">
   <meta property="og:locale" content="es_AR">
   <meta property="og:title" content="{{ seo_title | escape }}">
-  <meta property="og:description" content="{{ page.description | escape }}">
-  <meta property="og:url" content="{{ page.url | replace: '/index.html', '/' | absolute_url | escape }}">
+  <meta property="og:description" content="{{ seo_desc | strip_html | normalize_whitespace | truncate: 200 | escape }}">
+  <meta property="og:url" content="{{ canonical_url | escape }}">
   <meta property="og:image" content="{{ social_image | absolute_url | escape }}">
-  {% unless page.cover %}<meta property="og:image:width" content="1200">
+  {% unless page.cover %}<meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">{% endunless %}
   <meta property="og:image:alt" content="{{ page.cover_alt | default: 'Living con sofá oliva, muebles de nogal y acentos granate' | escape }}">
   <meta name="twitter:card" content="summary_large_image">
-  {% if page.url == '/' or page.url == '/index.html' %}<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "BRENBE Interiorismo",
-    "alternateName": "BRENBE",
-    "url": {{ '/' | absolute_url | jsonify }},
-    "inLanguage": "es-AR",
-    "description": {{ page.description | jsonify }}
-  }
-  </script>{% endif %}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="48x48">
+  <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{{ '/apple-touch-icon.png' | relative_url }}">
+  {% include schema.html %}
+  {% if page.preload_image %}<link rel="preload" as="image" href="{{ page.preload_image.src | relative_url }}" imagesrcset="{{ page.preload_image.srcset | escape }}" imagesizes="{{ page.preload_image.sizes | escape }}" fetchpriority="high">{% endif %}
+  <link rel="preload" href="{{ '/fonts/cormorant-garamond-latin-wght-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ '/fonts/dm-sans-latin-wght-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ '/brenbe.css' | relative_url }}">
 </head>
 
 <body>
+  <a class="skip" href="#main">Saltar al contenido</a>
   {% include header.html %}
   {{ content }}
   <footer>
-    <div class="footer-logo"><img src="{{ '/brenbe-interiorismo.webp' | relative_url }}" alt="BRENBE Interiorismo" width="800" height="505" loading="lazy"></div>
+    <a class="footer-logo" href="{{ '/' | relative_url }}"><img src="{{ '/brenbe-logo.webp' | relative_url }}" alt="BRENBE Interiorismo" width="380" height="125" loading="lazy" decoding="async"></a>
     <span>Interiorismo y decoración · Argentina</span>
     <a href="{{ '/' | relative_url }}">Inicio</a>
   </footer>

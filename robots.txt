@@ -1,7 +1,28 @@
 ---
 layout: null
 ---
+# Buscadores y buscadores de IA (Google, Bing, ChatGPT search, Perplexity, Claude): permitidos.
 User-agent: *
 Allow: /
+
+# Señales de uso (Cloudflare Content Signals).
+# search / ai-input = aparecer en buscadores y en respuestas de IA.
+# ai-train = permitir que se entrenen modelos con el contenido. Hoy permitido (decisión pendiente de la dueña).
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
+# --- Para NO permitir el entrenamiento de modelos de IA ---
+# 1) Cambiar arriba "ai-train=yes" por "ai-train=no".
+# 2) Quitar el "#" de las líneas siguientes:
+#
+# User-agent: GPTBot
+# User-agent: ClaudeBot
+# User-agent: Google-Extended
+# User-agent: Applebot-Extended
+# User-agent: CCBot
+# User-agent: Bytespider
+# Disallow: /
+#
+# No bloquear nunca Googlebot, Bingbot, OAI-SearchBot, ChatGPT-User, PerplexityBot ni Claude-SearchBot.
+# No se bloquea /admin/ acá a propósito: la página lleva noindex y Google necesita poder verlo.
 
 Sitemap: {{ '/sitemap.xml' | absolute_url }}

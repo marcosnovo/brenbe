@@ -8,7 +8,13 @@ defaults:
       type: proyectos
     values:
       layout: proyecto
+  - scope:
+      path: ""
+    values:
+      lang: es-AR
 
+title: BRENBE Interiorismo
+description: "Asesorías de interiorismo y decoración desde Argentina: renová tu casa sin obra, presencial u online."
 url: "https://brenbe.com"
 lang: es-AR
 timezone: America/Argentina/Buenos_Aires

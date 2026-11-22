@@ -3,11 +3,27 @@ layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% assign public_pages = '/,/asesoria-de-interiorismo-online/,/proyectos/' | split: ',' %}
-  {% for url in public_pages %}
-  <url><loc>{{ url | absolute_url | xml_escape }}</loc></url>
-  {% endfor %}
-  {% for proyecto in site.proyectos %}
-  <url><loc>{{ proyecto.url | absolute_url | xml_escape }}</loc></url>
-  {% endfor %}
+{%- comment -%}
+  Páginas: toda página con layout que no sea noindex ni `sitemap: false`.
+  Colecciones con salida (proyectos, guías...): todos los documentos indexables.
+  lastmod: `last_modified_at` (páginas) o `updated` / `date` (documentos); nunca site.time.
+{%- endcomment -%}
+{%- assign last_project = site.proyectos | sort: 'date' | last -%}
+{%- assign pages = site.pages | where_exp: 'p', 'p.layout and p.indexable != false and p.sitemap != false' | sort: 'url' -%}
+{%- for p in pages %}
+  {%- assign lm = p.last_modified_at -%}
+  {%- if p.url == '/' or p.url == '/proyectos/' -%}
+    {%- if last_project and lm -%}
+      {%- assign lm_i = lm | date: '%s' | plus: 0 -%}
+      {%- assign pr_i = last_project.updated | default: last_project.date | date: '%s' | plus: 0 -%}
+      {%- if pr_i > lm_i -%}{%- assign lm = last_project.updated | default: last_project.date -%}{%- endif -%}
+    {%- endif -%}
+  {%- endif %}
+  <url><loc>{{ p.url | absolute_url | xml_escape }}</loc>{% if lm %}<lastmod>{{ lm | date_to_xmlschema }}</lastmod>{% endif %}</url>
+{%- endfor %}
+{%- assign docs = site.documents | where_exp: 'd', 'd.indexable != false and d.sitemap != false' %}
+{%- for d in docs %}
+  {%- assign lm = d.updated | default: d.date %}
+  <url><loc>{{ d.url | absolute_url | xml_escape }}</loc>{% if lm %}<lastmod>{{ lm | date_to_xmlschema }}</lastmod>{% endif %}</url>
+{%- endfor %}
 </urlset>
