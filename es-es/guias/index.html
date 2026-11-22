@@ -1,0 +1,39 @@
+---
+layout: base
+locale: es-es
+ref: guias
+# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
+# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
+ready: false
+title: "Guías de interiorismo y decoración"
+seo_title: "Guías de interiorismo y decoración para tu casa | BRENBE"
+description: "TODO(i18n) meta description (es-es)."
+last_modified_at: 2026-11-22
+breadcrumb: "Guías"
+collection_page: guias
+permalink: /es-es/guias/
+---
+{%- comment -%}
+  TODO(i18n) es-es: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /guias/
+  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
+  Keywords del mercado: interiorista online · asesoramiento de decoración online · decorar un piso pequeño / de alquiler · home staging · interiorismo sin obras / sin reformas
+  Notas: Transcrear al español de España (tuteo, salón/dormitorio/piso, "sin obras/sin reformas", "papel pintado"); precio como "X €"; horarios en hora peninsular; invertir estaciones (hemisferio norte); aviso legal/privacidad UE.
+{%- endcomment -%}
+{% include loc.html %}
+{%- assign g_coll = site[L.guias] %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Guías de interiorismo y decoración</h1>
+    <p>TODO(i18n) intro.</p>
+  </div>
+  <section class="section">
+    {%- assign grupos = g_coll | sort: 'date' | reverse | group_by: 'category' %}
+    {%- for grupo in grupos %}
+    <div class="section-head"><h2>{{ grupo.name | escape }}</h2></div>
+    {% include guias.html list=grupo.items %}
+    {%- unless forloop.last %}<div class="spacer"></div>{% endunless %}
+    {%- endfor %}
+  </section>
+  {% include contact.html %}
+</main>

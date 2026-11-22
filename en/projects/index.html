@@ -1,0 +1,44 @@
+---
+layout: base
+locale: en
+ref: proyectos
+# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
+# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
+ready: false
+title: "Interior design projects"
+seo_title: "Interior Design Projects & Ideas | BRENBE"
+description: "TODO(i18n) meta description (en)."
+last_modified_at: 2026-11-22
+breadcrumb: "Projects"
+collection_page: true
+permalink: /en/projects/
+---
+{%- comment -%}
+  TODO(i18n) en: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /proyectos/
+  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
+  Keywords del mercado: online interior design · virtual interior design / e-design · online interior designer · virtual decorating consultation · renter-friendly decorating · interior designer who speaks Spanish
+  Notas: Write in US English (benefit-first, "you"); avoid claiming "licensed interior designer" (regulated title in some states): use "online decorator / design consultant"; price as "$X USD"; ft² with m²; contact = email + scheduling link; show ET/PT times.
+{%- endcomment -%}
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Interior design projects</h1>
+    <p>TODO(i18n) intro. Los proyectos son una sola colección en español (la carga Brenda): aquí se listan con textos de interfaz localizados y enlazan a su URL original.</p>
+  </div>
+  {% if site.proyectos.size > 0 %}
+  <section class="section">
+    <div class="section-head"><h2>{% include t.html k="projects_done_h2" %}</h2></div>
+    {% include proyectos.html limit=site.proyectos.size %}
+  </section>
+  {% endif %}
+  <section class="section">
+    <div class="section-head">
+      <h2>{% include t.html k="projects_ideas_h2" %}</h2>
+      <p class="section-intro">{% include t.html k="projects_ideas_intro" %}</p>
+    </div>
+    {% include referencias.html %}
+    <a class="button secondary after-grid" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="btn_online" %}</a>
+  </section>
+  {% include contact.html %}
+</main>

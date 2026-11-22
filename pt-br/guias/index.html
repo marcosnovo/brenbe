@@ -1,0 +1,39 @@
+---
+layout: base
+locale: pt-br
+ref: guias
+# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
+# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
+ready: false
+title: "Guias de decoração e design de interiores"
+seo_title: "Guias de decoração e design de interiores | BRENBE"
+description: "TODO(i18n) meta description (pt-br)."
+last_modified_at: 2026-11-22
+breadcrumb: "Guias"
+collection_page: guias
+permalink: /pt-br/guias/
+---
+{%- comment -%}
+  TODO(i18n) pt-br: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /guias/
+  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
+  Keywords del mercado: consultoria de decoração online · decoração online · designer de interiores online · projeto de decoração online · decorar sem obra / sem reforma · decoração de apartamento pequeno
+  Notas: Escrever em português do Brasil (você, frases curtas; "sem obra/sem reforma", sala de estar, quarto, armário, geladeira...). Atenção: Brenda só atende em português se isso for confirmado; preço em R$ ou US$; horário de Brasília.
+{%- endcomment -%}
+{% include loc.html %}
+{%- assign g_coll = site[L.guias] %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Guias de decoração e design de interiores</h1>
+    <p>TODO(i18n) intro.</p>
+  </div>
+  <section class="section">
+    {%- assign grupos = g_coll | sort: 'date' | reverse | group_by: 'category' %}
+    {%- for grupo in grupos %}
+    <div class="section-head"><h2>{{ grupo.name | escape }}</h2></div>
+    {% include guias.html list=grupo.items %}
+    {%- unless forloop.last %}<div class="spacer"></div>{% endunless %}
+    {%- endfor %}
+  </section>
+  {% include contact.html %}
+</main>

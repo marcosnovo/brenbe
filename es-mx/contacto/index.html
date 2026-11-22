@@ -1,0 +1,36 @@
+---
+layout: base
+locale: es-mx
+ref: contacto
+# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
+# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
+ready: false
+title: "Contacto"
+seo_title: "Contacto | Asesoría de interiorismo en línea BRENBE"
+description: "TODO(i18n) meta description (es-mx)."
+last_modified_at: 2026-11-22
+breadcrumb: "Contacto"
+# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
+index_when_any: [whatsapp, email]
+permalink: /es-mx/contacto/
+---
+{%- comment -%}
+  TODO(i18n) es-mx: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /contacto/
+  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
+  Keywords del mercado: asesoría de interiorismo en línea · diseñadora de interiores en línea · decoración de recámara · departamento pequeño · diseño de interiores sin remodelar
+  Notas: Transcrear al español de México (tuteo, sala/recámara/clóset, "en línea", "sin remodelar"); precio como "US$ X"; horarios en hora CDMX.
+{%- endcomment -%}
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Contacto</h1>
+    <p>TODO(i18n) intro.</p>
+  </div>
+  <section class="section copy">
+    <h2>TODO(i18n) qué enviar para empezar</h2>
+    <p>TODO(i18n) (en: email + enlace de agenda; indicar zona horaria local)</p>
+  </section>
+  {% include faq.html title=T.faq_title %}
+  {% include contact.html %}
+</main>

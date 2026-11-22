@@ -1,0 +1,51 @@
+---
+layout: base
+locale: en
+ref: home
+# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
+# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
+ready: false
+title: "Online interior design, no renovation needed"
+seo_title: "Online Interior Design, No Renovation Needed | BRENBE"
+description: "TODO(i18n) meta description (en), con el precio desde en moneda local si existe."
+last_modified_at: 2026-11-22
+---
+{%- comment -%}
+  TODO(i18n) en: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /
+  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
+  Keywords del mercado: online interior design · virtual interior design / e-design · online interior designer · virtual decorating consultation · renter-friendly decorating · interior designer who speaks Spanish
+  Notas: Write in US English (benefit-first, "you"); avoid claiming "licensed interior designer" (regulated title in some states): use "online decorator / design consultant"; price as "$X USD"; ft² with m²; contact = email + scheduling link; show ET/PT times.
+{%- endcomment -%}
+{% include loc.html %}
+{% include wa.html %}
+<main id="main">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">BRENBE · TODO(i18n) eyebrow</div>
+      <h1>TODO(i18n) H1: Online interior design, no renovation needed</h1>
+      <p class="lead">TODO(i18n) lead (slogan).</p>
+      <p>TODO(i18n) párrafo de presentación.</p>
+      <div class="actions">
+        <a class="button primary" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="btn_online" %}</a>
+        <a class="button secondary" href="{% include l.html ref='proyectos' %}">{% include t.html k="nav_proyectos" %}</a>
+        {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="noopener">{% include t.html k="contact_wa" %}</a>{% endif %}
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="{{ '/living-sofa-oliva-960.webp' | relative_url }}" srcset="{{ '/living-sofa-oliva-640.webp' | relative_url }} 640w, {{ '/living-sofa-oliva-960.webp' | relative_url }} 960w, {{ '/living-sofa-oliva.webp' | relative_url }} 1440w" sizes="(max-width: 800px) 100vw, 55vw" width="1440" height="810" fetchpriority="high" decoding="async" alt="{% include t.html k='og_image_alt' esc=true %}">
+    </div>
+  </section>
+  <section class="section" id="proyectos">
+    <div class="section-head"><div><h2>TODO(i18n) {% include t.html k="nav_proyectos" %}</h2></div></div>
+    {% if site.proyectos.size > 0 %}{% include proyectos.html limit=3 %}{% else %}{% include referencias.html %}{% endif %}
+  </section>
+  {%- assign g_coll = site[L.guias] %}
+  {% if g_coll.size > 0 %}
+  <section class="section" id="guias">
+    <div class="section-head"><div><h2>TODO(i18n) {% include t.html k="nav_guias" %}</h2></div></div>
+    {%- assign ultimas = g_coll | sort: 'date' | reverse %}
+    {% include guias.html list=ultimas limit=3 %}
+  </section>
+  {% endif %}
+  {% include contact.html %}
+</main>

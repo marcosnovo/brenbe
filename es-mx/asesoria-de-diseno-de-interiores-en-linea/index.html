@@ -1,0 +1,39 @@
+---
+layout: base
+locale: es-mx
+ref: asesoria-online
+# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
+# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
+ready: false
+title: "Asesoría de diseño de interiores en línea"
+seo_title: "Asesoría de diseño de interiores en línea, sin obra | BRENBE"
+description: "TODO(i18n) meta description (es-mx)."
+last_modified_at: 2026-11-22
+breadcrumb: "Asesoría en línea"
+schema_service: true
+faq_schema: true     # usa _data/faq_es_mx.yml (clave `items`) o define `faq:` en esta página
+permalink: /es-mx/asesoria-de-diseno-de-interiores-en-linea/
+---
+{%- comment -%}
+  TODO(i18n) es-mx: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /asesoria-de-interiorismo-online/
+  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
+  Keywords del mercado: asesoría de interiorismo en línea · diseñadora de interiores en línea · decoración de recámara · departamento pequeño · diseño de interiores sin remodelar
+  Notas: Transcrear al español de México (tuteo, sala/recámara/clóset, "en línea", "sin remodelar"); precio como "US$ X"; horarios en hora CDMX.
+{%- endcomment -%}
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Asesoría de diseño de interiores en línea</h1>
+    <p>TODO(i18n) intro. Precio desde: {% include precio.html %}{{ price_label }}</p>
+    <a class="button primary" href="#contacto">{% include t.html k="service_btn_consult" %}</a>
+  </div>
+  <section class="section copy">
+    <h2>TODO(i18n) qué incluye</h2>
+    <p>TODO(i18n)</p>
+    <h2>TODO(i18n) cómo es el proceso (horarios en hora local, enlace de agenda)</h2>
+    <p>TODO(i18n)</p>
+  </section>
+  {% include faq.html %}
+  {% include contact.html %}
+</main>

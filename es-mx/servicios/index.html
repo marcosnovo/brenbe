@@ -1,0 +1,39 @@
+---
+layout: base
+locale: es-mx
+ref: servicios
+# ready: false = borrador. No sale en sitemap ni en hreflang y la página lleva noindex.
+# TODO(i18n): cuando el contenido esté transcreado y revisado, cambiar a `ready: true` y borrar TODOS los marcadores TODO(i18n).
+ready: false
+title: "Servicios de interiorismo y decoración"
+seo_title: "Servicios de interiorismo y decoración en línea | BRENBE"
+description: "TODO(i18n) meta description (es-mx)."
+last_modified_at: 2026-11-22
+breadcrumb: "Servicios"
+permalink: /es-mx/servicios/
+---
+{%- comment -%}
+  TODO(i18n) es-mx: reescribir esta página (transcrear, no traducir). Versión de referencia es-AR: /servicios/
+  Guía: docs/i18n-content-guide.md · Vocabulario y keywords: estrategia de localización (sección 4).
+  Keywords del mercado: asesoría de interiorismo en línea · diseñadora de interiores en línea · decoración de recámara · departamento pequeño · diseño de interiores sin remodelar
+  Notas: Transcrear al español de México (tuteo, sala/recámara/clóset, "en línea", "sin remodelar"); precio como "US$ X"; horarios en hora CDMX.
+{%- endcomment -%}
+{% include loc.html %}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Servicios de interiorismo y decoración</h1>
+    <p>TODO(i18n) intro.</p>
+  </div>
+  <section class="section">
+    <div class="section-head"><h2>TODO(i18n) asesoría integral</h2></div>
+    <ul class="link-list">
+      <li><a href="{% include l.html ref='asesoria-online' %}"><strong>TODO(i18n) {% include t.html k="nav_asesoria" %}</strong><span>TODO(i18n)</span></a></li>
+    </ul>
+  </section>
+  <section class="section other-services">
+    <div class="section-head"><h2>TODO(i18n) servicios puntuales</h2></div>
+    {% include services-list.html %}
+  </section>
+  {% include contact.html %}
+</main>
