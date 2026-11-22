@@ -5,7 +5,7 @@ title: "Colores para el salón: cómo elegir tu paleta"
 description: "Cómo elegir los colores del salón: orientación y luz, neutros cálidos, verdes, terracotas y azules, cuándo atreverte con un tono oscuro y la regla 60-30-10."
 category: Color
 hub: color-y-paletas
-role: pilar
+role: cluster
 date: 2026-11-20
 cover: /living-sofa-oliva.webp
 cover_alt: "Salón cálido con sofá oliva, muebles de nogal y acentos color granate"
