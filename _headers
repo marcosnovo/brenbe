@@ -10,6 +10,14 @@
 /admin/*
   X-Robots-Tag: noindex, nofollow
 
+# Redirecciones a WhatsApp (medición de clics): nunca indexar.
+/wa/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: public, max-age=300
+
+/brenbe-blocks.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
 # Evita que la copia en pages.dev se indexe (el dominio válido es brenbe.com).
 # ":project" es un placeholder de Pages: aplica a cualquier *.pages.dev del proyecto.
 https://:project.pages.dev/*

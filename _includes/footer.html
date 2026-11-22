@@ -34,7 +34,7 @@
   {% if f_has %}<div class="footer-col">
     <h2>{% include t.html k="footer_follow_h" %}</h2>
     {%- if wa_href != '' %}
-    <a href="{{ wa_href }}" rel="noopener">{% include t.html k="wa_label" %}</a>{% endif %}
+    <a href="{{ wa_href }}" rel="{{ wa_rel }}">{% include t.html k="wa_label" %}</a>{% endif %}
     {%- if f_mail != '' %}
     <a href="mailto:{{ f_mail | escape }}">{{ f_mail | escape }}</a>{% endif %}
     {%- assign redes = 'instagram:Instagram,pinterest:Pinterest,linkedin:LinkedIn,facebook:Facebook,behance:Behance' | split: ',' -%}
