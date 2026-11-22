@@ -26,7 +26,16 @@
     if (open && !(ev.target.closest && ev.target.closest('details.lang-switch'))) open.removeAttribute('open');
   });
   document.addEventListener('keydown', function (ev) {
-    if (ev.key === 'Escape') { var o = document.querySelector('details.lang-switch[open]'); if (o) { o.removeAttribute('open'); } }
+    if (ev.key !== 'Escape') return;
+    var o = document.querySelector('details.lang-switch[open]');
+    if (!o) return;
+    o.removeAttribute('open');
+    var sm = o.querySelector('summary'); if (sm && sm.focus) sm.focus();
+  });
+  // Al salir con Tab del menú, se cierra (no queda tapando el contenido).
+  document.addEventListener('focusin', function (ev) {
+    var o = document.querySelector('details.lang-switch[open]');
+    if (o && !o.contains(ev.target)) o.removeAttribute('open');
   });
 
   // 2) Banner: solo si no hay elección guardada y no es un bot.
