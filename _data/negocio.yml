@@ -1,0 +1,26 @@
+# Datos del negocio. Los completa la dueña desde el panel (Pages CMS > Datos del negocio).
+# Todo es opcional: lo que quede vacío no se publica (ni en la página ni en los datos estructurados).
+nombre_completo:
+apellido:
+cargo:
+formacion:
+anio_inicio:
+retrato:
+ciudad:
+provincia:
+zona_presencial: []
+direccion:
+codigo_postal:
+email:
+telefono:
+whatsapp:
+whatsapp_mensaje:
+instagram:
+pinterest:
+linkedin:
+facebook:
+behance:
+google_business_url:
+moneda:
+precio_desde:
+duracion:

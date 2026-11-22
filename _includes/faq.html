@@ -1,21 +1,11 @@
 <section class="section faq" id="preguntas">
   <h2>Preguntas sobre la asesoría online</h2>
   <div class="faq-list">
+    {%- for item in site.data.faq.items %}
     <details>
-      <summary>¿Qué conviene tener para la primera consulta?</summary>
-      <p>Prepará fotos del ambiente desde varios ángulos, medidas aproximadas y una lista de lo que querés cambiar o conservar. Si tenés referencias de colores o muebles que te gustan, también sirven.</p>
+      <summary>{{ item.q | escape }}</summary>
+      <p>{{ item.a | escape }}</p>
     </details>
-    <details>
-      <summary>¿Puedo renovar un ambiente sin hacer obra?</summary>
-      <p>Sí. Podemos trabajar con la distribución, la pintura, la iluminación, los textiles y el mobiliario. El punto de partida es cómo usás el espacio y qué querés mejorar.</p>
-    </details>
-    <details>
-      <summary>¿Tengo que comprar muebles nuevos?</summary>
-      <p>Podemos partir de lo que ya tenés y decidir qué piezas conviene conservar, redistribuir o complementar.</p>
-    </details>
-    <details>
-      <summary>¿Cómo funciona si vivo fuera de Argentina?</summary>
-      <p>La asesoría se hace a distancia desde Argentina. Contame en qué país estás y qué espacio querés trabajar, así podemos definir un alcance que tenga sentido para vos.</p>
-    </details>
+    {%- endfor %}
   </div>
 </section>

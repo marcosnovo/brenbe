@@ -1,0 +1,251 @@
+{%- comment -%}
+  JSON-LD por página. Un <script> por nodo, enlazados por @id.
+  Fuente de datos: _data/negocio.yml y _data/faq.yml. Todo campo vacío se omite.
+  Espera que base.html haya definido `canonical_url`.
+  Nodos: A organización (todas), B persona (home y /sobre-brenda/), C WebSite (home),
+  D servicio (page.schema_service), E FAQ (page.faq_schema), F migas (page.breadcrumb),
+  G proyecto (layout proyecto), H colección (page.collection_page).
+{%- endcomment -%}
+{%- unless page.indexable == false -%}
+{%- assign n = site.data.negocio -%}
+{%- assign org_id = '/#organization' | absolute_url -%}
+{%- assign person_id = '/#brenda' | absolute_url -%}
+{%- assign website_id = '/#website' | absolute_url -%}
+{%- assign nombre = n.nombre_completo | default: '' | strip -%}
+{%- assign apellido = n.apellido | default: '' | strip -%}
+{%- assign cargo = n.cargo | default: 'Interiorista' | strip -%}
+{%- assign ciudad = n.ciudad | default: '' | strip -%}
+{%- assign provincia = n.provincia | default: '' | strip -%}
+{%- assign direccion = n.direccion | default: '' | strip -%}
+{%- assign cp = n.codigo_postal | default: '' | strip -%}
+{%- assign mail = n.email | default: '' | strip -%}
+{%- assign tel = n.telefono | default: '' | strip -%}
+{%- assign gbp = n.google_business_url | default: '' | strip -%}
+{%- assign moneda = n.moneda | default: 'ARS' | strip -%}
+{%- assign precio = n.precio_desde | default: '' | strip -%}
+{%- assign formacion = n.formacion | default: '' | strip -%}
+{%- assign retrato = n.retrato | default: '' | strip -%}
+{%- assign same = '' -%}
+{%- assign redes = 'instagram,pinterest,linkedin,facebook,behance' | split: ',' -%}
+{%- for red in redes -%}
+  {%- assign red_url = n[red] | default: '' | strip -%}
+  {%- if red_url != '' -%}{%- assign same = same | append: red_url | append: ' ' -%}{%- endif -%}
+{%- endfor -%}
+{%- assign same_list = same | strip | split: ' ' -%}
+
+{%- comment -%} A. Organización {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": {{ org_id | jsonify }},
+  "name": "BRENBE Interiorismo",
+  "alternateName": "BRENBE",
+  "url": {{ '/' | absolute_url | jsonify }},
+  "logo": { "@type": "ImageObject", "url": {{ '/brenbe-logo-512.png' | absolute_url | jsonify }}, "width": 512, "height": 512 },
+  "image": {{ '/brenbe-vista-previa.jpg' | absolute_url | jsonify }},
+  "description": "Asesorías de interiorismo y decoración, presenciales y online, para renovar espacios sin obra: color, mobiliario, iluminación y textiles.",
+  "slogan": "Interiores pensados para tu manera de vivir",
+  "inLanguage": "es-AR",
+  "knowsLanguage": "es-AR",
+  "serviceType": ["Asesoría de interiorismo", "Asesoría de decoración", "Diseño de interiores online"],
+  "knowsAbout": ["Interiorismo", "Decoración de interiores", "Diseño de interiores", "Paletas de color", "Iluminación", "Mobiliario", "Textiles"],
+  "areaServed": [{ "@type": "Country", "name": "Argentina" }{% for z in n.zona_presencial %}{% assign zona = z | strip %}{% if zona != '' %}, { "@type": "AdministrativeArea", "name": {{ zona | jsonify }} }{% endif %}{% endfor %}],
+  "founder": { "@id": {{ person_id | jsonify }} }
+  {%- if ciudad != '' %},
+  "address": { "@type": "PostalAddress", "addressLocality": {{ ciudad | jsonify }}{% if provincia != '' %}, "addressRegion": {{ provincia | jsonify }}{% endif %}{% if direccion != '' %}, "streetAddress": {{ direccion | jsonify }}{% endif %}{% if cp != '' %}, "postalCode": {{ cp | jsonify }}{% endif %}, "addressCountry": "AR" }{% endif %}
+  {%- if mail != '' %},
+  "email": {{ mail | jsonify }}{% endif %}
+  {%- if tel != '' %},
+  "telephone": {{ tel | jsonify }},
+  "contactPoint": { "@type": "ContactPoint", "contactType": "consultas", "telephone": {{ tel | jsonify }}, "availableLanguage": "es-AR", "areaServed": "AR" }{% endif %}
+  {%- if same_list.size > 0 %},
+  "sameAs": {{ same_list | jsonify }}{% endif %}
+  {%- if gbp != '' %},
+  "hasMap": {{ gbp | jsonify }}{% endif %}
+  {%- if precio != '' %},
+  "priceRange": {{ precio | prepend: ' ' | prepend: moneda | prepend: 'Desde ' | jsonify }}{% endif %}
+}
+</script>
+
+{%- comment -%} B. Persona {%- endcomment -%}
+{%- if page.url == '/' or page.url contains '/sobre-brenda' %}
+{%- assign person_name = nombre | default: 'Brenda' -%}
+{%- if nombre == '' -%}{%- assign person_name = 'Brenda' -%}{%- endif -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": {{ person_id | jsonify }},
+  "name": {{ person_name | jsonify }},
+  "givenName": "Brenda"
+  {%- if apellido != '' %},
+  "familyName": {{ apellido | jsonify }}{% endif %},
+  "jobTitle": {{ cargo | jsonify }},
+  "description": "Interiorista argentina, fundadora de BRENBE Interiorismo. Asesora a distancia y de forma presencial en decoración y diseño de interiores.",
+  "worksFor": { "@id": {{ org_id | jsonify }} },
+  "knowsAbout": ["Interiorismo", "Decoración", "Color", "Iluminación"]
+  {%- if page.url contains '/sobre-brenda' %},
+  "url": {{ canonical_url | jsonify }}{% endif %}
+  {%- if retrato != '' %},
+  "image": {{ retrato | absolute_url | jsonify }}{% endif %}
+  {%- if formacion != '' %},
+  "alumniOf": { "@type": "EducationalOrganization", "name": {{ formacion | jsonify }} }{% endif %}
+  {%- if same_list.size > 0 %},
+  "sameAs": {{ same_list | jsonify }}{% endif %}
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} C. WebSite {%- endcomment -%}
+{%- if page.url == '/' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": {{ website_id | jsonify }},
+  "url": {{ '/' | absolute_url | jsonify }},
+  "name": "BRENBE Interiorismo",
+  "alternateName": "BRENBE",
+  "inLanguage": "es-AR",
+  "publisher": { "@id": {{ org_id | jsonify }} }
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} D. Servicio (+ oferta solo si hay precio) {%- endcomment -%}
+{%- if page.schema_service %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": {{ canonical_url | append: '#service' | jsonify }},
+  "name": "Asesoría de interiorismo y decoración online",
+  "serviceType": "Asesoría de interiorismo",
+  "description": "Asesoría de diseño de interiores a distancia: distribución, color, iluminación, mobiliario y textiles para renovar un ambiente sin obra, con recomendaciones concretas para llevar a la práctica.",
+  "provider": { "@id": {{ org_id | jsonify }} },
+  "areaServed": [{ "@type": "Country", "name": "Argentina" }, { "@type": "Place", "name": "Online, para cualquier país" }],
+  "availableChannel": { "@type": "ServiceChannel", "serviceUrl": {{ canonical_url | jsonify }}, "availableLanguage": "es-AR" },
+  "audience": { "@type": "Audience", "audienceType": "Personas que quieren renovar su casa sin obra" },
+  "url": {{ canonical_url | jsonify }}
+  {%- if precio != '' %},
+  "offers": {
+    "@type": "Offer",
+    "url": {{ canonical_url | jsonify }},
+    "priceCurrency": {{ moneda | jsonify }},
+    "priceSpecification": { "@type": "PriceSpecification", "priceCurrency": {{ moneda | jsonify }}, "minPrice": {{ precio | jsonify }} },
+    "availability": "https://schema.org/InStock"
+  }{% endif %}
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} E. FAQPage (misma fuente que el bloque visible) {%- endcomment -%}
+{%- if page.faq_schema and site.data.faq.items.size > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": {{ canonical_url | append: '#faq' | jsonify }},
+  "inLanguage": "es-AR",
+  "mainEntity": [
+    {%- for f in site.data.faq.items %}
+    { "@type": "Question", "name": {{ f.q | jsonify }}, "acceptedAnswer": { "@type": "Answer", "text": {{ f.a | jsonify }} } }{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%}
+  F. Migas. Páginas con `breadcrumb: "Nombre"` en el front matter → Inicio / Nombre.
+  Padres opcionales: `breadcrumb_parents: [{name: ..., url: /.../}]`. Proyectos: Inicio / Proyectos / título.
+{%- endcomment -%}
+{%- assign bc_names = '' -%}
+{%- assign bc_urls = '' -%}
+{%- assign bc_last = '' -%}
+{%- if page.layout == 'proyecto' -%}
+  {%- assign bc_names = 'Inicio|Proyectos' -%}
+  {%- assign bc_urls = '/|/proyectos/' -%}
+  {%- assign bc_last = page.title -%}
+{%- elsif page.breadcrumb -%}
+  {%- assign bc_names = 'Inicio' -%}
+  {%- assign bc_urls = '/' -%}
+  {%- for parent in page.breadcrumb_parents -%}
+    {%- assign bc_names = bc_names | append: '|' | append: parent.name -%}
+    {%- assign bc_urls = bc_urls | append: '|' | append: parent.url -%}
+  {%- endfor -%}
+  {%- assign bc_last = page.breadcrumb -%}
+{%- endif -%}
+{%- if bc_last != '' -%}
+{%- assign bc_name_list = bc_names | split: '|' -%}
+{%- assign bc_url_list = bc_urls | split: '|' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {%- for name in bc_name_list %}
+    { "@type": "ListItem", "position": {{ forloop.index }}, "name": {{ name | jsonify }}, "item": {{ bc_url_list[forloop.index0] | absolute_url | jsonify }} },
+    {%- endfor %}
+    { "@type": "ListItem", "position": {{ bc_name_list.size | plus: 1 }}, "name": {{ bc_last | jsonify }}, "item": {{ canonical_url | jsonify }} }
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} G. Proyecto del CMS {%- endcomment -%}
+{%- if page.layout == 'proyecto' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "@id": {{ canonical_url | append: '#project' | jsonify }},
+  "name": {{ page.title | jsonify }},
+  "inLanguage": "es-AR",
+  "url": {{ canonical_url | jsonify }},
+  "mainEntityOfPage": {{ canonical_url | jsonify }},
+  "creator": { "@id": {{ person_id | jsonify }} },
+  "publisher": { "@id": {{ org_id | jsonify }} },
+  "isPartOf": { "@type": "CollectionPage", "@id": {{ '/proyectos/' | absolute_url | jsonify }} }
+  {%- if page.description %},
+  "description": {{ page.description | jsonify }}{% endif %}
+  {%- if page.space %},
+  "genre": {{ page.space | jsonify }}{% endif %}
+  {%- if page.date %},
+  "datePublished": {{ page.date | date_to_xmlschema | jsonify }}{% endif %}
+  {%- if page.updated %},
+  "dateModified": {{ page.updated | date_to_xmlschema | jsonify }}{% endif %}
+  {%- if page.cover %},
+  "image": [
+    { "@type": "ImageObject", "contentUrl": {{ page.cover | absolute_url | jsonify }}{% if page.cover_alt %}, "caption": {{ page.cover_alt | jsonify }}{% endif %} }
+    {%- for g in page.gallery %}{% if g.image %},
+    { "@type": "ImageObject", "contentUrl": {{ g.image | absolute_url | jsonify }}{% if g.alt %}, "caption": {{ g.alt | jsonify }}{% endif %} }{% endif %}{% endfor %}
+  ]{% endif %}
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} H. Listado de proyectos (solo si hay proyectos) {%- endcomment -%}
+{%- if page.collection_page and site.proyectos.size > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": {{ canonical_url | jsonify }},
+  "url": {{ canonical_url | jsonify }},
+  "name": "Proyectos de interiorismo",
+  "inLanguage": "es-AR",
+  "isPartOf": { "@id": {{ website_id | jsonify }} },
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {%- for p in site.proyectos reversed %}
+      { "@type": "ListItem", "position": {{ forloop.index }}, "url": {{ p.url | absolute_url | jsonify }}, "name": {{ p.title | jsonify }} }{% unless forloop.last %},{% endunless %}
+      {%- endfor %}
+    ]
+  }
+}
+</script>
+{%- endif -%}
+{%- endunless -%}

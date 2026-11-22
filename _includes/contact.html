@@ -1,10 +1,16 @@
-{% assign contact_email = site.data.contacto.email | default: '' | strip %}
+{%- assign n = site.data.negocio -%}
+{%- assign contact_email = n.email | default: '' | strip -%}
+{%- assign contact_wa = n.whatsapp | default: '' | replace: '+', '' | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' | strip -%}
+{%- assign wa_text = n.whatsapp_mensaje | default: '' | strip -%}
 <section class="contact" id="contacto">
   <div>
     <h2>Hablemos de tu espacio.</h2>
-    {% if contact_email == '' %}<p>Estamos preparando el canal de consultas.</p>{% endif %}
+    {% if contact_email == '' and contact_wa == '' %}<p>Estamos preparando el canal de consultas.</p>{% endif %}
   </div>
-  {% if contact_email != '' %}
-  <a class="button" href="mailto:{{ contact_email | escape }}">Escribile a Brenda</a>
+  {% if contact_email != '' or contact_wa != '' %}
+  <div class="actions">
+    {% if contact_wa != '' %}<a class="button" href="https://wa.me/{{ contact_wa | escape }}{% if wa_text != '' %}?text={{ wa_text | url_encode }}{% endif %}" rel="noopener">Escribime por WhatsApp</a>{% endif %}
+    {% if contact_email != '' %}<a class="button" href="mailto:{{ contact_email | escape }}">Escribile a Brenda</a>{% endif %}
+  </div>
   {% endif %}
 </section>
