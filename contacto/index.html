@@ -5,13 +5,14 @@ seo_title: Contacto | Asesoría de interiorismo BRENBE
 description: "Escribile a Brenda para consultar por una asesoría de interiorismo y decoración, online o presencial. Contá qué ambiente querés renovar y qué necesitás mandar."
 last_modified_at: 2026-11-22
 breadcrumb: Contacto
-# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Datos del negocio.
+# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
 index_when_any: [whatsapp, email]
 ---
 {%- assign n = site.data.negocio -%}
-{%- assign c_ciudad = n.ciudad | default: '' | append: '' | strip -%}
-{%- assign c_prov = n.provincia | default: '' | append: '' | strip -%}
-{%- assign c_dur = n.duracion | default: '' | append: '' | strip -%}
+{%- assign t = site.data.sitio -%}
+{%- assign c_ciudad = t.ciudad | default: '' | append: '' | strip -%}
+{%- assign c_prov = t.provincia | default: '' | append: '' | strip -%}
+{%- assign c_dur = t.duracion | default: '' | append: '' | strip -%}
 <main id="main">
   <div class="section page-intro">
     <p class="breadcrumb"><a href="{{ '/' | relative_url }}">Inicio</a> / Contacto</p>

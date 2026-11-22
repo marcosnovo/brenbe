@@ -1,29 +1,51 @@
 ---
 layout: base
 ---
+{%- assign p_alt = page.cover_alt | default: page.title -%}
+{%- assign p_loc = page.location | default: '' | append: '' | strip -%}
+{%- assign p_eyebrow = page.space | default: 'Proyecto' -%}
+{%- if p_loc != '' -%}{%- capture p_eyebrow %}{{ page.space }} · {{ p_loc }}{% endcapture -%}{%- endif -%}
+{%- assign t_quote = page.testimonial.quote | default: '' | append: '' | strip -%}
+{%- assign t_author = page.testimonial.author | default: '' | append: '' | strip -%}
 <main id="main">
   <div class="section page-intro">
     <p class="breadcrumb"><a href="{{ '/' | relative_url }}">Inicio</a> / <a href="{{ '/proyectos/' | relative_url }}">Proyectos</a> / {{ page.title | escape }}</p>
-    <div class="eyebrow">{{ page.space | escape }}</div>
+    <div class="eyebrow">{{ p_eyebrow | escape }}</div>
     <h1>{{ page.title | escape }}</h1>
-    <p>{{ page.description | escape }}</p>
-    <img class="project-cover" src="{{ page.cover | relative_url | escape }}" alt="{{ page.cover_alt | escape }}" fetchpriority="high">
+    {% if page.description %}<p>{{ page.description | escape }}</p>{% endif %}
+    {% include foto.html src=page.cover alt=p_alt sizes="(max-width: 1200px) 100vw, 1200px" loading="eager" class="project-cover" %}
   </div>
   <section class="section copy">
+    {% if page.objective %}
     <h2>El punto de partida</h2>
     <p class="project-text">{{ page.objective | escape }}</p>
+    {% endif %}
+    {% if page.decisions %}
     <h2>Las decisiones de diseño</h2>
     <p class="project-text">{{ page.decisions | escape }}</p>
+    {% endif %}
     {% if page.result %}
     <h2>El resultado</h2>
     <p class="project-text">{{ page.result | escape }}</p>
     {% endif %}
+    {% if t_quote != '' %}
+    <figure class="testimonial">
+      <blockquote><p>{{ t_quote | escape }}</p></blockquote>
+      {% if t_author != '' %}<figcaption>{{ t_author | escape }}</figcaption>{% endif %}
+    </figure>
+    {% endif %}
     {% if page.gallery and page.gallery.size > 0 %}
     <h2>Fotos del proyecto</h2>
     <div class="gallery">
-      {% for photo in page.gallery %}
-      <img src="{{ photo.image | relative_url | escape }}" alt="{{ photo.alt | escape }}" loading="lazy" decoding="async">
-      {% endfor %}
+      {%- for photo in page.gallery %}
+      {%- if photo.image == nil or photo.image == '' %}{% continue %}{% endif %}
+      {%- assign g_alt = photo.alt | default: page.title -%}
+      {%- assign g_etapa = photo.etapa | default: '' -%}
+      <figure class="gallery-item">
+        {% include foto.html src=photo.image alt=g_alt sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 380px" widths="480,800,1200" %}
+        {%- if g_etapa == 'antes' %}<span class="badge">Antes</span>{% elsif g_etapa == 'despues' %}<span class="badge badge-after">Después</span>{% endif %}
+      </figure>
+      {%- endfor %}
     </div>
     {% endif %}
     {% assign otros = site.proyectos | where_exp: 'p', 'p.url != page.url' %}
