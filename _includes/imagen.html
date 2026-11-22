@@ -10,5 +10,5 @@
 {%- capture im_srcset -%}{% for v in im.variantes %}{{ '/' | append: im_key | append: '-' | append: v | append: '.webp' | relative_url }} {{ v }}w, {% endfor %}{{ include.src | relative_url }} {{ im.w }}w{%- endcapture -%}
 <img{% if include.class %} class="{{ include.class }}"{% endif %} src="{{ include.src | relative_url }}" srcset="{{ im_srcset }}" sizes="{{ include.sizes | default: '100vw' }}" width="{{ im.w }}" height="{{ im.h }}" alt="{{ im_alt | escape }}" loading="{{ im_loading }}" decoding="async"{% if im_loading == 'eager' %} fetchpriority="high"{% endif %}>
 {%- else -%}
-<img{% if include.class %} class="{{ include.class }}"{% endif %} src="{{ include.src | relative_url }}" alt="{{ im_alt | escape }}" loading="{{ im_loading }}" decoding="async">
+{%- include foto.html src=include.src alt=im_alt sizes=include.sizes loading=im_loading class=include.class -%}
 {%- endif -%}

@@ -27,6 +27,11 @@ url: "https://brenbe.com"
 lang: es-AR
 timezone: America/Argentina/Buenos_Aires
 
+# Fotos subidas desde el panel (/media/...): Cloudflare las achica y convierte a WebP/AVIF al vuelo.
+# Requiere activar "Transformations" para brenbe.com en el panel de Cloudflare (Images > Transformations).
+# Si no está activado, el sitio vuelve solo a la foto original (más lento). Poné false para desactivarlo.
+image_transforms: true
+
 # Cloudflare Pages reads these from the build output; Jekyll skips "_" files by default.
 include:
   - _headers

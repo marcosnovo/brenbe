@@ -1,13 +1,21 @@
-{% if site.proyectos.size > 0 %}
+{%- comment -%} Grilla de proyectos, del más nuevo al más viejo. Parámetros: limit, exclude (url). {%- endcomment -%}
+{%- assign pj_list = site.proyectos | sort: 'date' | reverse -%}
+{%- assign pj_n = 0 -%}
+{%- assign pj_max = include.limit | default: 1000 -%}
+{% if pj_list.size > 0 %}
 <div class="project-grid">
-  {% for proyecto in site.proyectos reversed limit: include.limit %}
-  {% if include.exclude == proyecto.url %}{% continue %}{% endif %}
+  {%- for proyecto in pj_list %}
+  {%- if include.exclude == proyecto.url %}{% continue %}{% endif %}
+  {%- if pj_n >= pj_max %}{% break %}{% endif %}
+  {%- assign pj_n = pj_n | plus: 1 %}
+  {%- assign pj_alt = proyecto.cover_alt | default: proyecto.title %}
+  {%- capture pj_meta %}{{ proyecto.space }}{% if proyecto.location and proyecto.location != '' %} · {{ proyecto.location }}{% endif %}{% endcapture %}
   <article class="project-card">
     <a href="{{ proyecto.url | relative_url }}">
-      <div class="frame"><img src="{{ proyecto.cover | relative_url | escape }}" alt="{{ proyecto.cover_alt | escape }}" loading="lazy" decoding="async"></div>
-      <div class="project-meta"><div><h3>{{ proyecto.title | escape }}</h3><p>{{ proyecto.space | escape }}</p></div></div>
+      <div class="frame">{% include foto.html src=proyecto.cover alt=pj_alt sizes="(max-width: 480px) 100vw, (max-width: 800px) 50vw, 33vw" widths="480,720,960" %}</div>
+      <div class="project-meta"><div><h3>{{ proyecto.title | escape }}</h3><p>{{ pj_meta | strip | escape }}</p></div></div>
     </a>
   </article>
-  {% endfor %}
+  {%- endfor %}
 </div>
 {% endif %}
