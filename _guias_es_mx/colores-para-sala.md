@@ -3,7 +3,7 @@ title: "Colores para sala: cómo elegir tu paleta"
 description: "Cómo elegir los colores para tu sala: luz y orientación, neutros cálidos, verdes, terracotas y azules, tonos oscuros y la regla 60-30-10."
 category: Color
 hub: color-y-paletas
-role: pilar
+role: cluster
 date: 2026-11-20
 ready: true
 ref: colores-para-living
