@@ -406,6 +406,9 @@ content:
         type: date
         default: ""
         hidden: true
+      - name: revision_brenda
+        type: string
+        hidden: true
 
   # ---------------------------------------------------------------- Mis datos
   - name: negocio
