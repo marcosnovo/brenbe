@@ -1,0 +1,126 @@
+# Textos de interfaz (es-ES, tuteo; salón/dormitorio/piso). Lo que falte cae a es-ar.
+skip: Saltar al contenido
+announcement: Asesoramiento de interiorismo online · desde Argentina para España
+nav_aria: Navegación principal
+nav_asesoria: Asesoramiento
+nav_servicios: Servicios
+nav_proyectos: Proyectos
+nav_guias: Guías
+nav_sobre: Sobre mí
+nav_contacto: Contacto
+wa_aria: Escríbeme por WhatsApp
+wa_label: WhatsApp
+bc_home: Inicio
+bc_services: Servicios
+bc_projects: Proyectos
+bc_guides: Guías
+contact_h2: Hablemos de tu espacio.
+contact_preparing: Estamos preparando el canal de consultas.
+contact_wa: Escríbeme por WhatsApp
+contact_email: Escribe a Brenda
+btn_online: Descubre el asesoramiento online
+btn_how_online: Cómo funciona el asesoramiento online
+footer_tagline: Interiorismo y decoración · Asesoramiento online, sin obras, desde Argentina para España.
+footer_services_h: Servicios
+footer_site_aria: El sitio
+footer_site_h: BRENBE
+footer_follow_h: Sígueme
+footer_asesoria: Interiorismo online
+footer_color: Asesoramiento de color
+footer_empapelado: Papel pintado
+footer_mobiliario: Mobiliario y distribución
+footer_iluminacion: Iluminación y textiles
+footer_deptos: Pisos pequeños
+footer_projects: Proyectos
+footer_guides: Guías
+footer_about: Sobre mí
+footer_contact: Contacto
+faq_title: Preguntas frecuentes
+faq_title_asesoria: Preguntas sobre el interiorismo online
+guide_cta_h2: ¿Quieres aplicar esto en tu casa?
+guide_cta_p: Si prefieres que revisemos juntas tu espacio, el asesoramiento de interiorismo online te da una propuesta concreta de color, mobiliario e iluminación, sin reformas.
+guide_cta_btn: Descubre el interiorismo online
+guide_cta_wa: Consultar por WhatsApp
+guide_by: Por
+guide_published: Publicado el
+guide_updated: Actualizado el
+guide_read: "%s min de lectura"
+guide_more: Sigue leyendo
+project_eyebrow: Proyecto
+project_start: El punto de partida
+project_decisions: Las decisiones de diseño
+project_result: El resultado
+project_photos: Fotos del proyecto
+project_before: Antes
+project_after: Después
+project_others: Otros proyectos
+project_note: "Proyecto (texto en español de Argentina)"
+projects_done_h2: Proyectos realizados
+projects_ideas_h2: Ideas de referencia para tu casa
+projects_ideas_intro: Referencias visuales para explorar combinaciones de color, mobiliario e iluminación.
+service_eyebrow: Servicio de interiorismo
+service_btn_consult: Consultar por mi espacio
+service_btn_wa: Escríbeme por WhatsApp
+service_visual_ref: Referencia visual
+service_others: Otros servicios
+service_guides: Guías para profundizar
+date_fmt: "[d] de [month] de [y]"
+months: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
+wa_home: Hola Brenda, he visto tu web y quiero consultar por un asesoramiento de interiorismo online.
+wa_guide: Hola Brenda, he leído la guía "%s" en brenbe.com y quiero consultar por un asesoramiento.
+wa_page: Hola Brenda, estoy viendo "%s" en brenbe.com y quiero consultar por un asesoramiento.
+price_from: "Desde %s"
+price_ask: Consulta el precio
+schema_org_description: "Asesoramiento de interiorismo y decoración online, para renovar espacios sin reformas: color, mobiliario, iluminación y textiles."
+schema_slogan: Interiores pensados para tu manera de vivir
+schema_org_service_types: [Asesoramiento de interiorismo online, Asesoramiento de decoración, Diseño de interiores online]
+schema_knows_about: [Interiorismo, Decoración de interiores, Diseño de interiores, Paletas de color, Iluminación, Mobiliario, Textiles]
+schema_job_title: Interiorista
+schema_person_description: Interiorista argentina, fundadora de BRENBE Interiorismo. Asesora online en decoración y diseño de interiores.
+schema_person_knows: [Interiorismo, Decoración, Color, Iluminación]
+schema_service_name: Asesoramiento de interiorismo y decoración online
+schema_service_type: Asesoramiento de interiorismo online
+schema_service_description: "Asesoramiento de interiorismo a distancia: distribución, color, iluminación, mobiliario y textiles para renovar un salón, un dormitorio u otro espacio sin reformas, con recomendaciones concretas para llevar a la práctica."
+schema_audience: Personas que quieren renovar su casa sin reformas
+schema_area_online: Online, para cualquier país
+schema_guides_name: Guías de interiorismo y decoración
+schema_projects_name: Proyectos de interiorismo
+sw_label: Idioma y región
+sw_aria: Elegir idioma o región
+banner_aria: Sugerencia de idioma
+banner_text: "¿Estás en España? Mira la versión para España."
+banner_go: Ver versión para España
+banner_stay: Quedarme aquí
+banner_close: Cerrar
+nf_title: Página no encontrada | BRENBE Interiorismo
+nf_desc: La página que buscas no existe o ha cambiado de sitio.
+nf_h1: Esta página no existe
+nf_p: Puede que el enlace haya cambiado o que la dirección tenga un error. Vuelve al inicio o mira los proyectos de BRENBE.
+nf_home: Volver al inicio
+nf_projects: Ver proyectos
+nf_asesoria: Interiorismo online
+spaces:
+  Living: Salón
+  Comedor: Comedor
+  Living comedor: Salón-comedor
+  Dormitorio: Dormitorio
+  Cocina: Cocina
+  Baño: Baño
+  Escritorio: Despacho
+  Recibidor: Recibidor
+  Balcón o terraza: Balcón o terraza
+  Monoambiente: Estudio
+  Habitación infantil: Habitación infantil
+  Casa completa: Vivienda completa
+  Otro: Otro
+ref1_title: "Comedor en nogal"
+ref1_sub: "Color, mobiliario y textiles"
+ref1_alt: "Comedor en nogal con textiles y acentos en verde oliva"
+ref2_title: "Dormitorio en tonos cálidos"
+ref2_sub: "Texturas e iluminación"
+ref2_alt: "Dormitorio en tonos crema, oliva y granate"
+ref3_title: "Rincón de lectura"
+ref3_sub: "Materiales y objetos"
+ref3_alt: "Rincón de lectura con butaca verde oliva y lámpara de travertino"
+site_description: "Asesoramiento de interiorismo y decoración online, desde Argentina: renueva tu casa sin reformas, con color, mobiliario e iluminación."
+og_image_alt: Salón cálido con sofá verde oliva, muebles de nogal y acentos granate

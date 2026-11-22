@@ -1,0 +1,97 @@
+# Configuración de idiomas/regiones del sitio (NO se edita desde el panel de Brenda).
+# La clave de cada entrada es el "código de carpeta" (minúsculas) que se usa en `locale:` de cada página,
+# en _data/i18n/<clave>.yml y en la cookie `brenbe_loc`.
+#
+# ready: interruptor general del idioma. Con `ready: false` todo el idioma queda fuera del switcher,
+#        de hreflang y del sitemap y sus páginas pasan a noindex, aunque cada página diga `ready: true`.
+#        Una página se publica cuando locale.ready = true Y su front matter no dice `ready: false`.
+#        La home (ref: home) además decide si el idioma aparece en el switcher / banner / redirect.
+#
+# hreflang: lista de códigos que este idioma "reclama". Un mismo URL puede responder a varios códigos:
+#   es-AR y `es` (resto de Latinoamérica sin versión propia), es-MX y es-US, en y en-US, pt-BR y pt.
+#   No se usa es-419 (no es un valor hreflang soportado de forma fiable).
+es-ar:
+  html_lang: es-AR
+  prefix: ""
+  hreflang: [es-AR, es]
+  og: es_AR
+  name: Argentina
+  lang_name: Español
+  currency: ARS
+  price_key: ars
+  guias: guias
+  area_served: [Argentina]
+  thousands: "."
+  decimal: ","
+  group_min: 4          # desde cuántas cifras se agrupan miles (es-ES: 5)
+  money_prefix: "$ "
+  money_suffix: ""
+  ready: true
+es-mx:
+  html_lang: es-MX
+  prefix: /es-mx
+  hreflang: [es-MX, es-US]
+  og: es_MX
+  name: México
+  lang_name: Español
+  currency: USD
+  price_key: usd
+  guias: guias_es_mx
+  area_served: [México]
+  thousands: ","
+  decimal: "."
+  group_min: 4
+  money_prefix: "US$ "
+  money_suffix: ""
+  ready: true
+es-es:
+  html_lang: es-ES
+  prefix: /es-es
+  hreflang: [es-ES]
+  og: es_ES
+  name: España
+  lang_name: Español
+  currency: EUR
+  price_key: eur
+  guias: guias_es_es
+  area_served: [España]
+  thousands: "."
+  decimal: ","
+  group_min: 5
+  money_prefix: ""
+  money_suffix: " €"
+  ready: true
+en:
+  html_lang: en
+  prefix: /en
+  hreflang: [en, en-US]
+  og: en_US
+  name: English
+  lang_name: English
+  currency: USD
+  price_key: usd
+  guias: guias_en
+  area_served: [United States, Canada, United Kingdom, Australia]
+  thousands: ","
+  decimal: "."
+  group_min: 4
+  money_prefix: "$"
+  money_suffix: " USD"
+  ready: true
+pt-br:
+  html_lang: pt-BR
+  prefix: /pt-br
+  hreflang: [pt-BR, pt]
+  og: pt_BR
+  name: Português
+  lang_name: Português
+  currency: BRL
+  price_key: brl
+  guias: guias_pt_br
+  area_served: [Brasil]
+  thousands: "."
+  decimal: ","
+  group_min: 4
+  money_prefix: "R$ "
+  money_suffix: ""
+  ready: true

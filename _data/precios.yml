@@ -1,0 +1,7 @@
+# Precios "desde" para los idiomas que no cobran en la moneda de negocio.yml.
+# NO está en el panel de Brenda a propósito (se mantiene simple): lo edita el equipo técnico.
+# es-AR sigue leyendo `precio_desde` y `moneda` de negocio.yml (lo que carga Brenda en "Mis datos").
+# Solo el número, sin símbolos. Vacío = el sitio muestra "Consultá el precio" en ese idioma.
+usd:        # es-MX y en
+eur:        # es-ES
+brl:        # pt-BR

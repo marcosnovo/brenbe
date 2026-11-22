@@ -1,0 +1,126 @@
+# Textos de interface (português do Brasil, "você"). O que faltar cai para es-ar.
+skip: Pular para o conteúdo
+announcement: Consultoria de decoração online · da Argentina para o Brasil
+nav_aria: Navegação principal
+nav_asesoria: Consultoria
+nav_servicios: Serviços
+nav_proyectos: Projetos
+nav_guias: Guias
+nav_sobre: Sobre
+nav_contacto: Contato
+wa_aria: Fale comigo no WhatsApp
+wa_label: WhatsApp
+bc_home: Início
+bc_services: Serviços
+bc_projects: Projetos
+bc_guides: Guias
+contact_h2: Vamos conversar sobre o seu espaço.
+contact_preparing: Estamos preparando o canal de contato.
+contact_wa: Fale comigo no WhatsApp
+contact_email: Escreva para a Brenda
+btn_online: Conheça a consultoria online
+btn_how_online: Como funciona a consultoria online
+footer_tagline: Design de interiores e decoração · Consultoria online, sem obra, da Argentina para o Brasil.
+footer_services_h: Serviços
+footer_site_aria: O site
+footer_site_h: BRENBE
+footer_follow_h: Me acompanhe
+footer_asesoria: Consultoria online
+footer_color: Consultoria de cores
+footer_empapelado: Papel de parede e revestimentos
+footer_mobiliario: Móveis e layout
+footer_iluminacion: Iluminação e têxteis
+footer_deptos: Apartamentos pequenos
+footer_projects: Projetos
+footer_guides: Guias
+footer_about: Sobre
+footer_contact: Contato
+faq_title: Perguntas frequentes
+faq_title_asesoria: Perguntas sobre a consultoria online
+guide_cta_h2: Quer aplicar isso na sua casa?
+guide_cta_p: Se preferir que a gente olhe o seu ambiente juntas, a consultoria de decoração online entrega uma proposta concreta de cores, móveis e iluminação, sem obra.
+guide_cta_btn: Conheça a consultoria online
+guide_cta_wa: Perguntar no WhatsApp
+guide_by: Por
+guide_published: Publicado em
+guide_updated: Atualizado em
+guide_read: "%s min de leitura"
+guide_more: Continue lendo
+project_eyebrow: Projeto
+project_start: O ponto de partida
+project_decisions: As decisões de design
+project_result: O resultado
+project_photos: Fotos do projeto
+project_before: Antes
+project_after: Depois
+project_others: Outros projetos
+project_note: "Detalhes do projeto em espanhol"
+projects_done_h2: Projetos realizados
+projects_ideas_h2: Ideias de referência para a sua casa
+projects_ideas_intro: Referências visuais para explorar combinações de cores, móveis e iluminação.
+service_eyebrow: Serviço de design de interiores
+service_btn_consult: Consultar sobre o meu espaço
+service_btn_wa: Fale comigo no WhatsApp
+service_visual_ref: Referência visual
+service_others: Outros serviços
+service_guides: Guias para se aprofundar
+date_fmt: "[d] de [month] de [y]"
+months: [janeiro, fevereiro, março, abril, maio, junho, julho, agosto, setembro, outubro, novembro, dezembro]
+wa_home: Olá, Brenda! Vi o seu site e quero saber mais sobre a consultoria de decoração online.
+wa_guide: Olá, Brenda! Li o guia "%s" em brenbe.com e quero saber mais sobre a consultoria.
+wa_page: Olá, Brenda! Estou vendo "%s" em brenbe.com e quero saber mais sobre a consultoria.
+price_from: "A partir de %s"
+price_ask: Consulte o preço
+schema_org_description: "Consultoria de design de interiores e decoração, online e presencial, para renovar ambientes sem obra: cores, móveis, iluminação e têxteis."
+schema_slogan: Interiores pensados para o seu jeito de viver
+schema_org_service_types: [Consultoria de design de interiores online, Consultoria de decoração, Decoração online]
+schema_knows_about: [Design de interiores, Decoração de interiores, Paletas de cores, Iluminação, Móveis, Têxteis]
+schema_job_title: Designer de interiores
+schema_person_description: Designer de interiores argentina, fundadora da BRENBE Interiorismo. Atende online em decoração e design de interiores, em português, espanhol e inglês.
+schema_person_knows: [Design de interiores, Decoração, Cores, Iluminação]
+schema_service_name: Consultoria de decoração online
+schema_service_type: Consultoria de decoração online
+schema_service_description: "Consultoria de design de interiores à distância: layout, cores, iluminação, móveis e têxteis para renovar um ambiente sem obra, com recomendações concretas para colocar em prática."
+schema_audience: Pessoas que querem renovar a casa sem obra
+schema_area_online: Online, para qualquer país
+schema_guides_name: Guias de decoração e design de interiores
+schema_projects_name: Projetos de design de interiores
+sw_label: Idioma e região
+sw_aria: Escolher idioma ou região
+banner_aria: Sugestão de idioma
+banner_text: "Você está no Brasil? Veja a versão em português."
+banner_go: Ver versão em português
+banner_stay: Ficar aqui
+banner_close: Fechar
+nf_title: Página não encontrada | BRENBE Interiorismo
+nf_desc: A página que você procura não existe ou mudou de lugar.
+nf_h1: Esta página não existe
+nf_p: O link pode ter mudado ou o endereço pode ter um erro. Volte ao início ou veja os projetos da BRENBE.
+nf_home: Voltar ao início
+nf_projects: Ver projetos
+nf_asesoria: Consultoria online
+spaces:
+  Living: Sala de estar
+  Comedor: Sala de jantar
+  Living comedor: Sala de estar e jantar
+  Dormitorio: Quarto
+  Cocina: Cozinha
+  Baño: Banheiro
+  Escritorio: Home office
+  Recibidor: Hall de entrada
+  Balcón o terraza: Varanda
+  Monoambiente: Studio
+  Habitación infantil: Quarto infantil
+  Casa completa: Casa inteira
+  Otro: Outro
+ref1_title: "Sala de jantar em nogueira"
+ref1_sub: "Cores, móveis e têxteis"
+ref1_alt: "Sala de jantar em nogueira com têxteis e detalhes em verde-oliva"
+ref2_title: "Quarto em tons quentes"
+ref2_sub: "Texturas e iluminação"
+ref2_alt: "Quarto em tons de creme, oliva e granada"
+ref3_title: "Cantinho de leitura"
+ref3_sub: "Materiais e objetos"
+ref3_alt: "Cantinho de leitura com poltrona verde-oliva e luminária de travertino"
+site_description: "Consultoria de decoração e design de interiores online, da Argentina: renove a sua casa sem obra, com cores, móveis e iluminação."
+og_image_alt: Sala de estar aconchegante com sofá verde-oliva, móveis de nogueira e detalhes em granada

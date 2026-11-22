@@ -1,0 +1,126 @@
+# UI strings (English, US spelling; "you"). Anything missing falls back to es-ar.
+skip: Skip to content
+announcement: Online interior design consultations · from Argentina, for anywhere
+nav_aria: Main navigation
+nav_asesoria: Consultation
+nav_servicios: Services
+nav_proyectos: Projects
+nav_guias: Guides
+nav_sobre: About
+nav_contacto: Contact
+wa_aria: Message me on WhatsApp
+wa_label: WhatsApp
+bc_home: Home
+bc_services: Services
+bc_projects: Projects
+bc_guides: Guides
+contact_h2: Let's talk about your space.
+contact_preparing: We are setting up the contact channel.
+contact_wa: Message me on WhatsApp
+contact_email: Email Brenda
+btn_online: See the online consultation
+btn_how_online: How the online consultation works
+footer_tagline: Interior design and decorating · Online consultations from Argentina, no renovation needed.
+footer_services_h: Services
+footer_site_aria: The site
+footer_site_h: BRENBE
+footer_follow_h: Follow me
+footer_asesoria: Online consultation
+footer_color: Color consultation
+footer_empapelado: Wallpaper and wall coverings
+footer_mobiliario: Furniture and layout
+footer_iluminacion: Lighting and textiles
+footer_deptos: Small apartments and studios
+footer_projects: Projects
+footer_guides: Guides
+footer_about: About
+footer_contact: Contact
+faq_title: Frequently asked questions
+faq_title_asesoria: Questions about the online consultation
+guide_cta_h2: Want to apply this at home?
+guide_cta_p: If you would rather go through your room together, an online design consultation gives you a concrete plan for color, furniture and lighting, with no renovation.
+guide_cta_btn: See the online consultation
+guide_cta_wa: Ask on WhatsApp
+guide_by: By
+guide_published: Published on
+guide_updated: Updated on
+guide_read: "%s min read"
+guide_more: Keep reading
+project_eyebrow: Project
+project_start: The starting point
+project_decisions: The design decisions
+project_result: The result
+project_photos: Project photos
+project_before: Before
+project_after: After
+project_others: More projects
+project_note: "Project details in Spanish"
+projects_done_h2: Completed projects
+projects_ideas_h2: Reference ideas for your home
+projects_ideas_intro: Visual references to explore color, furniture and lighting combinations.
+service_eyebrow: Interior design service
+service_btn_consult: Ask about my space
+service_btn_wa: Message me on WhatsApp
+service_visual_ref: Visual reference
+service_others: Other services
+service_guides: Guides to go deeper
+date_fmt: "[month] [d], [y]"
+months: [January, February, March, April, May, June, July, August, September, October, November, December]
+wa_home: Hi Brenda, I found your website and I'd like to ask about an online interior design consultation.
+wa_guide: Hi Brenda, I read the guide "%s" on brenbe.com and I'd like to ask about a consultation.
+wa_page: Hi Brenda, I'm looking at "%s" on brenbe.com and I'd like to ask about a consultation.
+price_from: "From %s"
+price_ask: Ask for pricing
+schema_org_description: "Online and in-person interior design and decorating consultations to refresh a space without renovation: color, furniture, lighting and textiles."
+schema_slogan: Interiors designed around the way you live
+schema_org_service_types: [Online interior design consultation, Decorating consultation, Virtual interior design]
+schema_knows_about: [Interior design, Home decorating, Color palettes, Lighting, Furniture, Textiles]
+schema_job_title: Interior design consultant
+schema_person_description: Argentine interior design consultant and founder of BRENBE Interiorismo. Advises clients online on decorating and interior design, in Spanish and English.
+schema_person_knows: [Interior design, Decorating, Color, Lighting]
+schema_service_name: Online interior design consultation
+schema_service_type: Online interior design consultation
+schema_service_description: "Remote interior design consultation: layout, color, lighting, furniture and textiles to refresh a room without renovation, with concrete recommendations you can put into practice."
+schema_audience: People who want to refresh their home without renovating
+schema_area_online: Online, worldwide
+schema_guides_name: Interior design and decorating guides
+schema_projects_name: Interior design projects
+sw_label: Language and region
+sw_aria: Choose language or region
+banner_aria: Language suggestion
+banner_text: "Prefer English? This site is also available in English."
+banner_go: View the English version
+banner_stay: Stay here
+banner_close: Close
+nf_title: Page not found | BRENBE Interiorismo
+nf_desc: The page you are looking for does not exist or has moved.
+nf_h1: This page does not exist
+nf_p: The link may have changed or the address may have a typo. Go back home or take a look at BRENBE's projects.
+nf_home: Back to home
+nf_projects: View projects
+nf_asesoria: Online consultation
+spaces:
+  Living: Living room
+  Comedor: Dining room
+  Living comedor: Living/dining room
+  Dormitorio: Bedroom
+  Cocina: Kitchen
+  Baño: Bathroom
+  Escritorio: Home office
+  Recibidor: Entryway
+  Balcón o terraza: Balcony or patio
+  Monoambiente: Studio apartment
+  Habitación infantil: Kids' room
+  Casa completa: Whole home
+  Otro: Other
+ref1_title: "Walnut dining room"
+ref1_sub: "Color, furniture and textiles"
+ref1_alt: "Walnut dining room with textiles and olive accents"
+ref2_title: "Bedroom in warm tones"
+ref2_sub: "Textures and lighting"
+ref2_alt: "Bedroom in cream, olive and garnet tones"
+ref3_title: "Reading nook"
+ref3_sub: "Materials and objects"
+ref3_alt: "Reading nook with an olive armchair and a travertine lamp"
+site_description: "Online interior design and decorating consultations from Argentina: refresh your home without renovation, with color, furniture and lighting."
+og_image_alt: Warm living room with an olive sofa, walnut furniture and garnet accents
