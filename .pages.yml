@@ -1,219 +1,383 @@
+# Panel de Brenda (Pages CMS, https://app.pagescms.org).
+# Claves y tipos validados contra lib/config-schema.ts y fields/core/* de pages-cms/pages-cms.
+# Importante: Pages CMS solo guarda los campos que figuran acá. Si agregás una clave nueva a un
+# archivo, tiene que estar declarada (aunque sea con `hidden: true`) o se pierde al guardar.
+# Los datos técnicos (analítica, verificación de Google, redes secundarias...) viven en
+# _data/sitio.yml y _config.yml, fuera del panel, para que no se puedan romper.
+
 media:
   - name: proyectos
     label: Fotos de proyectos
     input: media/proyectos
     output: /media/proyectos
     categories: [image]
+    extensions: [jpg, jpeg, png, webp]
+    rename: random # nombre único automático: nunca se pisan fotos con el mismo nombre (IMG_0001.jpg)
   - name: guias
-    label: Imágenes de guías
+    label: Fotos de guías
     input: media/guias
     output: /media/guias
     categories: [image]
+    extensions: [jpg, jpeg, png, webp]
+    rename: random
+  - name: brenda
+    label: Mi foto
+    input: media/brenda
+    output: /media/brenda
+    categories: [image]
+    extensions: [jpg, jpeg, png, webp]
+    rename: random
+
 content:
+  # ---------------------------------------------------------------- Mis proyectos
   - name: proyectos
-    label: Proyectos
+    label: Mis proyectos
+    description: Cada proyecto es una página nueva en tu web, con sus fotos y su historia.
     type: collection
     path: _proyectos
     format: yaml-frontmatter
     filename: "{primary}.md"
+    exclude: [".gitkeep"]
+    operations:
+      rename: false # cambiar el nombre del archivo rompería el link del proyecto
     view:
       primary: title
-      fields: [title, space]
+      fields: [title, space, date]
+      default:
+        sort: date
+        order: desc
     fields:
       - name: title
-        label: Título del proyecto
-        description: Descriptivo y con el tipo de ambiente, por ejemplo "Living con sofá oliva y nogal". Evitá títulos como "Proyecto 1".
+        label: Nombre del proyecto
+        description: 'Contá qué es y cómo es, por ejemplo "Living con sofá oliva y nogal". Evitá "Proyecto 1".'
         type: string
-        required: true
-      - name: space
-        label: Tipo de ambiente
-        description: Por ejemplo, living, comedor o dormitorio.
-        type: string
-        required: true
-      - name: description
-        label: Resumen breve
-        description: Una o dos frases que resuman el proyecto. Es el texto que se ve en Google (120 a 155 caracteres).
-        type: text
         required: true
         options:
-          maxlength: 155
+          maxlength: 90
+      - name: space
+        label: Tipo de ambiente
+        description: Elegí el que más se parezca. Si no está, elegí "Otro".
+        type: select
+        required: true
+        options:
+          placeholder: Elegí un ambiente
+          values:
+            - Living
+            - Comedor
+            - Living comedor
+            - Dormitorio
+            - Cocina
+            - Baño
+            - Escritorio
+            - Recibidor
+            - Balcón o terraza
+            - Monoambiente
+            - Habitación infantil
+            - Casa completa
+            - Otro
+      - name: location
+        label: Ciudad o barrio (opcional)
+        description: 'Por ejemplo "Palermo, CABA" o "Rosario". Dejalo vacío si preferís no mostrarlo.'
+        type: string
+        options:
+          maxlength: 60
       - name: date
-        label: Fecha de publicación
-        description: Se usa para ordenar los proyectos y avisar a Google cuándo se publicó.
+        label: Fecha del proyecto
+        description: Ya viene con la fecha de hoy. Con esta fecha se ordenan los proyectos, los más nuevos primero.
         type: date
         required: true
-      - name: updated
-        label: Última actualización
-        description: Completalo solo si modificás el proyecto de forma importante.
-        type: date
       - name: cover
-        label: Foto de portada
+        label: Foto principal
+        description: "Es la foto que se ve en la lista de proyectos y arriba de todo. Subí una foto horizontal, en jpg o png. Si es muy pesada no pasa nada, la web la achica sola."
         type: image
         required: true
         options:
           media: proyectos
           extensions: [jpg, jpeg, png, webp]
-          rename: safe
       - name: cover_alt
-        label: Descripción de la portada
-        description: Contá qué se ve en la imagen (ambiente, color, materiales), en unos 80 a 125 caracteres, sin empezar con "imagen de".
+        label: Qué se ve en la foto principal
+        description: 'Describila como si se la contaras a alguien por teléfono. Ejemplo: "Living con sofá verde oliva, mesa ratona de madera y cortinas de lino". Ayuda a personas que no ven bien y a que te encuentren en Google.'
         type: string
+        options:
+          maxlength: 140
+      - name: description
+        label: Resumen breve
+        description: 'Una o dos frases que cuenten el proyecto. Ejemplo: "Renovamos un living de 20 m² con una paleta cálida, sin hacer obra." Es lo que se ve en Google.'
+        type: text
         required: true
+        options:
+          maxlength: 155
       - name: objective
         label: El punto de partida
+        description: '¿Qué necesitaba la persona o el espacio? Ejemplo: "Un living oscuro y desordenado donde la familia no se juntaba."'
         type: text
         required: true
+        options:
+          maxlength: 800
       - name: decisions
-        label: Decisiones de diseño
+        label: Qué decidimos
+        description: '¿Qué cambios hiciste y por qué? Colores, muebles, luces, textiles. Ejemplo: "Elegimos un verde oliva para el sofá porque combina con la madera que ya tenían."'
         type: text
         required: true
+        options:
+          maxlength: 1500
       - name: result
-        label: El resultado
+        label: El resultado (opcional)
+        description: '¿Cómo quedó y qué cambió? Ejemplo: "Ahora el living es el lugar preferido de la casa."'
         type: text
+        options:
+          maxlength: 800
       - name: gallery
-        label: Galería
+        label: Más fotos del proyecto (opcional)
+        description: Agregá una por una. Podés arrastrarlas para cambiar el orden. Hasta 12 fotos.
         type: object
         list:
           max: 12
-          collapsible: true
+          collapsible:
+            collapsed: false
+            summary: "Foto {index}: {fields.alt}"
         fields:
           - name: image
             label: Foto
+            description: En jpg o png.
             type: image
             required: true
             options:
               media: proyectos
               extensions: [jpg, jpeg, png, webp]
-              rename: safe
           - name: alt
-            label: Qué se ve en la foto
+            label: Qué se ve en esta foto
+            description: 'Ejemplo: "Detalle de la mesa de comedor de nogal con jarrón de cerámica".'
             type: string
-            required: true
+            options:
+              maxlength: 140
+          - name: etapa
+            label: ¿Es una foto de antes o de después? (opcional)
+            description: Si la marcás, se muestra una etiqueta arriba de la foto. Si no, dejalo vacío.
+            type: select
+            options:
+              placeholder: Ninguna
+              values:
+                - value: antes
+                  label: Antes
+                - value: despues
+                  label: Después
+      - name: testimonial
+        label: Lo que dijo quien vive ahí (opcional)
+        description: Si la persona te dio permiso, copiá acá lo que te dijo. Si no hay nada escrito, no se muestra nada.
+        type: object
+        fields:
+          - name: quote
+            label: Lo que dijo
+            description: 'Ejemplo: "Brenda entendió enseguida cómo vivimos. El living quedó hermoso."'
+            type: text
+            options:
+              maxlength: 400
+          - name: author
+            label: Nombre de quien lo dijo
+            description: 'Ejemplo: "Laura, Palermo". Si prefieren no dar el apellido, alcanza con el nombre.'
+            type: string
+            options:
+              maxlength: 60
+
+  # ---------------------------------------------------------------- Mis guías
   - name: guias
-    label: Guías
+    label: Mis guías
+    description: Artículos con consejos de decoración. Ayudan a que más gente te encuentre en Google.
     type: collection
     path: _guias
     format: yaml-frontmatter
     filename: "{primary}.md"
+    operations:
+      rename: false # cambiar el nombre del archivo rompería el link de la guía
     view:
       primary: title
       fields: [title, category, date]
+      default:
+        sort: date
+        order: desc
     fields:
       - name: title
         label: Título de la guía
-        description: Es el título que se ve en la página y en Google. Incluí la búsqueda principal, por ejemplo "Cómo decorar un living chico".
+        description: 'Escribilo como lo buscaría alguien en Google. Ejemplo: "Cómo decorar un living chico".'
         type: string
         required: true
-      - name: description
-        label: Resumen breve
-        description: Una o dos frases que resuman la guía. Es el texto que se ve en Google (120 a 155 caracteres).
-        type: text
-        required: true
         options:
-          maxlength: 155
+          maxlength: 90
       - name: category
-        label: Categoría
+        label: Tema
+        description: Elegí el tema que más se parezca.
         type: select
         required: true
         options:
-          values: [Espacios chicos, Color, Muebles y distribución, Iluminación, Papel pintado, Tendencias, Proceso]
+          placeholder: Elegí un tema
+          values:
+            - Espacios chicos
+            - Color
+            - Muebles y distribución
+            - Iluminación
+            - Papel pintado
+            - Tendencias
+            - Proceso
+            - Otros temas
       - name: date
-        label: Fecha de publicación
+        label: Fecha
+        description: Ya viene con la fecha de hoy.
         type: date
         required: true
-      - name: updated
-        label: Última actualización
-        description: Completalo cuando revises o ampliés la guía. Se muestra en la página y se avisa a Google.
-        type: date
       - name: cover
-        label: Imagen de portada
+        label: Foto principal
+        description: "Foto horizontal, en jpg o png. Si es muy pesada no pasa nada, la web la achica sola."
         type: image
         required: true
         options:
           media: guias
           extensions: [jpg, jpeg, png, webp]
-          rename: safe
       - name: cover_alt
-        label: Descripción de la portada
-        description: Contá qué se ve en la imagen (ambiente, color, materiales), en unos 80 a 125 caracteres, sin empezar con "imagen de".
+        label: Qué se ve en la foto principal
+        description: 'Ejemplo: "Living con sofá verde oliva y mesa ratona de madera".'
         type: string
+        options:
+          maxlength: 140
+      - name: description
+        label: Resumen breve
+        description: 'Una o dos frases que cuenten de qué trata la guía. Es lo que se ve en Google.'
+        type: text
         required: true
+        options:
+          maxlength: 155
+      - name: body
+        label: La guía
+        description: 'Escribí como si le hablaras a una amiga. Usá los botones de arriba para poner títulos, listas o negritas. Para una sección nueva, usá el botón de título.'
+        type: rich-text
+        options:
+          media: guias
+          extensions: [jpg, jpeg, png, webp]
+          switcher: false
+      - name: faq
+        label: Preguntas y respuestas (opcional)
+        description: 'Entre 3 y 4 preguntas que suele hacer la gente sobre este tema. Se muestran al final de la guía.'
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.q}"
+        fields:
+          - name: q
+            label: Pregunta
+            type: string
+            required: true
+            options:
+              maxlength: 140
+          - name: a
+            label: Respuesta
+            description: 'Entre 2 y 4 oraciones.'
+            type: text
+            required: true
+            options:
+              maxlength: 600
+      # Campos que ya existen en las guías: se declaran ocultos para que no se pierdan al guardar.
       - name: related
-        label: Guías relacionadas (opcional)
-        description: Nombre del archivo de otras guías, sin el .md, por ejemplo colores-para-living. Si queda vacío se muestran las más recientes.
         type: string
         list: true
-      - name: body
-        label: Contenido
-        description: Usá títulos de nivel 2 para las secciones. Podés enlazar a otras guías y a la asesoría.
-        type: rich-text
-      - name: faq
-        label: Preguntas frecuentes (opcional)
-        description: De 3 a 4 preguntas con respuestas de 40 a 80 palabras. Se muestran al final y ayudan a aparecer en Google.
-        type: object
-        list: true
-        fields:
-          - { name: q, label: Pregunta, type: string, required: true }
-          - { name: a, label: Respuesta, type: text, required: true }
+        hidden: true
+      - name: updated
+        type: date
+        default: ""
+        hidden: true
+
+  # ---------------------------------------------------------------- Mis datos
   - name: negocio
-    label: Datos del negocio
+    label: Mis datos
+    description: Tu WhatsApp, tu mail, tu Instagram, tu foto y tu historia. Lo que dejes vacío no se muestra en la web.
     type: file
     path: _data/negocio.yml
     format: yaml
     fields:
-      - { name: nombre_completo, label: Nombre y apellido de Brenda, type: string }
-      - { name: apellido, label: Apellido, type: string }
-      - { name: cargo, label: "Cómo te presentás (Interiorista, Diseñadora de interiores, Decoradora)", type: string }
-      - { name: formacion, label: Formación (título e institución), type: string }
-      - { name: anio_inicio, label: Año en que empezaste a trabajar, type: string }
+      - name: nombre_completo
+        label: Tu nombre y apellido
+        description: 'Ejemplo: "Brenda Pérez". Aparece en la página "Sobre mí".'
+        type: string
+        options:
+          maxlength: 80
       - name: retrato
-        label: Foto retrato
+        label: Tu foto
+        description: Una foto tuya, mejor vertical, en jpg o png.
         type: image
         options:
-          media: proyectos
+          media: brenda
           extensions: [jpg, jpeg, png, webp]
-          rename: safe
       - name: bio
-        label: Tu historia (aparece en "Sobre Brenda"; con nombre y bio la página se publica en Google)
-        description: Dos o tres párrafos sobre cómo llegaste al interiorismo y cómo trabajás. Usá solo datos reales.
+        label: Tu historia
+        description: 'Dos o tres párrafos sobre cómo llegaste al interiorismo y cómo trabajás. Dejá una línea en blanco entre un párrafo y otro. La página "Sobre mí" aparece en Google cuando completás tu nombre y tu historia.'
         type: text
-      - { name: ciudad, label: Ciudad base, type: string }
-      - { name: provincia, label: Provincia, type: string }
-      - name: zona_presencial
-        label: Zonas donde atendés de forma presencial
-        description: Una por línea de la lista, por ejemplo CABA o GBA Norte. Dejalo vacío si solo trabajás online.
+        options:
+          maxlength: 2500
+      - name: whatsapp
+        label: Tu WhatsApp
+        description: 'Solo números, sin espacios ni signos, con código de país. Ejemplo: 5491112345678 (54 es Argentina, 9 va siempre para celulares, después el código de área sin 0 y el número sin 15).'
         type: string
-        list: true
-      - { name: direccion, label: "Dirección del estudio (solo si atendés al público)", type: string }
-      - { name: codigo_postal, label: Código postal del estudio, type: string }
+        pattern:
+          regex: '^[0-9]{10,15}$'
+          message: 'Escribí solo números, sin espacios ni signos. Ejemplo: 5491112345678'
       - name: email
-        label: Correo público de BRENBE
+        label: Tu mail
+        description: 'Ejemplo: hola@brenbe.com'
         type: string
-        pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
-      - { name: telefono, label: "Teléfono (con código de país, por ejemplo +5491112345678)", type: string }
-      - { name: whatsapp, label: "WhatsApp (solo números con código de país, por ejemplo 5491112345678)", type: string }
-      - { name: whatsapp_mensaje, label: Mensaje que se completa al abrir WhatsApp, type: string }
-      - { name: instagram, label: Link de Instagram, type: string }
-      - { name: pinterest, label: Link de Pinterest, type: string }
-      - { name: linkedin, label: Link de LinkedIn, type: string }
-      - { name: facebook, label: Link de Facebook, type: string }
-      - { name: behance, label: Link de Behance, type: string }
-      - { name: google_business_url, label: Link de tu perfil de Google Business, type: string }
-      - { name: moneda, label: "Moneda del precio (ARS o USD)", type: string }
-      - { name: precio_desde, label: "Precio desde de la asesoría (solo el número). Vacío = no se publica precio", type: string }
-      - { name: cloudflare_analytics_token, label: "Token de Cloudflare Web Analytics (opcional; vacío = no se mide)", type: string }
-      - { name: google_site_verification, label: "Código de verificación de Google Search Console (opcional)", type: string }
-      - { name: duracion, label: "Duración o plazo, por ejemplo: Reunión de 60 minutos y propuesta en 7 días", type: string }
+        pattern:
+          regex: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+          message: 'Revisá que el mail esté bien escrito. Ejemplo: hola@brenbe.com'
+      - name: instagram
+        label: Link de tu Instagram
+        description: 'Abrí tu perfil en Instagram, copiá el link y pegalo acá. Ejemplo: https://www.instagram.com/brenbe'
+        type: string
+        pattern:
+          regex: '^https?://.+'
+          message: 'El link tiene que empezar con https://'
+      - name: moneda
+        label: Moneda de tus precios
+        type: select
+        options:
+          values:
+            - value: ARS
+              label: Pesos argentinos
+            - value: USD
+              label: Dólares
+      - name: precio_desde
+        label: Precio de la asesoría, desde
+        description: 'Solo el número, sin puntos ni signos. Ejemplo: 80000. Si lo dejás vacío no se publica ningún precio.'
+        type: number
+        options:
+          min: 0
+
+  # ---------------------------------------------------------------- Preguntas frecuentes
   - name: faq
     label: Preguntas frecuentes
+    description: Las preguntas que más te hacen y tus respuestas. Se muestran en la web.
     type: file
     path: _data/faq.yml
     format: yaml
     fields:
       - name: items
         label: Preguntas
+        description: Podés agregar, borrar y arrastrar para cambiar el orden.
         type: object
-        list: true
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{fields.q}"
         fields:
-          - { name: q, label: Pregunta, type: string, required: true }
-          - { name: a, label: Respuesta (40 a 80 palabras), type: text, required: true }
+          - name: q
+            label: Pregunta
+            description: '¿Qué te preguntan? Ejemplo: "¿Tengo que comprar muebles nuevos?"'
+            type: string
+            required: true
+            options:
+              maxlength: 140
+          - name: a
+            label: Respuesta
+            description: 'Respondé en 2 a 4 oraciones, como si estuvieras hablando con la persona.'
+            type: text
+            required: true
+            options:
+              maxlength: 600
