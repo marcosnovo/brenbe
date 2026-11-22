@@ -1,0 +1,42 @@
+---
+layout: base
+locale: en
+ref: guia-de-paletas
+ready: false
+title: "Free color palette guide"
+seo_title: "Free Color Palette Guide | BRENBE"
+description: "Request BRENBE's free color palette guide: color combinations for the living room and bedroom, how to use them and what to look for in paint and textiles."
+last_modified_at: 2026-11-22
+breadcrumb: "Color palette guide"
+index_when_any: [whatsapp, email]
+wa_message: "Hi Brenda, I'd like the free color palette guide (PALETTE). My space is: ___"
+permalink: /en/color-palette-guide/
+---
+{% include loc.html %}
+{% include wa.html %}
+{%- assign lm_mail = site.data.negocio.email | default: '' | append: '' | strip -%}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / Color palette guide</p>
+    <h1>Free color palette guide</h1>
+    <p class="lead-text">Color palettes designed for a living room and a bedroom, with how to combine them and what to look for in paint and textiles. Ask for it free, no strings attached.</p>
+  </div>
+  <section class="section copy">
+    <h2>What you will find</h2>
+    <ul>
+      <li>Color combinations for the living room and the bedroom.</li>
+      <li>How to use the 60-30-10 rule in every palette.</li>
+      <li>Which paint and textiles to look for, and how to test a sample.</li>
+      <li>A one-page checklist for before you paint or buy.</li>
+    </ul>
+    <h2>How to get it</h2>
+    <p>Message me on WhatsApp with the word PALETTE and tell me which room you want to refresh, or ask for it by email. I will send it the same day.</p>
+    <div class="actions lead-actions">
+      {% if wa_href != '' %}<a class="button primary" href="{{ wa_href }}" rel="{{ wa_rel }}">Ask on WhatsApp</a>{% endif %}
+      {% if lm_mail != '' %}<a class="button secondary" href="mailto:{{ lm_mail | escape }}?subject={{ 'Color palette guide' | url_encode }}">Ask by email</a>{% endif %}
+    </div>
+    <p class="pal-note">We use your message only to send you the guide and reply. We do not add you to any list unless you ask.</p>
+    <p class="todo-note">TODO(i18n): write the real guide content, review the privacy notice and switch ready: false to ready: true once the PDF is ready.</p>
+  </section>
+  {% include contact.html %}
+</main>

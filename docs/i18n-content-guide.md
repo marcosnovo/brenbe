@@ -69,3 +69,7 @@ Son una sola colección en español (la carga Brenda). En los otros idiomas el l
 ## Redirección automática (Cloudflare)
 
 `functions/index.js` solo responde a `GET /`: primera visita, sin cookie `brenbe_loc`, no bots, con Accept-Language compatible, país mapeado y idioma publicado (`/locales.json`): 302 al idioma. `?nolang` la desactiva. Prueba: `node tests/function-redirect.test.mjs`. Verificar con "Inspección de URL" de Search Console que Googlebot ve `/` sin redirección.
+
+## Temas (hubs) y plantillas de guía
+
+Cada guía puede llevar `hub:` y `role: pilar|cluster` (ver `_data/hubs.yml`). La página del tema se genera sola en cada idioma con al menos 2 guías publicadas de ese tema (slugs y textos por idioma en `hubs.yml`). Plantillas de paleta, idea, estilo, antes/después y glosario: `docs/growth/plantillas.md`. Medición de clics a WhatsApp y UTM: `docs/growth/utm.md`. Páginas de la guía de paletas (lead magnet): `ref: guia-de-paletas`, todas con `ready: false` y marcador `TODO(i18n)` hasta tener el PDF.

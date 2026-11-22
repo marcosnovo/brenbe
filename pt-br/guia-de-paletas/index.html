@@ -1,0 +1,42 @@
+---
+layout: base
+locale: pt-br
+ref: guia-de-paletas
+ready: false
+title: "Guia de paletas grátis"
+seo_title: "Guia de paletas de cores grátis | BRENBE"
+description: "Peça o guia de paletas grátis da BRENBE: combinações de cores para a sala e o quarto, como usar e o que procurar em tintas e têxteis."
+last_modified_at: 2026-11-22
+breadcrumb: "Guia de paletas"
+index_when_any: [whatsapp, email]
+wa_message: "Olá Brenda, quero o guia de paletas grátis (PALETA). Meu espaço é: ___"
+permalink: /pt-br/guia-de-paletas/
+---
+{% include loc.html %}
+{% include wa.html %}
+{%- assign lm_mail = site.data.negocio.email | default: '' | append: '' | strip -%}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / Guia de paletas</p>
+    <h1>Guia de paletas grátis</h1>
+    <p class="lead-text">Paletas de cores pensadas para uma sala e um quarto, com como combiná-las e o que procurar em tintas e têxteis. Peça sem custo e sem compromisso.</p>
+  </div>
+  <section class="section copy">
+    <h2>O que você vai encontrar</h2>
+    <ul>
+      <li>Combinações de cores para a sala e o quarto.</li>
+      <li>Como usar a regra 60-30-10 em cada paleta.</li>
+      <li>Que tinta e que têxteis procurar, e como testar uma amostra.</li>
+      <li>Uma checklist de uma página para antes de pintar ou comprar.</li>
+    </ul>
+    <h2>Como pedir</h2>
+    <p>Escreva para mim no WhatsApp com a palavra PALETA e conte qual ambiente quer renovar, ou peça por e-mail. Envio no mesmo dia.</p>
+    <div class="actions lead-actions">
+      {% if wa_href != '' %}<a class="button primary" href="{{ wa_href }}" rel="{{ wa_rel }}">Pedir pelo WhatsApp</a>{% endif %}
+      {% if lm_mail != '' %}<a class="button secondary" href="mailto:{{ lm_mail | escape }}?subject={{ 'Guia de paletas' | url_encode }}">Pedir por e-mail</a>{% endif %}
+    </div>
+    <p class="pal-note">Usamos sua mensagem apenas para enviar o guia e responder. Não colocamos você em nenhuma lista sem que peça.</p>
+    <p class="todo-note">TODO(i18n): escrever o conteúdo real do guia, revisar o aviso de privacidade (LGPD) e trocar ready: false por ready: true quando o PDF estiver pronto.</p>
+  </section>
+  {% include contact.html %}
+</main>
