@@ -4,6 +4,8 @@ description: "How to decorate a small living room without renovating: measure fi
 ref: como-decorar-un-living-chico
 ready: true
 category: Small spaces
+hub: depto-chico
+role: cluster
 date: 2026-11-22
 cover: /rincon-de-lectura.webp
 cover_alt: "Reading nook with an olive armchair and a travertine lamp"

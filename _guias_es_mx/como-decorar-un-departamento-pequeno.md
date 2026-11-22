@@ -2,6 +2,8 @@
 title: "Cómo decorar un departamento pequeño o tipo estudio sin remodelar"
 description: "Cómo decorar un departamento pequeño sin remodelar: dividir zonas, ubicar cama y sofá, guardado, una paleta única y qué hacer si rentas."
 category: Espacios pequeños
+hub: depto-chico
+role: cluster
 date: 2026-11-21
 ready: true
 seo_title: "Cómo decorar un departamento pequeño | BRENBE"

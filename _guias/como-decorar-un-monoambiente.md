@@ -2,6 +2,8 @@
 title: "Cómo decorar un monoambiente sin obra"
 description: "Cómo decorar un monoambiente sin hacer obra: dividir zonas, ubicar cama y sofá, guardado, paleta única y qué hacer si alquilás. Ideas por prioridades."
 category: Espacios chicos
+hub: depto-chico
+role: cluster
 date: 2026-11-21
 cover: /dormitorio-tonos-calidos.webp
 cover_alt: "Dormitorio en tonos crema, oliva y granate"

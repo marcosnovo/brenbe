@@ -4,6 +4,8 @@ description: "How to choose living room paint colors: light and window direction
 ref: colores-para-living
 ready: true
 category: Color
+hub: color-y-paletas
+role: pilar
 date: 2026-11-20
 cover: /living-sofa-oliva.webp
 cover_alt: "Warm living room with an olive sofa, walnut furniture and garnet accents"

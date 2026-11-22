@@ -1,0 +1,316 @@
+# Temas (hubs) de contenido: un pilar + varias guías que lo rodean. NO se edita desde el panel de Brenda.
+#
+# Cada guía se asigna a un tema con `hub: <id>` y `role: pilar | cluster` en su front matter (ver docs/growth/plantillas.md).
+# La página del tema (p. ej. /guias/depto-chico/) se GENERA SOLA (_plugins/brenbe.rb) en cada idioma que tenga al menos
+# `min_guides` guías publicadas de ese tema (publicada = misma regla que el sitemap: ready, idioma activo, index_when).
+# Con menos, la página no existe: nada de páginas finas. Al publicar la guía que falta, aparece sola.
+#
+# Por idioma: slug (último tramo de la URL; no puede coincidir con el nombre de una guía), nombre (corto: menús, migas,
+# "Más en este tema"), titulo (H1), seo_title (≤ 60 caracteres), descripcion (≤ 155), intro (párrafo de la página).
+# `servicio`: ref del servicio con el que cierra el tema.
+min_guides: 2
+hubs:
+  depto-chico:
+    fase: 1
+    servicio: servicio-deptos
+    es-ar:
+      slug: depto-chico
+      nombre: Deptos chicos y monoambientes
+      titulo: Cómo decorar un depto chico o un monoambiente
+      seo_title: "Decorar un depto chico o monoambiente | BRENBE"
+      descripcion: "Guías para decorar un depto chico o un monoambiente: distribución, color, guardado y muebles a medida del espacio, sin hacer obra."
+      intro: "Un ambiente chico no pide más metros: pide mejores decisiones. Acá juntamos las guías para ordenar la distribución, elegir muebles a la medida del espacio y ganar amplitud con color y luz, sin tocar una pared."
+    es-mx:
+      slug: departamento-pequeno
+      nombre: Departamentos pequeños y estudios
+      titulo: Cómo decorar un departamento pequeño o tipo estudio
+      seo_title: "Decorar un departamento pequeño o estudio | BRENBE"
+      descripcion: "Guías para decorar un departamento pequeño o tipo estudio: distribución, color, almacenaje y muebles a la medida del espacio, sin remodelar."
+      intro: "Un espacio pequeño no necesita más metros: necesita mejores decisiones. Aquí reunimos las guías para acomodar los muebles, elegir piezas a la medida del lugar y ganar amplitud con color y luz, sin remodelar."
+    es-es:
+      slug: piso-pequeno
+      nombre: Pisos pequeños y estudios
+      titulo: Cómo decorar un piso pequeño o un estudio
+      seo_title: "Decorar un piso pequeño o estudio sin obras | BRENBE"
+      descripcion: "Guías para decorar un piso pequeño o un estudio: distribución, color, almacenaje y muebles a medida del espacio, sin hacer obras."
+      intro: "Un espacio pequeño no necesita más metros, sino mejores decisiones. Aquí reunimos las guías para distribuir el mobiliario, elegir piezas a la medida de la estancia y ganar amplitud con color y luz, sin obras."
+    en:
+      slug: small-apartment
+      nombre: Small apartments and studios
+      titulo: How to decorate a small apartment or studio
+      seo_title: "Small Apartment & Studio Decorating Guides | BRENBE"
+      descripcion: "Guides to decorating a small apartment or studio: layout, color, storage and furniture sized to the space, with no renovation needed."
+      intro: "A small space does not need more square feet; it needs better decisions. These guides cover how to lay out the furniture, choose pieces sized to the room and gain a sense of space with color and light, with no renovation."
+    pt-br:
+      slug: apartamento-pequeno
+      nombre: Apartamentos pequenos e kitnets
+      titulo: Como decorar um apartamento pequeno ou kitnet
+      seo_title: "Decorar apartamento pequeno ou kitnet | BRENBE"
+      descripcion: "Guias para decorar apartamento pequeno ou kitnet: distribuição, cor, armazenamento e móveis na medida do espaço, sem obra."
+      intro: "Um espaço pequeno não precisa de mais metros: precisa de decisões melhores. Aqui reunimos os guias para distribuir os móveis, escolher peças na medida do ambiente e ganhar amplitude com cor e luz, sem obra."
+  color-y-paletas:
+    fase: 1
+    servicio: servicio-color
+    es-ar:
+      slug: color-y-paletas
+      nombre: Color y paletas
+      titulo: Cómo elegir el color y la paleta de cada ambiente
+      seo_title: "Color y paletas para decorar tu casa | BRENBE"
+      descripcion: "Guías de color para tu casa: cómo elegir la pintura según la luz, armar una paleta y combinar neutros, verdes y acentos en cada ambiente."
+      intro: "El color es la decisión más barata y la que más cambia un ambiente. Acá encontrás las guías para leer la luz de tu casa, armar una paleta que se sostenga y probar antes de pintar."
+    es-mx:
+      slug: color-y-paletas
+      nombre: Color y paletas
+      titulo: Cómo elegir el color y la paleta de cada espacio
+      seo_title: "Color y paletas para decorar tu casa | BRENBE"
+      descripcion: "Guías de color para tu casa: cómo elegir la pintura según la luz, armar una paleta y combinar neutros, verdes y acentos en cada espacio."
+      intro: "El color es la decisión más económica y la que más cambia un espacio. Aquí encontrarás las guías para leer la luz de tu casa, armar una paleta que funcione y probar antes de pintar."
+    es-es:
+      slug: color-y-paletas
+      nombre: Color y paletas
+      titulo: Cómo elegir el color y la paleta de cada estancia
+      seo_title: "Color y paletas para decorar tu casa | BRENBE"
+      descripcion: "Guías de color para tu casa: cómo elegir la pintura según la luz, crear una paleta y combinar neutros, verdes y acentos en cada estancia."
+      intro: "El color es la decisión más económica y la que más cambia una estancia. Aquí encontrarás las guías para leer la luz de tu casa, crear una paleta equilibrada y probar antes de pintar."
+    en:
+      slug: color-and-palettes
+      nombre: Color and palettes
+      titulo: How to choose the color and palette for every room
+      seo_title: "Paint Colors & Palettes for Your Home | BRENBE"
+      descripcion: "Color guides for your home: how to choose paint for your light, build a palette and combine neutrals, greens and accents in every room."
+      intro: "Color is the cheapest decision and the one that changes a room the most. These guides show you how to read the light at home, build a palette that holds together and test before you paint."
+    pt-br:
+      slug: cores-e-paletas
+      nombre: Cores e paletas
+      titulo: Como escolher a cor e a paleta de cada ambiente
+      seo_title: "Cores e paletas para decorar sua casa | BRENBE"
+      descripcion: "Guias de cor para sua casa: como escolher a tinta conforme a luz, montar uma paleta e combinar neutros, verdes e destaques em cada ambiente."
+      intro: "A cor é a decisão mais barata e a que mais transforma um ambiente. Aqui estão os guias para ler a luz da sua casa, montar uma paleta que funcione e testar antes de pintar."
+  decorar-alquilando:
+    fase: 1
+    servicio: asesoria-online
+    es-ar:
+      slug: decorar-alquilando
+      nombre: Decorar alquilando
+      titulo: Cómo decorar un departamento alquilado sin hacer obra
+      seo_title: "Decorar un depto alquilado sin obra | BRENBE"
+      descripcion: "Guías para decorar un departamento alquilado sin hacer obra: qué es reversible, cómo pedir permiso y cambios que se llevan en la mudanza."
+      intro: "Alquilar no es un impedimento para tener un hogar lindo. Estas guías se enfocan en cambios reversibles y que se llevan con vos: luz, textiles, color y muebles, sin agujeros ni obra."
+    es-mx:
+      slug: decorar-rentando
+      nombre: Decorar rentando
+      titulo: Cómo decorar un departamento rentado sin hacer obra
+      seo_title: "Decorar un departamento rentado sin obra | BRENBE"
+      descripcion: "Guías para decorar un departamento rentado sin hacer obra: qué es reversible, cómo pedir permiso y cambios que te llevas en la mudanza."
+      intro: "Rentar no es un impedimento para tener un hogar bonito. Estas guías se enfocan en cambios reversibles que te llevas contigo: luz, textiles, color y muebles, sin agujeros ni obra."
+    es-es:
+      slug: decorar-de-alquiler
+      nombre: Decorar un piso de alquiler
+      titulo: Cómo decorar un piso de alquiler sin hacer obras
+      seo_title: "Decorar un piso de alquiler sin obras | BRENBE"
+      descripcion: "Guías para decorar un piso de alquiler sin obras: qué es reversible, cómo pedir permiso al propietario y cambios que te llevas en la mudanza."
+      intro: "Vivir de alquiler no impide tener una casa bonita. Estas guías se centran en cambios reversibles que te llevas contigo: luz, textiles, color y mobiliario, sin agujeros ni obras."
+    en:
+      slug: renter-friendly-decorating
+      nombre: Renter-friendly decorating
+      titulo: How to decorate a rental apartment without renovating
+      seo_title: "Renter-Friendly Decorating Guides | BRENBE"
+      descripcion: "Guides to decorating a rental without renovating: what is reversible, how to ask your landlord and changes you can take with you when you move."
+      intro: "Renting is no reason to live with a home you do not love. These guides focus on reversible changes you can take with you: lighting, textiles, color and furniture, with no holes and no renovation."
+    pt-br:
+      slug: decorar-alugando
+      nombre: Decorar alugando
+      titulo: Como decorar um apartamento alugado sem fazer obra
+      seo_title: "Decorar apartamento alugado sem obra | BRENBE"
+      descripcion: "Guias para decorar apartamento alugado sem obra: o que é reversível, como pedir permissão ao proprietário e mudanças que você leva na mudança."
+      intro: "Morar de aluguel não impede uma casa bonita. Estes guias focam em mudanças reversíveis que você leva consigo: luz, têxteis, cor e móveis, sem furos e sem obra."
+  presupuesto:
+    fase: 1
+    servicio: asesoria-online
+    es-ar:
+      slug: presupuesto
+      nombre: Presupuesto y precios
+      titulo: Cómo decorar con presupuesto y cuánto cuesta una asesoría
+      seo_title: "Decorar con poco presupuesto y precios | BRENBE"
+      descripcion: "Guías para decorar con presupuesto: por dónde empezar, qué cambia más con menos plata y cuánto cuesta trabajar con una asesora de interiorismo."
+      intro: "Decorar bien no depende de gastar más, sino de elegir en qué. Acá van las guías para ordenar prioridades, entender qué cambia más con menos y saber qué esperar de una asesoría."
+    es-mx:
+      slug: presupuesto
+      nombre: Presupuesto y precios
+      titulo: Cómo decorar con presupuesto y cuánto cuesta un diseñador
+      seo_title: "Decorar con poco presupuesto y precios | BRENBE"
+      descripcion: "Guías para decorar con presupuesto: por dónde empezar, qué cambia más con menos dinero y cuánto cuesta trabajar con una asesora de interiores."
+      intro: "Decorar bien no depende de gastar más, sino de elegir en qué. Aquí van las guías para ordenar prioridades, entender qué cambia más con menos y saber qué esperar de una asesoría."
+    es-es:
+      slug: presupuesto
+      nombre: Presupuesto y precios
+      titulo: Cómo decorar con presupuesto y cuánto cuesta un interiorista
+      seo_title: "Decorar con poco presupuesto y precios | BRENBE"
+      descripcion: "Guías para decorar con presupuesto: por dónde empezar, qué cambia más con menos dinero y cuánto cuesta trabajar con una interiorista."
+      intro: "Decorar bien no depende de gastar más, sino de elegir en qué. Aquí tienes las guías para ordenar prioridades, entender qué cambia más con menos y saber qué esperar de una asesoría."
+    en:
+      slug: budget
+      nombre: Budget and pricing
+      titulo: How to decorate on a budget and what a consultation costs
+      seo_title: "Decorating on a Budget & Pricing Guides | BRENBE"
+      descripcion: "Guides to decorating on a budget: where to start, what changes a room the most for the least money and what an interior design consultation costs."
+      intro: "Decorating well is not about spending more; it is about choosing where to spend. These guides help you set priorities, see what changes the most for the least and know what to expect from a consultation."
+    pt-br:
+      slug: orcamento
+      nombre: Orçamento e preços
+      titulo: Como decorar com orçamento e quanto custa uma consultoria
+      seo_title: "Decorar com pouco orçamento e preços | BRENBE"
+      descripcion: "Guias para decorar com orçamento: por onde começar, o que muda mais com menos dinheiro e quanto custa uma consultoria de decoração."
+      intro: "Decorar bem não depende de gastar mais, e sim de escolher onde gastar. Aqui estão os guias para definir prioridades, entender o que muda mais com menos e saber o que esperar de uma consultoria."
+  iluminacion:
+    fase: 2
+    servicio: servicio-iluminacion
+    es-ar:
+      slug: iluminacion
+      nombre: Iluminación
+      titulo: "Iluminación para el hogar: luz cálida, capas y lámparas"
+      seo_title: "Iluminación del hogar: guías de decoración | BRENBE"
+      descripcion: "Guías de iluminación para tu casa: luz cálida o fría, luz en capas, apliques y lámparas de pie, sin tocar la instalación eléctrica."
+      intro: "La luz cambia cómo se ve y cómo se siente un ambiente más que casi cualquier mueble. Estas guías explican cómo combinar luces, qué temperatura elegir y cómo iluminar sin obra."
+    es-mx:
+      slug: iluminacion
+      nombre: Iluminación
+      titulo: "Iluminación para el hogar: luz cálida, capas y lámparas"
+      seo_title: "Iluminación del hogar: guías de decoración | BRENBE"
+      descripcion: "Guías de iluminación para tu casa: luz cálida o fría, luz en capas, arbotantes y lámparas de pie, sin tocar la instalación eléctrica."
+      intro: "La luz cambia cómo se ve y cómo se siente un espacio más que casi cualquier mueble. Estas guías explican cómo combinar luces, qué temperatura elegir y cómo iluminar sin obra."
+    es-es:
+      slug: iluminacion
+      nombre: Iluminación
+      titulo: "Iluminación para el hogar: luz cálida, capas y lámparas"
+      seo_title: "Iluminación del hogar: guías de decoración | BRENBE"
+      descripcion: "Guías de iluminación para tu casa: luz cálida o fría, luz en capas, apliques y lámparas de pie, sin tocar la instalación eléctrica."
+      intro: "La luz cambia cómo se ve y cómo se siente una estancia más que casi cualquier mueble. Estas guías explican cómo combinar luces, qué temperatura elegir y cómo iluminar sin obras."
+    en:
+      slug: lighting
+      nombre: Lighting
+      titulo: "Home lighting: warm light, layers and lamps"
+      seo_title: "Home Lighting Guides for Every Room | BRENBE"
+      descripcion: "Lighting guides for your home: warm or cool light, layered lighting, sconces and floor lamps, without touching the electrical wiring."
+      intro: "Light changes how a room looks and feels more than almost any piece of furniture. These guides explain how to combine light sources, which color temperature to pick and how to light a room with no rewiring."
+    pt-br:
+      slug: iluminacao
+      nombre: Iluminação
+      titulo: "Iluminação para a casa: luz quente, camadas e luminárias"
+      seo_title: "Iluminação da casa: guias de decoração | BRENBE"
+      descripcion: "Guias de iluminação para sua casa: luz quente ou fria, iluminação em camadas, arandelas e luminárias de piso, sem mexer na instalação elétrica."
+      intro: "A luz muda como um ambiente parece e como ele faz a gente se sentir, mais do que quase qualquer móvel. Estes guias explicam como combinar luzes, qual temperatura escolher e como iluminar sem obra."
+  empapelado:
+    fase: 2
+    servicio: servicio-empapelado
+    es-ar:
+      slug: empapelado
+      nombre: Empapelado
+      titulo: "Empapelado: cómo elegirlo y cómo usarlo en cada ambiente"
+      seo_title: "Empapelado: guías para elegir y colocar | BRENBE"
+      descripcion: "Guías de empapelado: cómo elegir el papel, cuánto rinde un rollo, papel removible o tradicional y en qué ambientes conviene usarlo."
+      intro: "Un empapelado bien elegido le da carácter a una pared en una tarde. Estas guías ayudan a decidir qué papel, dónde ponerlo y cuándo conviene uno removible."
+    es-mx:
+      slug: papel-tapiz
+      nombre: Papel tapiz
+      titulo: "Papel tapiz: cómo elegirlo y usarlo en cada espacio"
+      seo_title: "Papel tapiz: guías para elegir y colocar | BRENBE"
+      descripcion: "Guías de papel tapiz: cómo elegirlo, cuánto rinde un rollo, removible o tradicional y en qué espacios conviene usarlo."
+      intro: "Un papel tapiz bien elegido le da carácter a una pared en una tarde. Estas guías ayudan a decidir qué papel, dónde ponerlo y cuándo conviene uno removible."
+    es-es:
+      slug: papel-pintado
+      nombre: Papel pintado
+      titulo: "Papel pintado: cómo elegirlo y usarlo en cada estancia"
+      seo_title: "Papel pintado: guías para elegir y colocar | BRENBE"
+      descripcion: "Guías de papel pintado: cómo elegirlo, cuánto rinde un rollo, removible o tradicional y en qué estancias conviene usarlo."
+      intro: "Un papel pintado bien elegido da carácter a una pared en una tarde. Estas guías te ayudan a decidir qué papel, dónde ponerlo y cuándo conviene uno removible."
+    en:
+      slug: wallpaper
+      nombre: Wallpaper
+      titulo: "Wallpaper: how to choose it and use it in every room"
+      seo_title: "Wallpaper Guides: How to Choose & Use It | BRENBE"
+      descripcion: "Wallpaper guides: how to choose a pattern, how far a roll goes, peel-and-stick vs. traditional and which rooms suit it."
+      intro: "Well-chosen wallpaper gives a wall character in an afternoon. These guides help you decide which paper, where to put it and when a removable one makes sense."
+    pt-br:
+      slug: papel-de-parede
+      nombre: Papel de parede
+      titulo: "Papel de parede: como escolher e usar em cada ambiente"
+      seo_title: "Papel de parede: guias para escolher e usar | BRENBE"
+      descripcion: "Guias de papel de parede: como escolher, quanto rende um rolo, removível ou tradicional e em quais ambientes vale usar."
+      intro: "Um papel de parede bem escolhido dá personalidade a uma parede em uma tarde. Estes guias ajudam a decidir qual papel, onde colocar e quando vale um removível."
+  ideas-por-ambiente:
+    fase: 2
+    servicio: servicio-mobiliario
+    es-ar:
+      slug: ideas-por-ambiente
+      nombre: Ideas por ambiente
+      titulo: Ideas de decoración por ambiente
+      seo_title: "Ideas de decoración por ambiente | BRENBE"
+      descripcion: "Ideas de decoración por ambiente con criterio: qué hacer en el living, el dormitorio, el comedor o el balcón, y por qué funciona cada decisión."
+      intro: "Ideas con explicación: cada guía muestra qué se hizo en un ambiente, por qué funciona y cómo adaptarlo a tu caso."
+    es-mx:
+      slug: ideas-por-espacio
+      nombre: Ideas por espacio
+      titulo: Ideas de decoración por espacio
+      seo_title: "Ideas de decoración por espacio | BRENBE"
+      descripcion: "Ideas de decoración por espacio con criterio: qué hacer en la sala, la recámara, el comedor o el balcón, y por qué funciona cada decisión."
+      intro: "Ideas con explicación: cada guía muestra qué se hizo en un espacio, por qué funciona y cómo adaptarlo a tu caso."
+    es-es:
+      slug: ideas-por-estancia
+      nombre: Ideas por estancia
+      titulo: Ideas de decoración por estancia
+      seo_title: "Ideas de decoración por estancia | BRENBE"
+      descripcion: "Ideas de decoración por estancia con criterio: qué hacer en el salón, el dormitorio, el comedor o la terraza, y por qué funciona cada decisión."
+      intro: "Ideas con explicación: cada guía muestra qué se hizo en una estancia, por qué funciona y cómo adaptarlo a tu caso."
+    en:
+      slug: room-ideas
+      nombre: Room-by-room ideas
+      titulo: Decorating ideas, room by room
+      seo_title: "Decorating Ideas for Every Room | BRENBE"
+      descripcion: "Decorating ideas with reasoning: what to do in the living room, bedroom, dining room or balcony, and why each decision works."
+      intro: "Ideas with an explanation: each guide shows what was done in a room, why it works and how to adapt it to your own space."
+    pt-br:
+      slug: ideias-por-ambiente
+      nombre: Ideias por ambiente
+      titulo: Ideias de decoração por ambiente
+      seo_title: "Ideias de decoração por ambiente | BRENBE"
+      descripcion: "Ideias de decoração por ambiente com critério: o que fazer na sala, no quarto, na sala de jantar ou na varanda, e por que cada decisão funciona."
+      intro: "Ideias com explicação: cada guia mostra o que foi feito em um ambiente, por que funciona e como adaptar ao seu caso."
+  estilos:
+    fase: 3
+    servicio: asesoria-online
+    es-ar:
+      slug: estilos
+      nombre: Estilos
+      titulo: "Estilos de decoración: cómo lograrlos en un depto chico o alquilado"
+      seo_title: "Estilos de decoración y cómo lograrlos | BRENBE"
+      descripcion: "Estilos de decoración explicados para la vida real: cómo lograr cada uno en un departamento chico o alquilado, sin obra ni grandes gastos."
+      intro: "Más que definir cada estilo, estas guías muestran cómo lograrlo en un departamento chico o alquilado, con cambios que se pueden hacer sin obra."
+    es-mx:
+      slug: estilos
+      nombre: Estilos
+      titulo: "Estilos de decoración: cómo lograrlos en un departamento pequeño o rentado"
+      seo_title: "Estilos de decoración y cómo lograrlos | BRENBE"
+      descripcion: "Estilos de decoración explicados para la vida real: cómo lograr cada uno en un departamento pequeño o rentado, sin obra ni grandes gastos."
+      intro: "Más que definir cada estilo, estas guías muestran cómo lograrlo en un departamento pequeño o rentado, con cambios que se pueden hacer sin obra."
+    es-es:
+      slug: estilos
+      nombre: Estilos
+      titulo: "Estilos de decoración: cómo lograrlos en un piso pequeño o de alquiler"
+      seo_title: "Estilos de decoración y cómo lograrlos | BRENBE"
+      descripcion: "Estilos de decoración explicados para la vida real: cómo lograr cada uno en un piso pequeño o de alquiler, sin obras ni grandes gastos."
+      intro: "Más que definir cada estilo, estas guías muestran cómo lograrlo en un piso pequeño o de alquiler, con cambios que se pueden hacer sin obras."
+    en:
+      slug: styles
+      nombre: Styles
+      titulo: "Decorating styles: how to get the look in a small or rented apartment"
+      seo_title: "Decorating Styles & How to Get the Look | BRENBE"
+      descripcion: "Decorating styles explained for real life: how to get each look in a small or rented apartment, with no renovation and no big spending."
+      intro: "Rather than just defining each style, these guides show how to get the look in a small or rented apartment, with changes you can make without renovating."
+    pt-br:
+      slug: estilos
+      nombre: Estilos
+      titulo: "Estilos de decoração: como conseguir em um apartamento pequeno ou alugado"
+      seo_title: "Estilos de decoração e como conseguir | BRENBE"
+      descripcion: "Estilos de decoração explicados para a vida real: como conseguir cada um em um apartamento pequeno ou alugado, sem obra e sem gastar muito."
+      intro: "Mais do que definir cada estilo, estes guias mostram como conseguir o visual em um apartamento pequeno ou alugado, com mudanças que dispensam obra."

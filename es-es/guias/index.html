@@ -19,6 +19,7 @@ permalink: /es-es/guias/
     <h1>Guías de interiorismo y decoración</h1>
     <p>Artículos prácticos para decidir mejor cómo decorar tu casa: color, salones y pisos pequeños, distribución y cómo trabajar con un profesional. Pensados para la vida real, sin obras de por medio.</p>
   </div>
+  {% include hub-cards.html %}
   <section class="section">
     {%- assign grupos = g_coll | sort: 'date' | reverse | group_by: 'category' %}
     {%- for grupo in grupos %}

@@ -4,6 +4,8 @@ ready: true
 title: "Cuánto cuesta un interiorista en España y a quién contratar"
 description: "Interiorista, decorador o asesor: diferencias, cómo se cobra (por hora, por habitación, paquete cerrado o porcentaje) y qué preguntar antes de contratar."
 category: Proceso
+hub: presupuesto
+role: cluster
 date: 2026-11-19
 cover: /comedor-en-nogal.webp
 cover_alt: "Comedor en nogal con textiles y acentos oliva"

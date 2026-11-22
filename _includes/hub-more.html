@@ -1,0 +1,14 @@
+{%- comment -%} "Más en este tema": bloque de la guía actual (page.hub). Solo si la página del tema existe en este idioma. {%- endcomment -%}
+{%- unless L %}{% include loc.html %}{% endunless -%}
+{%- if page.hub and site.hubs_live[lk][page.hub] -%}
+{%- assign hm_url = site.hubs_live[lk][page.hub] -%}
+{%- assign hm_d = site.data.hubs.hubs[page.hub][lk] -%}
+{%- include hub-guides.html hub=page.hub exclude=page.url -%}
+{%- if hub_all.size > 0 %}
+<section class="section hub-more">
+  <div class="section-head"><h2>{% include t.html k="hub_more_h" %}</h2><p class="section-intro"><a href="{{ hm_url | relative_url }}">{{ hm_d.nombre | escape }}</a></p></div>
+  {% include guias.html list=hub_all limit=3 %}
+  <p class="hub-all"><a class="button secondary" href="{{ hm_url | relative_url }}">{% include t.html k="hub_view_all" %}</a></p>
+</section>
+{%- endif -%}
+{%- endif -%}

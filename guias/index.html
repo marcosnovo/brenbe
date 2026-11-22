@@ -15,6 +15,7 @@ collection_page: guias
     <h1>Guías de interiorismo y decoración</h1>
     <p>Artículos prácticos para decidir mejor cómo decorar tu casa: color, espacios chicos, distribución y cómo trabajar con un profesional. Pensados para la vida real, sin obra de por medio.</p>
   </div>
+  {% include hub-cards.html %}
   <section class="section">
     {%- assign grupos = site.guias | sort: 'date' | reverse | group_by: 'category' %}
     {%- for grupo in grupos %}

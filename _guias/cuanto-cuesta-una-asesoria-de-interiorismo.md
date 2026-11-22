@@ -2,6 +2,8 @@
 title: "Interiorista, decorador o asesor: a quién contratar y cuánto cuesta"
 description: "Diferencias entre interiorista, decorador y asesor, cómo se cobra una asesoría (por hora, por ambiente o paquete) y qué preguntar antes de contratar."
 category: Proceso
+hub: presupuesto
+role: cluster
 date: 2026-11-19
 cover: /comedor-en-nogal.webp
 cover_alt: "Comedor en nogal con textiles y acentos oliva"

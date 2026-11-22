@@ -4,6 +4,8 @@ ready: true
 title: "Cómo decorar un estudio o un piso pequeño sin obras"
 description: "Cómo decorar un estudio o un piso pequeño sin obras: dividir zonas, colocar cama y sofá, armarios y almacenaje, paleta única y qué hacer si vives de alquiler."
 category: Espacios pequeños
+hub: depto-chico
+role: cluster
 date: 2026-11-21
 cover: /dormitorio-tonos-calidos.webp
 cover_alt: "Dormitorio en tonos crema, oliva y granate"

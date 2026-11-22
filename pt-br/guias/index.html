@@ -19,6 +19,7 @@ permalink: /pt-br/guias/
     <h1>Guias de decoração e design de interiores</h1>
     <p>Ideias e critérios práticos para decorar a sua casa sem obra: como organizar uma sala pequena, aproveitar um apartamento pequeno ou kitnet, escolher cores e entender como funciona e quanto custa uma consultoria de decoração.</p>
   </div>
+  {% include hub-cards.html %}
   <section class="section">
     {%- assign grupos = g_coll | sort: 'date' | reverse | group_by: 'category' %}
     {%- for grupo in grupos %}

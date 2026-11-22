@@ -2,6 +2,8 @@
 title: "Cuánto cuesta un diseñador de interiores en México (y a quién contratar)"
 description: "Diferencias entre diseñadora, decoradora y asesora, cómo se cobra una asesoría (por hora, espacio o paquete) y qué preguntar antes de contratar."
 category: Proceso
+hub: presupuesto
+role: cluster
 date: 2026-11-19
 ready: true
 seo_title: "Cuánto cuesta un diseñador de interiores en México | BRENBE"

@@ -4,6 +4,8 @@ description: "What online interior design costs: designer vs. decorator vs. cons
 ref: cuanto-cuesta-una-asesoria-de-interiorismo
 ready: true
 category: Process
+hub: presupuesto
+role: cluster
 date: 2026-11-19
 cover: /comedor-en-nogal.webp
 cover_alt: "Walnut dining room with textiles and olive accents"
