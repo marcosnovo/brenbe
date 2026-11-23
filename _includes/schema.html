@@ -14,6 +14,12 @@
 {%- assign org_id = '/#organization' | absolute_url -%}
 {%- assign person_id = '/#brenda' | absolute_url -%}
 {%- assign home_path = L.prefix | append: '/' -%}
+{%- capture img_contact %}{% include l.html ref='contacto' %}{% endcapture -%}
+{%- assign img_contact = img_contact | strip | absolute_url -%}
+{%- assign img_author = n.nombre_completo | default: 'Brenda' | strip -%}
+{%- capture img_credit %}{{ img_author }} / BRENBE Interiorismo{% endcapture -%}
+{%- capture img_copy %}© {{ site.time | date: '%Y' }} {{ img_credit }}{% endcapture -%}
+{%- capture img_rights %}"license": {{ img_contact | jsonify }}, "acquireLicensePage": {{ img_contact | jsonify }}, "copyrightNotice": {{ img_copy | jsonify }}, "creditText": {{ img_credit | jsonify }}{% endcapture -%}
 {%- assign website_id = home_path | append: '#website' | absolute_url -%}
 {%- assign nombre = n.nombre_completo | default: '' | strip -%}
 {%- assign apellido = t.apellido | default: '' | strip -%}
@@ -220,7 +226,7 @@
   "inLanguage": {{ html_lang | jsonify }},
   "url": {{ canonical_url | jsonify }},
   "mainEntityOfPage": {{ canonical_url | jsonify }},
-  "creator": { "@id": {{ person_id | jsonify }} },
+  "creator": { "@id": {{ person_id | jsonify }} }, {{ img_rights }},
   "publisher": { "@id": {{ org_id | jsonify }} },
   "isPartOf": { "@type": "CollectionPage", "@id": {{ '/proyectos/' | absolute_url | jsonify }} }
   {%- if page.description %},
@@ -235,9 +241,9 @@
   "dateModified": {{ page.updated | date_to_xmlschema | jsonify }}{% endif %}
   {%- if page.cover %},
   "image": [
-    { "@type": "ImageObject", "contentUrl": {{ page.cover | absolute_url | jsonify }}{% if page.cover_alt %}, "caption": {{ page.cover_alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} }, "representativeOfPage": true }
+    { "@type": "ImageObject", "contentUrl": {{ page.cover | absolute_url | jsonify }}{% if page.cover_alt %}, "caption": {{ page.cover_alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} }, {{ img_rights }}, "representativeOfPage": true }
     {%- for g in page.gallery %}{% if g.image %},
-    { "@type": "ImageObject", "contentUrl": {{ g.image | absolute_url | jsonify }}{% if g.caption or g.alt %}, "caption": {{ g.caption | default: g.alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} } }{% endif %}{% endfor %}
+    { "@type": "ImageObject", "contentUrl": {{ g.image | absolute_url | jsonify }}{% if g.caption or g.alt %}, "caption": {{ g.caption | default: g.alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} }, {{ img_rights }} }{% endif %}{% endfor %}
   ]{% endif %}
 }
 </script>
@@ -267,11 +273,11 @@
   "dateModified": {{ page.updated | default: page.date | date_to_xmlschema | jsonify }}{% endif %}
   {%- if page.cover %},
   "image": [
-    { "@type": "ImageObject", "contentUrl": {{ page.cover | absolute_url | jsonify }}{% if page.cover_caption or page.cover_alt %}, "caption": {{ page.cover_caption | default: page.cover_alt | jsonify }}{% endif %}{% if page.cover_alt %}, "description": {{ page.cover_alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} }, "representativeOfPage": true }
+    { "@type": "ImageObject", "contentUrl": {{ page.cover | absolute_url | jsonify }}{% if page.cover_caption or page.cover_alt %}, "caption": {{ page.cover_caption | default: page.cover_alt | jsonify }}{% endif %}{% if page.cover_alt %}, "description": {{ page.cover_alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} }, {{ img_rights }}, "representativeOfPage": true }
     {%- for f in page.galeria %}{% if f.image %},
-    { "@type": "ImageObject", "contentUrl": {{ f.image | absolute_url | jsonify }}{% if f.caption or f.alt %}, "caption": {{ f.caption | default: f.alt | jsonify }}{% endif %}{% if f.alt %}, "description": {{ f.alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} } }{% endif %}{% endfor %}
+    { "@type": "ImageObject", "contentUrl": {{ f.image | absolute_url | jsonify }}{% if f.caption or f.alt %}, "caption": {{ f.caption | default: f.alt | jsonify }}{% endif %}{% if f.alt %}, "description": {{ f.alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} }, {{ img_rights }} }{% endif %}{% endfor %}
     {%- if page.paleta.imagen %},
-    { "@type": "ImageObject", "contentUrl": {{ page.paleta.imagen | absolute_url | jsonify }}{% if page.paleta.imagen_alt %}, "caption": {{ page.paleta.imagen_alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} } }{% endif %}
+    { "@type": "ImageObject", "contentUrl": {{ page.paleta.imagen | absolute_url | jsonify }}{% if page.paleta.imagen_alt %}, "caption": {{ page.paleta.imagen_alt | jsonify }}{% endif %}, "creator": { "@id": {{ person_id | jsonify }} }, {{ img_rights }} }{% endif %}
   ]{% endif %}
 }
 </script>
