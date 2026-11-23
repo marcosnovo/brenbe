@@ -8,8 +8,8 @@ seo_title: "Contacto | Diseñadora de interiores en línea BRENBE"
 description: "Escríbele a Brenda para consultar por una asesoría de diseño de interiores en línea. Cuéntale qué espacio quieres renovar y qué fotos y medidas enviar."
 last_modified_at: 2026-11-22
 breadcrumb: "Contacto"
-# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
-index_when_any: [whatsapp, email]
+# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos, o cuando el formulario está activo (sitio.contact_form).
+index_when_any: [whatsapp, email, contact_form]
 permalink: /es-mx/contacto/
 ---
 {% include loc.html %}
@@ -19,6 +19,7 @@ permalink: /es-mx/contacto/
     <h1>Contacto</h1>
     <p>Cuéntame qué espacio quieres renovar y vemos cómo ayudarte. La primera conversación sirve para entender tu punto de partida y definir si una asesoría es lo que necesitas.</p>
   </div>
+  {% include contact-form.html %}
   <section class="section copy">
     <h2>Qué enviarme para empezar</h2>
     <p>No hace falta tener todo resuelto. Con esto ya podemos arrancar:</p>

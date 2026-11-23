@@ -110,4 +110,5 @@ exclude:
   - .jekyll-cache
   - functions      # Cloudflare Pages Function (functions/index.js): la usa Pages desde la raíz del repo, no es parte del sitio
   - tests
+  - workers        # Worker del formulario de contacto (workers/contacto): se despliega aparte con wrangler
   - docs

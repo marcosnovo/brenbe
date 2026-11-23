@@ -91,8 +91,11 @@ module Brenbe
 
       negocio = site.data['negocio'] || {}
       filled = ->(k) { !negocio[k].to_s.strip.empty? }
+      # `contact_form` (en index_when_any) vale como cargado si el formulario está activo en _data/sitio.yml.
+      form_on = (site.data['sitio'] || {})['contact_form'] == true
+      filled_any = ->(k) { filled.call(k) || (k == 'contact_form' && form_on) }
       return false unless Array(d['index_when']).all?(&filled)
-      return false if d['index_when_any'] && !Array(d['index_when_any']).any?(filled)
+      return false if d['index_when_any'] && !Array(d['index_when_any']).any?(&filled_any)
 
       true
     end

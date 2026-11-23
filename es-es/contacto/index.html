@@ -8,8 +8,8 @@ seo_title: "Contacto | Interiorismo online BRENBE"
 description: "Escribe a Brenda para consultar por un asesoramiento de interiorismo online. Cuéntame qué habitación quieres renovar y qué conviene enviar para empezar."
 last_modified_at: 2026-11-22
 breadcrumb: "Contacto"
-# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
-index_when_any: [whatsapp, email]
+# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos, o cuando el formulario está activo (sitio.contact_form).
+index_when_any: [whatsapp, email, contact_form]
 permalink: /es-es/contacto/
 ---
 {%- assign t = site.data.sitio -%}
@@ -21,6 +21,7 @@ permalink: /es-es/contacto/
     <h1>Contacto</h1>
     <p>Cuéntame qué espacio quieres renovar y vemos cómo ayudarte. La primera conversación sirve para entender tu punto de partida y decidir si un asesoramiento es lo que necesitas.</p>
   </div>
+  {% include contact-form.html %}
   <section class="section copy">
     <h2>Qué enviarme para empezar</h2>
     <p>No hace falta tenerlo todo resuelto. Con esto ya podemos arrancar:</p>

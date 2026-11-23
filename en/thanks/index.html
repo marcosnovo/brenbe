@@ -1,0 +1,21 @@
+---
+layout: base
+locale: en
+ref: gracias
+ready: true
+title: "Thank you"
+seo_title: "Thank you | BRENBE"
+description: "Thank you for your message"
+# Página de confirmación del formulario: nunca se indexa ni entra al sitemap.
+indexable: false
+sitemap: false
+permalink: /en/thanks/
+---
+{%- include loc.html -%}
+<main id="main">
+  <div class="section page-intro">
+    <h1>{% include t.html k="cf_ok_h" %}</h1>
+    <p>{% include t.html k="cf_ok_p" %}</p>
+    <p class="actions"><a class="button primary" href="{% include l.html ref='home' %}">{% include t.html k="th_back" %}</a></p>
+  </div>
+</main>
