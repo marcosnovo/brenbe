@@ -81,7 +81,7 @@ title: BRENBE Interiorismo
 description: "Asesorías de interiorismo y decoración online, para cualquier lugar: renová tu casa sin obra."
 url: "https://brenbe.com"
 lang: es-AR
-timezone: America/Argentina/Buenos_Aires
+timezone: UTC
 
 # Fotos subidas desde el panel (/media/...): Cloudflare las achica y convierte a WebP/AVIF al vuelo.
 # Requiere activar "Transformations" para brenbe.com en el panel de Cloudflare (Images > Transformations).
