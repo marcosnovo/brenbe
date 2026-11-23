@@ -36,6 +36,21 @@ https://:project.pages.dev/*
 /brenbe-lang.js
   Cache-Control: public, max-age=3600, must-revalidate
 
+/brenbe-contact.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Páginas de gracias del formulario: no se indexan.
+/gracias/
+  X-Robots-Tag: noindex
+/es-mx/gracias/
+  X-Robots-Tag: noindex
+/es-es/gracias/
+  X-Robots-Tag: noindex
+/en/thanks/
+  X-Robots-Tag: noindex
+/pt-br/obrigado/
+  X-Robots-Tag: noindex
+
 # Lista de idiomas publicados: la lee la Function de la raíz (functions/index.js). No se indexa.
 /locales.json
   Cache-Control: public, max-age=300

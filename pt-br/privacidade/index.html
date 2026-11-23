@@ -1,0 +1,36 @@
+---
+layout: base
+locale: pt-br
+ref: privacidad
+ready: true
+indexable: false
+title: "Privacidade e estatísticas"
+seo_title: "Privacidade e estatísticas | BRENBE"
+description: "Como a BRENBE mede as visitas ao site: estatísticas próprias e anônimas, sem cookies e sem guardar seu IP."
+last_modified_at: 2026-11-23
+breadcrumb: "Privacidade e estatísticas"
+permalink: /pt-br/privacidade/
+---
+{%- include loc.html -%}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Privacidade e estatísticas</h1>
+    <p>Este site mede quantas pessoas o visitam para saber quais páginas são úteis. Aqui explicamos, sem rodeios, o que é medido e o que não é.</p>
+  </div>
+  <section class="section copy">
+    <h2>O que é medido</h2>
+    <p>Cada vez que você abre uma página, é guardado um registro anônimo com: a página que viu e seu título, a data e a hora, o site de onde veio (por exemplo Google ou Pinterest) e, se o link trazia, a campanha (UTM); o país, a região e a cidade aproximados, deduzidos da sua conexão; o tipo de aparelho (celular, tablet ou computador); se parece um robô; quanto tempo ficou na página e até onde rolou; e se tocou no botão do WhatsApp ou no e-mail de contato.</p>
+    <h2>O que não é feito</h2>
+    <ul><li>Não são usados cookies.</li><li>Seu endereço IP não é guardado.</li><li>Você não é identificado nem é criado um perfil seu: para ligar as páginas de uma mesma visita, usa-se um número aleatório que vive só naquela aba do navegador e é apagado ao fechá-la.</li><li>Esses dados não são compartilhados com redes de publicidade.</li></ul>
+    <h2>A cidade é aproximada</h2>
+    <p>A localização é deduzida da sua conexão de internet e pode não coincidir com a sua casa: às vezes é a cidade do seu provedor.</p>
+    <h2>Outras ferramentas</h2>
+    <p>Também pode ser usado o Cloudflare Web Analytics (que também não usa cookies) e o Google Search Console, que mostra à Brenda quais buscas levaram ao site. Esses dados são agregados e do Google: não são da sua visita específica. WhatsApp e e-mail funcionam com suas próprias políticas.</p>
+    <h2>Sua escolha</h2>
+    <p>Se o seu navegador tem "Não rastrear" (Do Not Track) ou o Global Privacy Control ativado, o site não mede a sua visita.</p>
+    <h2>Por quanto tempo é guardado</h2>
+    <p>Os registros são apagados automaticamente após 400 dias.</p>
+    <p>Dúvidas? Escreva para a Brenda pela página de <a href="{% include l.html ref='contacto' %}">Contato</a>.</p>
+  </section>
+</main>

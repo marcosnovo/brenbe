@@ -2,13 +2,15 @@
 {%- include wa.html -%}
 {%- assign n = site.data.negocio -%}
 {%- assign contact_email = n.email | default: '' | append: '' | strip -%}
+{%- assign contact_form = site.data.sitio.contact_form -%}
 <section class="contact" id="contacto">
   <div>
     <h2>{% include t.html k="contact_h2" %}</h2>
-    {% if contact_email == '' and wa_href == '' %}<p>{% include t.html k="contact_preparing" %}</p>{% endif %}
+    {% if contact_email == '' and wa_href == '' and contact_form != true %}<p>{% include t.html k="contact_preparing" %}</p>{% endif %}
   </div>
-  {% if contact_email != '' or wa_href != '' %}
+  {% if contact_email != '' or wa_href != '' or contact_form == true %}
   <div class="actions">
+    {% if contact_form == true %}<a class="button" href="{% include l.html ref='contacto' %}#formulario">{% include t.html k="cf_h2" %}</a>{% endif %}
     {% if wa_href != '' %}<a class="button" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include t.html k="contact_wa" %}</a>{% endif %}
     {% if contact_email != '' %}<a class="button" href="mailto:{{ contact_email | escape }}">{% include t.html k="contact_email" %}</a>{% endif %}
   </div>

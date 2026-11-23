@@ -8,8 +8,8 @@ seo_title: "Contato | Consultoria de decoração online BRENBE"
 description: "Fale com a Brenda para saber mais sobre a consultoria de decoração online: conte qual ambiente quer renovar e veja o que enviar para começar."
 last_modified_at: 2026-11-22
 breadcrumb: "Contato"
-# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
-index_when_any: [whatsapp, email]
+# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos, o cuando el formulario está activo (sitio.contact_form).
+index_when_any: [whatsapp, email, contact_form]
 permalink: /pt-br/contato/
 ---
 {%- assign t = site.data.sitio -%}
@@ -21,6 +21,7 @@ permalink: /pt-br/contato/
     <h1>Contato</h1>
     <p>Me conte qual espaço você quer renovar e vamos ver como posso te ajudar. A primeira conversa serve para entender o seu ponto de partida e definir se uma consultoria é o que você precisa.</p>
   </div>
+  {% include contact-form.html %}
   <section class="section copy">
     <h2>O que enviar para começar</h2>
     <p>Não precisa ter tudo resolvido. Com isto, a gente já consegue começar:</p>

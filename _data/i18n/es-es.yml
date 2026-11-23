@@ -35,6 +35,7 @@ footer_projects: Proyectos
 footer_guides: Guías
 footer_about: Sobre mí
 footer_contact: Contacto
+footer_privacy: Privacidad y estadísticas
 faq_title: Preguntas frecuentes
 faq_title_asesoria: Preguntas sobre el interiorismo online
 guide_cta_h2: ¿Quieres aplicar esto en tu casa?
@@ -158,3 +159,40 @@ idea_affiliate_note: "Algunos de estos enlaces pueden darme una comisión si com
 ba_h: "Antes y después"
 ba_slider: "Desliza para comparar el antes y el después"
 glos_more: "Ver la guía"
+
+# Formulario de contacto (cf_*) y páginas de gracias. Tuteo de España.
+cf_h2: Escríbeme tu consulta
+cf_intro: Rellena el formulario y te respondo por correo. No hace falta que lo tengas todo decidido.
+cf_nombre: Tu nombre
+cf_email: Tu correo electrónico
+cf_tel: WhatsApp o teléfono
+cf_pais: País y ciudad
+cf_opt: "(opcional)"
+cf_need: ¿Qué necesitas?
+cf_need_ph: Elige una opción
+cf_need_opts:
+  asesoria: Asesoramiento de interiorismo online
+  color: Asesoramiento de color
+  empapelado: Papel pintado y revestimientos
+  mobiliario: Mobiliario y distribución
+  iluminacion: Iluminación, textiles y styling
+  deptos: Piso pequeño o estudio
+  otro: Otra consulta o aún no lo sé
+cf_msg: Tu mensaje
+cf_msg_hint: Cuéntame qué habitación quieres renovar y qué te gustaría cambiar.
+cf_consent: Acepto que Brenda use estos datos solo para responder a mi consulta.
+cf_submit: Enviar consulta
+cf_sending: Enviando…
+cf_ok_h: ¡Gracias! Tu consulta ha llegado.
+cf_ok_p: Te respondo por correo a la dirección que has indicado.
+cf_err_required: Rellena este dato.
+cf_err_email: "Revisa el correo: parece que le falta algo."
+cf_err_short: Cuéntame un poco más (al menos unas pocas palabras).
+cf_err_long: El mensaje es demasiado largo. Acórtalo un poco.
+cf_err_consent: Marca la casilla para poder enviar.
+cf_err_generic: No hemos podido enviar tu consulta. Inténtalo de nuevo en unos minutos o escríbeme por WhatsApp o correo.
+cf_err_captcha: No hemos podido comprobar que eres una persona. Recarga la página e inténtalo de nuevo.
+cf_err_fast: Ha sido demasiado rápido. Espera unos segundos e inténtalo de nuevo.
+cf_err_rate: Has enviado varias consultas seguidas. Espera un rato e inténtalo de nuevo.
+cf_error_static: No hemos podido enviar tu consulta. Inténtalo de nuevo en unos minutos o escríbeme por WhatsApp o correo.
+th_back: Volver al inicio

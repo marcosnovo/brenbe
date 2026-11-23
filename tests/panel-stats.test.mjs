@@ -48,6 +48,9 @@ const GQL = {
     referrers: [grp(30, 30, { refererHost: '' }), grp(20, 20, { refererHost: 'www.google.com' }), grp(10, 10, { refererHost: 'ar.pinterest.com' }), grp(6, 6, { refererHost: 'l.instagram.com' }), grp(4, 4, { refererHost: 'otro.com' })],
     countries: [grp(50, 50, { countryName: 'AR' }), grp(20, 20, { countryName: 'MX' })],
     devices: [grp(60, 60, { deviceType: 'mobile' }), grp(20, 20, { deviceType: 'desktop' })],
+    botTotal: [grp(40, 33, {})],
+    botPrevTotal: [grp(5, 5, {})],
+    botCountries: [grp(30, 0, { countryName: 'US' }), grp(10, 0, { countryName: 'DE' })],
   }] } },
 };
 
@@ -121,6 +124,15 @@ await t('consulta GraphQL: token, cuenta, site tag y rango', async () => {
   assert.match(v.s, /T00:00:00Z$/, 'el inicio está alineado a medianoche UTC');
   assert.equal(Math.round((Date.parse(v.s) - Date.parse(v.ps)) / 86400000), 7);
   assert.match(lastGql.body.query, /rumPageloadEventsAdaptiveGroups/);
+});
+await t('bots: todos los bloques principales filtran bot: 0 y los bots se cuentan aparte', async () => {
+  const { body } = await call({ token: await sign(kp, good) });
+  const q = lastGql.body.query;
+  const main = ['curTotal', 'prevTotal', 'series', 'paths', 'prevPaths', 'referrers', 'countries', 'devices'];
+  for (const k of main) assert.match(q, new RegExp(k + ': rumPageloadEventsAdaptiveGroups\\(filter: \\{ siteTag: \\$site, bot: 0,'), k + ' filtra personas');
+  for (const k of ['botTotal', 'botPrevTotal', 'botCountries']) assert.match(q, new RegExp(k + ': rumPageloadEventsAdaptiveGroups\\(filter: \\{ siteTag: \\$site, bot_gt: 0,'), k + ' cuenta bots');
+  assert.deepEqual(body.totals.bots, { value: 40, previous: 5, visits: 33 });
+  assert.deepEqual(body.botCountries, [{ country: 'US', views: 30 }, { country: 'DE', views: 10 }]);
 });
 await t('JWKS se cachea en memoria', async () => {
   const tk = await sign(kp, good);

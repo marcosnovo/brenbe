@@ -1,0 +1,36 @@
+---
+layout: base
+locale: es-ar
+ref: privacidad
+ready: true
+indexable: false
+title: "Privacidad y estadísticas"
+seo_title: "Privacidad y estadísticas | BRENBE"
+description: "Cómo mide BRENBE las visitas a la web: estadísticas propias y anónimas, sin cookies y sin guardar tu IP."
+last_modified_at: 2026-11-23
+breadcrumb: "Privacidad y estadísticas"
+permalink: /privacidad/
+---
+{%- include loc.html -%}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Privacidad y estadísticas</h1>
+    <p>Esta web mide cuánta gente la visita para saber qué páginas sirven. Acá te cuento, sin vueltas, qué se mide y qué no.</p>
+  </div>
+  <section class="section copy">
+    <h2>Qué se mide</h2>
+    <p>Cada vez que abrís una página se guarda un registro anónimo con: la página que viste y su título, la fecha y la hora, el sitio desde el que llegaste (por ejemplo Google o Pinterest) y, si el enlace la traía, la campaña (UTM); el país, la región y la ciudad aproximados que se deducen de tu conexión; el tipo de aparato (celular, tablet o computadora); si parece un robot; cuánto tiempo estuviste en la página y hasta dónde bajaste; y si tocaste el botón de WhatsApp o el mail de contacto.</p>
+    <h2>Qué no se hace</h2>
+    <ul><li>No se usan cookies.</li><li>No se guarda tu dirección IP.</li><li>No se te identifica ni se arma un perfil tuyo: para unir las páginas de una misma visita se usa un número al azar que vive solo en esa pestaña del navegador y se borra al cerrarla.</li><li>No se comparten estos datos con redes de publicidad.</li></ul>
+    <h2>La ciudad es aproximada</h2>
+    <p>La ubicación sale de tu conexión a internet y puede no coincidir con tu casa: a veces es la ciudad de tu proveedor.</p>
+    <h2>Otras herramientas</h2>
+    <p>Además se puede usar Cloudflare Web Analytics (tampoco usa cookies) y Google Search Console, que le muestra a Brenda qué búsquedas llevaron a la web. Esos datos son agregados y de Google: no son de tu visita puntual. WhatsApp y el mail funcionan con sus propias políticas.</p>
+    <h2>Tu decisión</h2>
+    <p>Si tu navegador tiene activado "No rastrear" (Do Not Track) o el Global Privacy Control, la web no mide tu visita.</p>
+    <h2>Cuánto tiempo se guardan</h2>
+    <p>Los registros se borran automáticamente pasados los 400 días.</p>
+    <p>Si tenés dudas, escribile a Brenda desde la página de <a href="{% include l.html ref='contacto' %}">Contacto</a>.</p>
+  </section>
+</main>
