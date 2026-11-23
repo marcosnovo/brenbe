@@ -32,7 +32,7 @@ permalink: /es-es/guia-de-paletas/
     <h2>Cómo pedirla</h2>
     <p>Escríbeme por WhatsApp con la palabra PALETA y cuéntame qué estancia quieres renovar, o pídela por correo electrónico. Te la envío en el día.</p>
     <div class="actions lead-actions">
-      {% if wa_href != '' %}<a class="button primary" href="{{ wa_href }}" rel="{{ wa_rel }}">Pedirla por WhatsApp</a>{% endif %}
+      {% if wa_href != '' %}<a class="button has-wa primary" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include wa-icon.html %}Pedirla por WhatsApp</a>{% endif %}
       {% if lm_mail != '' %}<a class="button secondary" href="mailto:{{ lm_mail | escape }}?subject={{ 'Guía de paletas' | url_encode }}">Pedirla por correo</a>{% endif %}
     </div>
     <p class="pal-note">Usamos tu mensaje solo para enviarte la guía y responderte. No te añadimos a ninguna lista sin que lo pidas.</p>

@@ -69,7 +69,7 @@
   {% include header.html %}
   {{ content }}
   {% include footer.html %}
-  {% if wa_href != '' %}<a class="wa-float" href="{{ wa_href }}" rel="{{ wa_rel }}" aria-label="{% include t.html k='wa_aria' esc=true %}"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-4.2A8 8 0 1 1 8.3 18.8L4 20z"/><path d="M9 9.5c.3 2.4 2.6 4.7 5.5 5.5l1.5-1.5-2-1-1 .8c-.8-.4-1.7-1.3-2.1-2.1l.8-1-1-2L9 9.5z"/></svg><span>{% include t.html k="wa_label" %}</span></a>{% endif %}
+  {% if wa_href != '' %}<a class="wa-float" href="{{ wa_href }}" rel="{{ wa_rel }}" aria-label="{% include t.html k='wa_aria' esc=true %}">{% include wa-icon.html %}<span>{% include t.html k="wa_label" %}</span></a>{% endif %}
   {%- include locs.html %}
   {%- if live_locs.size > 1 %}
   {%- include alts.html sw=true %}

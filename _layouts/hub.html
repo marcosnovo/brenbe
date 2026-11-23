@@ -39,7 +39,7 @@ layout: base
       <p>{% include t.html k="guide_cta_p" %}</p>
       <div class="actions">
         <a class="button primary" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="guide_cta_btn" %}</a>
-        {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include t.html k="guide_cta_wa" %}</a>{% endif %}
+        {% if wa_href != '' %}<a class="button has-wa secondary" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include wa-icon.html %}{% include t.html k="guide_cta_wa" %}</a>{% endif %}
       </div>
       {%- if hub_srv and hub_srv.ready != false and hub_d.servicio != 'asesoria-online' %}
       <p class="hub-service"><a href="{{ hub_srv.url | replace: 'index.html', '' | relative_url }}">{% include t.html k="hub_service" %}: {{ hub_srv.breadcrumb | default: hub_srv.title | escape }}</a></p>

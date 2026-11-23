@@ -32,7 +32,7 @@ permalink: /pt-br/guia-de-paletas/
     <h2>Como pedir</h2>
     <p>Escreva para mim no WhatsApp com a palavra PALETA e conte qual ambiente quer renovar, ou peça por e-mail. Envio no mesmo dia.</p>
     <div class="actions lead-actions">
-      {% if wa_href != '' %}<a class="button primary" href="{{ wa_href }}" rel="{{ wa_rel }}">Pedir pelo WhatsApp</a>{% endif %}
+      {% if wa_href != '' %}<a class="button has-wa primary" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include wa-icon.html %}Pedir pelo WhatsApp</a>{% endif %}
       {% if lm_mail != '' %}<a class="button secondary" href="mailto:{{ lm_mail | escape }}?subject={{ 'Guia de paletas' | url_encode }}">Pedir por e-mail</a>{% endif %}
     </div>
     <p class="pal-note">Usamos sua mensagem apenas para enviar o guia e responder. Não colocamos você em nenhuma lista sem que peça.</p>
