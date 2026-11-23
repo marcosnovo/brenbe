@@ -10,6 +10,11 @@
 /admin/*
   X-Robots-Tag: noindex, nofollow
 
+# Panel de estadísticas privado (Cloudflare Access): nunca indexar ni cachear.
+/panel/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: private, no-store
+
 # Redirecciones a WhatsApp (medición de clics): nunca indexar.
 /wa/*
   X-Robots-Tag: noindex, nofollow

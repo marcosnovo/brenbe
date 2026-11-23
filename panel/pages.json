@@ -1,0 +1,21 @@
+---
+layout: null
+sitemap: false
+indexable: false
+---
+{%- comment -%}
+  Mapa url -> título (y id de /wa/<id>/) para que el panel de estadísticas muestre nombres en vez de rutas.
+  Se genera en cada build. Queda protegido por Cloudflare Access (/panel*) y noindex (_headers).
+{%- endcomment -%}
+{%- assign pj_pages = site.pages | where_exp: 'p', 'p.layout and p.layout != "wa" and p.title' -%}
+{%- assign pj_all = pj_pages | concat: site.documents -%}
+{"pages":[
+{%- assign pj_first = true -%}
+{%- for p in pj_all -%}
+  {%- if p.url contains '/wa/' or p.url contains '/panel/' or p.url contains '/admin/' or p.title == nil or p.title == '' -%}{%- continue -%}{%- endif -%}
+  {%- assign pj_url = p.url | replace: 'index.html', '' -%}
+  {%- unless pj_first %},{% endunless -%}
+  {%- assign pj_first = false %}
+{"url":{{ pj_url | jsonify }},"id":{% if pj_url == '/' %}"home"{% else %}{{ pj_url | slugify | jsonify }}{% endif %},"title":{{ p.title | strip_html | normalize_whitespace | jsonify }},"locale":{{ p.locale | default: 'es-ar' | jsonify }}}
+{%- endfor %}
+]}
