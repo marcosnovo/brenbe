@@ -18,9 +18,9 @@ Necesitás: la cuenta de Cloudflare donde está `brenbe.com`, y los mails de las
 1. Entrá a <https://dash.cloudflare.com> y elegí la cuenta.
 2. Menú izquierdo: **Analytics & logs** → **Web analytics**.
 3. Tiene que aparecer el sitio **brenbe.com**. Si no aparece: **Add a site** → escribí `brenbe.com` → seguí los pasos (ver `docs/growth/utm.md`, opción A) y esperá unas horas a que haya visitas.
-4. Hacé clic en **Manage site** (al lado de brenbe.com).
-5. En el recuadro con el código (*JS Snippet*) buscá `"token": "XXXXXXXX..."`. Ese valor largo (letras y números, sin comillas) es el **Site Tag**. Copialo y guardalo: lo usás en el paso 3 como `CF_SITE_TAG`.
-   - Es el mismo valor que está en `_data/sitio.yml` → `cloudflare_analytics_token`.
+4. Hacé clic en **brenbe.com** (o en **View metrics**) para abrir sus estadísticas.
+5. Mirá la barra de direcciones del navegador: la URL incluye `siteTag~in=XXXXXXXX…`. Ese valor (letras y números, hasta el próximo `&` si lo hay) es el **Site Tag**. Copialo: lo usás en el paso 3 como `CF_SITE_TAG`.
+   - **No** es el `token` del código JS (*Manage site* → *JS Snippet*): ese token es otro identificador y sirve para `_data/sitio.yml` → `cloudflare_analytics_token`, no para el panel.
 
 ## Paso 2. Crear el token de la API (solo lectura)
 

@@ -112,9 +112,12 @@ const iso = (d) => d.toISOString().replace(/\.\d+Z$/, 'Z');
 const day = (d) => d.toISOString().slice(0, 10);
 
 async function runQuery(env, days, now) {
+  // Ventana alineada a días calendario (UTC): hoy incluido + los (days - 1) días anteriores completos,
+  // para que la serie diaria y los totales cubran exactamente los mismos días.
   const end = new Date(now);
-  const start = new Date(now - days * 86400000);
-  const pstart = new Date(now - 2 * days * 86400000);
+  const todayUtc = Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate());
+  const start = new Date(todayUtc - (days - 1) * 86400000);
+  const pstart = new Date(start.getTime() - days * 86400000);
   const res = await fetch(GRAPHQL, {
     method: 'POST',
     headers: { authorization: 'Bearer ' + env.CF_ANALYTICS_TOKEN, 'content-type': 'application/json' },

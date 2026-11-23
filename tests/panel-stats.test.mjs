@@ -116,7 +116,9 @@ await t('consulta GraphQL: token, cuenta, site tag y rango', async () => {
   const v = lastGql.body.variables;
   assert.equal(v.acc, 'acc1');
   assert.equal(v.site, 'site1');
-  assert.equal(Math.round((Date.parse(v.e) - Date.parse(v.s)) / 86400000), 7);
+  const span = (Date.parse(v.e) - Date.parse(v.s)) / 86400000;
+  assert.ok(span > 6 && span <= 7, 'la ventana cubre hoy + 6 días completos');
+  assert.match(v.s, /T00:00:00Z$/, 'el inicio está alineado a medianoche UTC');
   assert.equal(Math.round((Date.parse(v.s) - Date.parse(v.ps)) / 86400000), 7);
   assert.match(lastGql.body.query, /rumPageloadEventsAdaptiveGroups/);
 });
