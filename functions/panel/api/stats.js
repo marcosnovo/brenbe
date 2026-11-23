@@ -95,16 +95,22 @@ const isWa = (p) => p.startsWith('/wa/');
 const isNoise = (p) => p.startsWith('/panel') || p.startsWith('/admin') || p.startsWith('/cdn-cgi/');
 
 // ---------- GraphQL (dataset de Web Analytics / RUM) ----------
+// `bot` es un uint8 (0 = persona, 1 = bot que detecta Cloudflare). Todos los bloques principales filtran `bot: 0`
+// (solo personas); `bot_gt: 0` cuenta aparte los bots detectados. Verificado por introspección del filtro
+// AccountRumPageloadEventsAdaptiveGroupsFilter_InputObject (campos bot, bot_gt, bot_neq, bot_in, ...).
 const QUERY = `query Panel($acc: String!, $site: String!, $ps: Time!, $s: Time!, $e: Time!) {
   viewer { accounts(filter: { accountTag: $acc }) {
-    curTotal: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, datetime_geq: $s, datetime_lt: $e }, limit: 1) { count sum { visits } }
-    prevTotal: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, datetime_geq: $ps, datetime_lt: $s }, limit: 1) { count sum { visits } }
-    series: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, datetime_geq: $s, datetime_lt: $e }, limit: 400, orderBy: [date_ASC]) { count sum { visits } dimensions { date } }
-    paths: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, datetime_geq: $s, datetime_lt: $e }, limit: 1000, orderBy: [count_DESC]) { count sum { visits } dimensions { requestPath } }
-    prevPaths: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, datetime_geq: $ps, datetime_lt: $s }, limit: 1000, orderBy: [count_DESC]) { count dimensions { requestPath } }
-    referrers: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, datetime_geq: $s, datetime_lt: $e }, limit: 300, orderBy: [sum_visits_DESC]) { count sum { visits } dimensions { refererHost } }
-    countries: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, datetime_geq: $s, datetime_lt: $e }, limit: 60, orderBy: [sum_visits_DESC]) { count sum { visits } dimensions { countryName } }
-    devices: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, datetime_geq: $s, datetime_lt: $e }, limit: 10, orderBy: [sum_visits_DESC]) { count sum { visits } dimensions { deviceType } }
+    curTotal: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot: 0, datetime_geq: $s, datetime_lt: $e }, limit: 1) { count sum { visits } }
+    prevTotal: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot: 0, datetime_geq: $ps, datetime_lt: $s }, limit: 1) { count sum { visits } }
+    series: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot: 0, datetime_geq: $s, datetime_lt: $e }, limit: 400, orderBy: [date_ASC]) { count sum { visits } dimensions { date } }
+    paths: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot: 0, datetime_geq: $s, datetime_lt: $e }, limit: 1000, orderBy: [count_DESC]) { count sum { visits } dimensions { requestPath } }
+    prevPaths: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot: 0, datetime_geq: $ps, datetime_lt: $s }, limit: 1000, orderBy: [count_DESC]) { count dimensions { requestPath } }
+    referrers: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot: 0, datetime_geq: $s, datetime_lt: $e }, limit: 300, orderBy: [sum_visits_DESC]) { count sum { visits } dimensions { refererHost } }
+    countries: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot: 0, datetime_geq: $s, datetime_lt: $e }, limit: 60, orderBy: [sum_visits_DESC]) { count sum { visits } dimensions { countryName } }
+    devices: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot: 0, datetime_geq: $s, datetime_lt: $e }, limit: 10, orderBy: [sum_visits_DESC]) { count sum { visits } dimensions { deviceType } }
+    botTotal: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot_gt: 0, datetime_geq: $s, datetime_lt: $e }, limit: 1) { count sum { visits } }
+    botPrevTotal: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot_gt: 0, datetime_geq: $ps, datetime_lt: $s }, limit: 1) { count sum { visits } }
+    botCountries: rumPageloadEventsAdaptiveGroups(filter: { siteTag: $site, bot_gt: 0, datetime_geq: $s, datetime_lt: $e }, limit: 5, orderBy: [count_DESC]) { count dimensions { countryName } }
   } }
 }`;
 
@@ -188,6 +194,10 @@ export function shape(acc, days, start, end) {
     devices.set(d, (devices.get(d) || 0) + sv(r));
   }
 
+  const bt = g('botTotal')[0] || {};
+  const bpt = g('botPrevTotal')[0] || {};
+  const botCountries = g('botCountries').map((r) => ({ country: dim(r, 'countryName') || '??', views: r.count || 0 })).filter((x) => x.views > 0);
+
   const rank = (m, key) => [...m.entries()].map(([k, v]) => ({ [key]: k, visits: v })).filter((x) => x.visits > 0).sort((a, b) => b.visits - a.visits);
   return {
     days,
@@ -196,7 +206,9 @@ export function shape(acc, days, start, end) {
       visits: { value: sv(t), previous: sv(pt) },
       pageviews: { value: Math.max(0, (t.count || 0) - waTotal - noise), previous: Math.max(0, (pt.count || 0) - waPrev - noisePrev) },
       whatsapp: { value: waTotal, previous: waPrev },
+      bots: { value: bt.count || 0, previous: bpt.count || 0, visits: sv(bt) },
     },
+    botCountries,
     series,
     pages: [...pages.values()].sort((a, b) => b.views - a.views).slice(0, 15),
     channels: CHANNELS.map((c) => ({ channel: c, visits: chan[c] })),
@@ -208,11 +220,10 @@ export function shape(acc, days, start, end) {
   };
 }
 
-// ---------- Handler ----------
-export async function onRequestGet(context) {
-  const { request, env } = context;
-  const url = new URL(request.url);
-
+// ---------- Autorización común (la usan stats, visitas y busquedas) ----------
+export const jsonResponse = json;
+// Devuelve null si el JWT de Access es válido; si no, la Response de error (503/401/403) que hay que devolver.
+export async function authorize(request, env) {
   if (!env || !env.ACCESS_TEAM_DOMAIN || !env.ACCESS_AUD || !teamHost(env.ACCESS_TEAM_DOMAIN)) {
     return json({ error: 'panel_no_configurado', message: 'Panel no configurado: faltan ACCESS_TEAM_DOMAIN y ACCESS_AUD (ver docs/panel-analitica.md).' }, 503);
   }
@@ -220,6 +231,16 @@ export async function onRequestGet(context) {
   if (!token) return json({ error: 'no_autenticado', message: 'Hace falta iniciar sesión.' }, 401);
   const auth = await verifyAccessJwt(token, env);
   if (!auth.ok) return json({ error: 'acceso_denegado', message: 'Tu sesión no es válida o venció. Volvé a entrar al panel.' }, 403);
+  return null;
+}
+
+// ---------- Handler ----------
+export async function onRequestGet(context) {
+  const { request, env } = context;
+  const url = new URL(request.url);
+
+  const denied = await authorize(request, env);
+  if (denied) return denied;
 
   const days = Number(url.searchParams.get('days') || '30');
   if (!DAYS_OK.includes(days)) return json({ error: 'dias_invalidos', message: 'days debe ser 7, 30 o 90.' }, 400);

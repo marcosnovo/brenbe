@@ -1,0 +1,36 @@
+---
+layout: base
+locale: en
+ref: privacidad
+ready: true
+indexable: false
+title: "Privacy and statistics"
+seo_title: "Privacy and statistics | BRENBE"
+description: "How BRENBE measures visits to this site: first-party anonymous statistics, no cookies and no IP address stored."
+last_modified_at: 2026-11-23
+breadcrumb: "Privacy and statistics"
+permalink: /en/privacy/
+---
+{%- include loc.html -%}
+<main id="main">
+  <div class="section page-intro">
+    <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
+    <h1>Privacy and statistics</h1>
+    <p>This site measures how many people visit it so we know which pages are useful. Here is, plainly, what is measured and what is not.</p>
+  </div>
+  <section class="section copy">
+    <h2>What is measured</h2>
+    <p>Each time you open a page, an anonymous record is saved with: the page you viewed and its title, the date and time, the site you came from (for example Google or Pinterest) and, if the link carried one, its campaign (UTM); the approximate country, region and city inferred from your connection; the type of device (phone, tablet or computer); whether it looks like a robot; how long you stayed on the page and how far you scrolled; and whether you tapped the WhatsApp button or the contact email.</p>
+    <h2>What is not done</h2>
+    <ul><li>No cookies are used.</li><li>Your IP address is not stored.</li><li>You are not identified and no profile of you is built: to link the pages of one visit, a random number is used that lives only in that browser tab and is erased when you close it.</li><li>This data is not shared with advertising networks.</li></ul>
+    <h2>The city is approximate</h2>
+    <p>The location is inferred from your internet connection and may not match where you are: sometimes it is your provider's city.</p>
+    <h2>Other tools</h2>
+    <p>Cloudflare Web Analytics (also cookie-free) may be used as well, along with Google Search Console, which shows Brenda which searches led people to the site. That data is aggregated and comes from Google: it is not about your individual visit. WhatsApp and email work under their own policies.</p>
+    <h2>Your choice</h2>
+    <p>If your browser has "Do Not Track" or Global Privacy Control turned on, the site does not measure your visit.</p>
+    <h2>How long it is kept</h2>
+    <p>Records are deleted automatically after 400 days.</p>
+    <p>Questions? Write to Brenda from the <a href="{% include l.html ref='contacto' %}">Contact</a>.</p>
+  </section>
+</main>

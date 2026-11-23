@@ -100,6 +100,73 @@ Las variables nuevas se aplican en el **próximo despliegue**:
 ## Para el equipo técnico
 
 - Variables: `ACCESS_TEAM_DOMAIN`, `ACCESS_AUD`, `CF_ACCOUNT_ID`, `CF_SITE_TAG`, `CF_ANALYTICS_TOKEN` (secreto).
-- `_routes.json`: las Functions solo corren en `/` y `/panel/api/*`.
+- `_routes.json`: las Functions corren en `/`, `/c` y `/panel/api/*` (ver v2 abajo).
 - Tests: `node tests/panel-stats.test.mjs` (JWT RS256 firmado en el test, GraphQL y JWKS simulados) y `node tests/function-redirect.test.mjs`.
 - La consulta usa el dataset `rumPageloadEventsAdaptiveGroups` (filtros `siteTag`, `datetime_geq`, `datetime_lt`; dimensiones `date`, `requestPath`, `refererHost`, `countryName`, `deviceType`; `sum { visits }`). Si Cloudflare cambia un nombre de campo, `?debug=1` devuelve el error de GraphQL.
+
+---
+
+# Panel v2: estadísticas propias, bots y búsquedas de Google
+
+Desde la v2 el panel junta **tres fuentes** (cada bloque dice cuál usa):
+
+| Fuente | Qué aporta | Función |
+|---|---|---|
+| **Cloudflare Web Analytics** (RUM) | Cifras generales: visitas, páginas, países, dispositivos, WhatsApp por página | `/panel/api/stats` |
+| **Estadísticas propias** (colector `/c` + base D1) | **Ciudad** y país, recorrido de cada visita, canales y UTM, bots, clics a WhatsApp / mail | `/panel/api/visitas` |
+| **Google Search Console** | **Qué buscó la gente en Google** (consulta, clics, impresiones, posición) | `/panel/api/busquedas` |
+
+**Todo es opcional y se activa por partes.** Si falta la base D1 o las claves de Google, el sitio funciona igual y cada bloque del panel muestra "todavía no está activado". Las tres funciones verifican el JWT de Access igual que `/panel/api/stats`.
+
+## Personas vs bots
+
+- **Cloudflare (RUM):** el dataset `rumPageloadEventsAdaptiveGroups` tiene el campo `bot` (entero 0/1). Los bloques principales filtran `bot: 0` (solo personas) y se consultan aparte los bots con `bot_gt: 0` ("Bots detectados").
+- **Propias:** cada evento guarda `is_bot` y `bot_reason`: `ua` (User-Agent de robot, vacío o headless), `verified` (categoría de bot verificado que informa Cloudflare), `score` (puntaje de Bot Management, si el plan lo trae), `webdriver` (el script detecta navegador automatizado o sin idiomas/pantalla) y `datacenter` (la red es de un proveedor de hosting/nube: AWS, Google Cloud, Azure, OVH, etc.; es una pista, no una certeza). Los bots **no** entran en ciudades, países, canales ni "Últimas visitas".
+- Si en el panel casi todo viene de EE. UU. y "Directo", casi seguro son bots (servidores de allá).
+
+## Paso 7. Crear la base D1 y aplicar la migración (estadísticas propias)
+
+1. **Workers & Pages** → **D1 SQL database** → **Create database** → nombre `brenbe-analytics` (o desde la terminal: `npx wrangler d1 create brenbe-analytics`).
+2. Aplicar el esquema: en la base → pestaña **Console**, pegar el contenido de `migrations/0001_init.sql` y ejecutar; o `npx wrangler d1 execute brenbe-analytics --remote --file=migrations/0001_init.sql`.
+3. **Workers & Pages** → proyecto **brenbe** → **Settings** → **Bindings** → **Add** → **D1 database**: *Variable name* `DB`, base `brenbe-analytics`. Hacelo en **Production** y también en **Preview**.
+4. Redesplegar (como en el paso 5). Probar: abrir cualquier página del sitio y, en el panel, ver aparecer la visita en "Últimas visitas".
+
+Sin el binding `DB`, el colector responde 204 y no guarda nada. Sin la migración, el panel avisa que falta aplicarla.
+
+### Qué guarda el colector (esquema `events`)
+
+`ts`, `sid` (número al azar por pestaña, `sessionStorage`, sin cookies), `type` (`pageview`, `wa_click`, `contact_submit` —toque al mail de contacto o envío de un formulario— y `leave` con duración y scroll), `path`, `title`, `locale`, `ref_host`, `ref_path` (solo si el origen es un buscador, y sin query), `utm_source/medium/campaign`, `country/region/city/tz` (de `request.cf`, aproximados), `device`, `is_bot`, `bot_reason`, `dur`, `scroll`. **No** se guarda la IP, ni el User-Agent completo, ni nada para identificar a alguien.
+
+- Script en el sitio: `_includes/stats-script.html` (≈1,2 KB, se incluye al final de `_layouts/base.html`). No corre con Do Not Track / Global Privacy Control ni en `/panel` y `/admin`. Se apaga con `stats_collector: false` en `_data/sitio.yml`.
+- Colector: `functions/c.js` (POST `/c`): rechaza otros orígenes (403), cuerpos de más de 2 KB (413), JSON o campos inválidos (400), más de 60 eventos por minuto por sesión (429, en memoria) y vuelve a respetar DNT/GPC en el servidor.
+- **Retención:** de vez en cuando (1 % de los envíos) borra lo de más de 400 días.
+- Página pública de explicación: `/privacidad/` (y su versión en cada idioma), enlazada desde el pie. Describe lo que se hace, sin afirmar que cumpla ninguna norma en particular: si hace falta una revisión legal, hay que pedirla aparte.
+
+## Paso 8. Conectar Google Search Console (búsquedas)
+
+La API de Search Console no usa mail ni contraseña: se usa una **cuenta de servicio** (un "usuario robot") con permiso de solo lectura.
+
+1. Entrá a <https://console.cloud.google.com> con la cuenta de Google de Brenda o Marcos y **creá un proyecto** nuevo (p. ej. `brenbe-panel`).
+2. **APIs y servicios** → **Biblioteca** → buscá **Google Search Console API** → **Habilitar**.
+3. **IAM y administración** → **Cuentas de servicio** → **Crear cuenta de servicio** (nombre `panel-brenbe`; no hace falta darle roles).
+4. Abrí la cuenta creada → pestaña **Claves** → **Agregar clave** → **Crear clave nueva** → **JSON**. Se descarga un archivo `.json`: es secreto, no lo subas al repositorio ni lo mandes por chat.
+5. Copiá el mail de la cuenta de servicio (`panel-brenbe@…iam.gserviceaccount.com`).
+6. Entrá a <https://search.google.com/search-console> → propiedad `brenbe.com` (de dominio) → **Configuración** → **Usuarios y permisos** → **Agregar usuario** → pegá ese mail con permiso **Restringido**.
+7. En **Workers & Pages** → **brenbe** → **Settings** → **Variables and Secrets** (Production) agregá:
+
+| Nombre | Tipo | Valor |
+|---|---|---|
+| `GSC_SA_JSON` | **Secret** | el contenido completo del archivo `.json` de la clave |
+| `GSC_SITE` | Text | `sc-domain:brenbe.com` (si la propiedad es de prefijo de URL: `https://brenbe.com/`) |
+
+8. Redesplegar. El bloque "¿Qué buscaron en Google?" se llena.
+
+Notas: Google publica los datos con **2 o 3 días de demora** (el rango termina 3 días antes de hoy), oculta las búsquedas muy poco frecuentes y una web nueva tarda en aparecer. Si el panel dice que la cuenta de servicio no tiene acceso: revisá el paso 6 y que `GSC_SITE` esté bien escrito. El token de Google se guarda en memoria (≈1 h) y los resultados 1 h.
+
+## Para el equipo técnico (v2)
+
+- Bindings y variables nuevas: `DB` (D1), `GSC_SA_JSON` (secreto), `GSC_SITE`. Las de Access y Cloudflare no cambian.
+- `_routes.json`: ahora corren Functions en `/`, `/c` y `/panel/api/*`.
+- Tests: `node tests/collector.test.mjs`, `node tests/panel-visitas.test.mjs`, `node tests/panel-busquedas.test.mjs` (D1 y `fetch` simulados), además de los anteriores.
+- `visitas` lee hasta 30.000 eventos del período (más recientes primero) y agrupa en la Function; si hubiera más, marca `truncated`.
+- Filtro de bots de RUM verificado por introspección: `AccountRumPageloadEventsAdaptiveGroupsFilter_InputObject` tiene `bot`, `bot_gt`, `bot_neq`, `bot_in`... (tipo `uint8`).

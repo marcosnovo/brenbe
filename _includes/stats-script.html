@@ -1,0 +1,16 @@
+{%- comment -%}
+  Estadísticas propias y anónimas (colector /c, ver functions/c.js y docs/panel-analitica.md). Sin cookies, sin IP, sin huella:
+  usa un id al azar por pestaña (sessionStorage). No corre con Do Not Track / Global Privacy Control ni en /panel y /admin.
+  Se imprime al final del body (equivale a diferido). Se puede apagar con `stats_collector: false` en _data/sitio.yml.
+{%- endcomment -%}
+{%- if site.data.sitio.stats_collector != false -%}
+<script>(function(){var n=navigator,w=window,d=document,l=location,p=l.pathname,s,m=0,t=Date.now(),q=new URLSearchParams(l.search);
+if(n.doNotTrack=='1'||w.doNotTrack=='1'||n.globalPrivacyControl||/^\/(panel|admin)/.test(p)||!n.sendBeacon)return;
+try{s=sessionStorage.bs;if(!s)sessionStorage.bs=s=Math.random().toString(36).slice(2,12)+t.toString(36)}catch(e){return}
+function x(e,o){o=o||{};o.e=e;o.s=s;o.p=p;o.n=d.title;n.sendBeacon('/c',new Blob([JSON.stringify(o)],{type:'text/plain'}))}
+x('pv',{r:d.referrer,us:q.get('utm_source'),um:q.get('utm_medium'),uc:q.get('utm_campaign'),b:n.webdriver||!n.languages||!n.languages.length||!screen.width?1:0});
+d.addEventListener('click',function(v){var a=v.target.closest&&v.target.closest('a'),h=a&&a.getAttribute('href')||'';if(h.indexOf('/wa/')==0)x('wa');else if(h.indexOf('mailto:')==0)x('ct')},true);
+d.addEventListener('submit',function(){x('ct')},true);
+w.addEventListener('scroll',function(){var h=d.documentElement,v=Math.round((w.scrollY+w.innerHeight)/h.scrollHeight*100);if(v>m)m=v},{passive:true});
+d.addEventListener('visibilitychange',function(){if(d.visibilityState=='hidden')x('lv',{d:Math.round((Date.now()-t)/1e3),g:Math.min(m,100)})})})()</script>
+{%- endif -%}
