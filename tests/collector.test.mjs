@@ -7,11 +7,12 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const mod = await import(join(root, 'functions', 'c.js'));
 
 function mockDb({ fail = false } = {}) {
-  const calls = [];
+  // Solo los INSERT van a `calls`; la purga aleatoria (1 %) de maybePurge va aparte para que no vuelva inestables los conteos.
+  const calls = [], purges = [];
   return {
-    calls,
+    calls, purges,
     prepare(sql) {
-      return { bind: (...args) => ({ run: async () => { if (fail) throw new Error('no such table: events'); calls.push({ sql, args }); return { success: true }; } }) };
+      return { bind: (...args) => ({ run: async () => { if (fail) throw new Error('no such table: events'); if (/^\s*INSERT/i.test(sql)) calls.push({ sql, args }); else purges.push({ sql, args }); return { success: true }; } }) };
     },
   };
 }
@@ -143,10 +144,10 @@ await t('retención: borra lo de más de 400 días solo de vez en cuando', async
   const db = mockDb();
   const now = Date.UTC(2026, 10, 23);
   assert.equal(await mod.maybePurge(db, now, 0.5), false);
-  assert.equal(db.calls.length, 0);
+  assert.equal(db.purges.length, 0);
   assert.equal(await mod.maybePurge(db, now, 0.001), true);
-  assert.match(db.calls[0].sql, /DELETE FROM events WHERE ts < \?/);
-  assert.equal(db.calls[0].args[0], now - 400 * 86400000);
+  assert.match(db.purges[0].sql, /DELETE FROM events WHERE ts < \?/);
+  assert.equal(db.purges[0].args[0], now - 400 * 86400000);
 });
 await t('otros métodos: 405', async () => {
   const { res } = await post({ method: 'GET' });

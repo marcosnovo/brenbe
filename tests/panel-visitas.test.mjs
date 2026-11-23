@@ -39,7 +39,7 @@ const ROWS = [
   ev('bot2yyyyyyyy', 10, { country: 'US', city: 'Boardman', is_bot: 1, bot_reason: 'ua' }),
 ].sort((a, b) => a.ts - b.ts);
 
-function mockDb({ rows = ROWS, prev = 3, fail = false } = {}) {
+function mockDb({ rows = ROWS, prev = 3, prevC = 1, fail = false } = {}) {
   const log = [];
   return {
     log,
@@ -47,7 +47,7 @@ function mockDb({ rows = ROWS, prev = 3, fail = false } = {}) {
     async batch(stmts) {
       if (fail) throw new Error('no such table: events');
       log.push(...stmts);
-      return stmts.map((s) => (/COUNT\(DISTINCT sid\)/.test(s.sql) ? { results: [{ n: prev }] } : { results: rows.slice().reverse().filter((r) => r.ts >= s.args[0]) }));
+      return stmts.map((s) => (/COUNT\(DISTINCT sid\)/.test(s.sql) ? { results: [{ n: /wa_click/.test(s.sql) ? prevC : prev }] } : { results: rows.slice().reverse().filter((r) => r.ts >= s.args[0]) }));
     },
   };
 }
@@ -126,12 +126,46 @@ await t('muchas sesiones: solo las 50 últimas', async () => {
   assert.equal(body.totals.people.value, 70);
   assert.equal(body.recent.length, 50);
 });
+await t('contactos únicos (wa o formulario, sin doble conteo) y serie diaria de personas', async () => {
+  const rows = [
+    ...ROWS,
+    // persona que toca WhatsApp y además manda el formulario: cuenta 1 en contacted y 1 en cada desglose
+    ev('persona5eeee', 30, {}), ev('persona5eeee', 29, { type: 'wa_click' }), ev('persona5eeee', 28, { type: 'contact_submit' }),
+    // bot que toca WhatsApp: no cuenta
+    ev('bot3zzzzzzzz', 20, { is_bot: 1, bot_reason: 'ua' }), ev('bot3zzzzzzzz', 19, { type: 'wa_click', is_bot: 1, bot_reason: 'ua' }),
+  ].sort((a, b) => a.ts - b.ts);
+  const { body } = await call({ qs: '?days=7', env: { DB: mockDb({ rows, prevC: 2 }) } });
+  assert.deepEqual(body.totals.contacted, { value: 3, previous: 2 });
+  assert.equal(body.totals.whatsapp.value, 2); assert.equal(body.totals.contact.value, 2);
+  assert.ok(body.totals.contacted.value < body.totals.whatsapp.value + body.totals.contact.value);
+  assert.equal(body.series.length, 7);
+  const dates = body.series.map((x) => x.date);
+  const n = new Date();
+  const stats7 = stats.shape({}, 7, new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate()) - 6 * 86400000), n);
+  assert.deepEqual(dates, stats7.series.map((x) => x.date), 'mismos días que la serie de stats.js');
+  assert.ok(body.series.reduce((k, x) => k + x.people, 0) >= body.totals.people.value, 'cada persona cuenta al menos un día');
+  assert.ok(body.series.every((x) => Number.isInteger(x.people) && x.people >= 0));
+  assert.equal(body.range.from.slice(0, 10), dates[0]);
+});
+await t('serie diaria: una misma pestaña activa dos días cuenta en ambos días', async () => {
+  const today = new Date(NOW).toISOString().slice(0, 10);
+  const minsToday = Math.max(1, Math.floor((NOW - Date.parse(today + 'T00:00:00Z')) / 60000) - 1);
+  const rows = [ev('pestana2dias', minsToday + 60 * 24), ev('pestana2dias', 0)].sort((a, b) => a.ts - b.ts);
+  const { body } = await call({ qs: '?days=7', env: { DB: mockDb({ rows }) } });
+  const byDate = Object.fromEntries(body.series.map((x) => [x.date, x.people]));
+  assert.equal(byDate[today], 1, 'hoy cuenta a la persona');
+  const yesterday = new Date(Date.parse(today) - 86400000).toISOString().slice(0, 10);
+  assert.equal(byDate[yesterday], 1, 'ayer también');
+  assert.equal(body.totals.people.value, 1);
+});
 await t('consulta: ventana de días, límite y solo lecturas', async () => {
   const db = mockDb();
   await call({ qs: '?days=30', env: { DB: db } });
-  assert.equal(db.log.length, 2);
+  assert.equal(db.log.length, 3);
   assert.match(db.log[0].sql, /^SELECT .* FROM events WHERE ts >= \? ORDER BY ts DESC LIMIT/);
-  assert.ok(Math.abs(db.log[0].args[0] - (Date.now() - 30 * 86400000)) < 5000);
+  const d0 = new Date(); const todayUtc = Date.UTC(d0.getUTCFullYear(), d0.getUTCMonth(), d0.getUTCDate());
+  assert.equal(db.log[0].args[0], todayUtc - 29 * 86400000, 'ventana alineada a días calendario UTC (igual que stats.js)');
+  assert.equal(db.log[1].args[1], db.log[0].args[0], 'el período previo termina donde empieza el actual');
   assert.ok(db.log.every((s) => /^SELECT/.test(s.sql)));
 });
 await t('sin DB: 200 configured:false; D1 sin migración: configured:false sin_tabla', async () => {

@@ -91,6 +91,7 @@ Las variables nuevas se aplican en el **próximo despliegue**:
 
 ## Qué muestra y cómo se calcula
 
+- **Pantalla de resumen** (v3): Personas, Contactos, Tasa de contacto y tendencia arriba; debajo "¿Cómo llegan?", "¿Desde dónde?", "En Google", "Últimas visitas" y "Lo más visto" con pestañas, y "Ver todo" abre el detalle en un panel lateral. Cada tarjeta se pinta apenas llega su dato. "Personas" usa las estadísticas propias (`totals.people`) y, si no están activas, Cloudflare. "Contactos" = personas distintas que tocaron WhatsApp o mandaron el formulario (`totals.contacted` de `/panel/api/visitas`, sin doble conteo); la serie diaria de personas (`series`) usa los mismos días calendario (UTC) que `/panel/api/stats`.
 - **Visitas**, **Páginas vistas** y su comparación con el período anterior de la misma duración.
 - **Clics a WhatsApp**: salen del colector propio (D1, `wa_click`, solo personas); el origen es la página donde tocaron el botón (ver `docs/growth/utm.md`). Sin D1 se muestra "no configurado".
 - **¿De dónde llegan?**: según el *referer*: Google, Pinterest, Instagram, Facebook, WhatsApp, Directo (sin referer) y Otros. Cloudflare no lee UTM (ver `docs/growth/utm.md`).
