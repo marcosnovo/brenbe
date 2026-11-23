@@ -19,13 +19,8 @@
 {%- assign apellido = t.apellido | default: '' | strip -%}
 {%- assign cargo = T.schema_job_title | default: TD.schema_job_title -%}
 {%- if lk == 'es-ar' -%}{%- assign cargo = t.cargo | default: cargo | strip -%}{%- endif -%}
-{%- assign ciudad = t.ciudad | default: '' | strip -%}
-{%- assign provincia = t.provincia | default: '' | strip -%}
-{%- assign direccion = t.direccion | default: '' | strip -%}
-{%- assign cp = t.codigo_postal | default: '' | strip -%}
 {%- assign mail = n.email | default: '' | strip -%}
 {%- assign tel = t.telefono | default: '' | strip -%}
-{%- assign gbp = t.google_business_url | default: '' | strip -%}
 {%- include precio.html -%}
 {%- assign moneda = price_cur -%}
 {%- assign precio = price_num -%}
@@ -58,19 +53,15 @@
   "knowsLanguage": {{ html_lang | jsonify }},
   "serviceType": {{ T.schema_org_service_types | default: TD.schema_org_service_types | jsonify }},
   "knowsAbout": {{ T.schema_knows_about | default: TD.schema_knows_about | jsonify }},
-  "areaServed": [{% for c in L.area_served %}{ "@type": "Country", "name": {{ c | jsonify }} }{% unless forloop.last %}, {% endunless %}{% endfor %}{% if lk == 'es-ar' %}{% for z in t.zona_presencial %}{% assign zona = z | strip %}{% if zona != '' %}, { "@type": "AdministrativeArea", "name": {{ zona | jsonify }} }{% endif %}{% endfor %}{% endif %}],
+  "areaServed": { "@type": "Place", "name": {{ T.schema_area_online | default: TD.schema_area_online | jsonify }} },
   "founder": { "@id": {{ person_id | jsonify }} }
-  {%- if ciudad != '' %},
-  "address": { "@type": "PostalAddress", "addressLocality": {{ ciudad | jsonify }}{% if provincia != '' %}, "addressRegion": {{ provincia | jsonify }}{% endif %}{% if direccion != '' %}, "streetAddress": {{ direccion | jsonify }}{% endif %}{% if cp != '' %}, "postalCode": {{ cp | jsonify }}{% endif %}, "addressCountry": "AR" }{% endif %}
   {%- if mail != '' %},
   "email": {{ mail | jsonify }}{% endif %}
   {%- if tel != '' %},
   "telephone": {{ tel | jsonify }},
-  "contactPoint": { "@type": "ContactPoint", "contactType": "consultas", "telephone": {{ tel | jsonify }}, "availableLanguage": {{ html_lang | jsonify }}, "areaServed": "AR" }{% endif %}
+  "contactPoint": { "@type": "ContactPoint", "contactType": "consultas", "telephone": {{ tel | jsonify }}, "availableLanguage": {{ html_lang | jsonify }} }{% endif %}
   {%- if same_list.size > 0 %},
   "sameAs": {{ same_list | jsonify }}{% endif %}
-  {%- if gbp != '' %},
-  "hasMap": {{ gbp | jsonify }}{% endif %}
   {%- if precio != '' %},
   "priceRange": {{ T.price_from | default: TD.price_from | replace: '%s', price_range_amount | jsonify }}{% endif %}
 }
@@ -133,7 +124,7 @@
   "description": {{ page.service_description | default: T.schema_service_description | default: TD.schema_service_description | jsonify }},
   "provider": { "@id": {{ org_id | jsonify }} },
   "inLanguage": {{ html_lang | jsonify }},
-  "areaServed": [{% for c in L.area_served %}{ "@type": "Country", "name": {{ c | jsonify }} }, {% endfor %}{ "@type": "Place", "name": {{ T.schema_area_online | default: TD.schema_area_online | jsonify }} }],
+  "areaServed": { "@type": "Place", "name": {{ T.schema_area_online | default: TD.schema_area_online | jsonify }} },
   "availableChannel": { "@type": "ServiceChannel", "serviceUrl": {{ canonical_url | jsonify }}, "availableLanguage": {{ html_lang | jsonify }} },
   "audience": { "@type": "Audience", "audienceType": {{ T.schema_audience | default: TD.schema_audience | jsonify }} },
   "url": {{ canonical_url | jsonify }}

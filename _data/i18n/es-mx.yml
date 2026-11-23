@@ -1,6 +1,6 @@
 # Textos de interfaz (es-MX, tuteo; recámara/sala/clóset). Lo que falte cae a es-ar.
 skip: Saltar al contenido
-announcement: Asesorías de interiorismo en línea · desde Argentina para México y EE. UU.
+announcement: Asesorías de interiorismo en línea · para México y EE. UU.
 nav_aria: Navegación principal
 nav_asesoria: Asesoría
 nav_servicios: Servicios
@@ -20,7 +20,7 @@ contact_wa: Escríbeme por WhatsApp
 contact_email: Escríbele a Brenda
 btn_online: Conoce la asesoría en línea
 btn_how_online: Cómo funciona la asesoría en línea
-footer_tagline: Interiorismo y decoración · Asesorías en línea, sin remodelar, desde Argentina para México y EE. UU.
+footer_tagline: Interiorismo y decoración · Asesorías en línea, sin remodelar, para México y EE. UU.
 footer_services_h: Servicios
 footer_site_aria: El sitio
 footer_site_h: BRENBE
@@ -54,7 +54,7 @@ project_photos: Fotos del proyecto
 project_before: Antes
 project_after: Después
 project_others: Otros proyectos
-project_note: "Proyecto (texto en español de Argentina)"
+project_note: "Proyecto (texto original en español)"
 projects_done_h2: Proyectos realizados
 projects_ideas_h2: Ideas de referencia para tu casa
 projects_ideas_intro: Referencias visuales para explorar combinaciones de color, muebles e iluminación.
@@ -76,7 +76,7 @@ schema_slogan: Interiores pensados para tu manera de vivir
 schema_org_service_types: [Asesoría de interiorismo en línea, Asesoría de decoración, Diseño de interiores en línea]
 schema_knows_about: [Interiorismo, Decoración de interiores, Diseño de interiores, Paletas de color, Iluminación, Muebles, Textiles]
 schema_job_title: Diseñadora de interiores
-schema_person_description: Diseñadora de interiores argentina, fundadora de BRENBE Interiorismo. Asesora en línea en decoración y diseño de interiores.
+schema_person_description: Diseñadora de interiores, fundadora de BRENBE Interiorismo. Asesora en línea en decoración y diseño de interiores.
 schema_person_knows: [Interiorismo, Decoración, Color, Iluminación]
 schema_service_name: Asesoría de interiorismo y decoración en línea
 schema_service_type: Asesoría de interiorismo en línea
@@ -122,7 +122,7 @@ ref2_alt: "Recámara en tonos crema, oliva y granate"
 ref3_title: "Rincón de lectura"
 ref3_sub: "Materiales y objetos"
 ref3_alt: "Rincón de lectura con sillón verde oliva y lámpara de travertino"
-site_description: "Asesorías de interiorismo y decoración en línea, desde Argentina: renueva tu casa sin remodelar, con color, muebles e iluminación."
+site_description: "Asesorías de interiorismo y decoración en línea, para cualquier lugar: renueva tu casa sin remodelar, con color, muebles e iluminación."
 og_image_alt: Sala cálida con sofá verde oliva, muebles de nogal y acentos granate
 
 # Plantillas de contenido, temas (hubs), paletas y redirección a WhatsApp

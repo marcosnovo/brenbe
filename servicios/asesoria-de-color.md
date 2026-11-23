@@ -3,9 +3,9 @@ layout: servicio
 locale: es-ar
 ref: servicio-color
 title: Asesoría de color para tu casa
-seo_title: Asesoría de color para tu casa, online y presencial | BRENBE
+seo_title: Asesoría de color para tu casa, 100 % online | BRENBE
 h1: Asesoría de color para tu casa
-description: "Asesoría de color para tu casa: elegimos una paleta de paredes, textiles y muebles según tu luz, tu piso y lo que ya tenés. Sin obra, online y presencial."
+description: "Asesoría de color para tu casa: elegimos una paleta de paredes, textiles y muebles según tu luz, tu piso y lo que ya tenés. Sin obra, 100 % online."
 intro: "Elegir el color de tu casa no tiene por qué ser una apuesta. Te ayudo a definir una paleta pensada para tu luz, tus materiales y tu manera de vivir, para que pintes una vez y con seguridad."
 card: "Una paleta coherente para paredes, muebles y textiles, probada con tu luz."
 order: 1

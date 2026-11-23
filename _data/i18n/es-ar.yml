@@ -1,7 +1,7 @@
 # Textos de interfaz (es-AR, voseo). Claves planas; es el idioma de respaldo: si falta una clave en otro
 # idioma, el sitio usa este texto. `%s` se reemplaza en la plantilla. NO se edita desde el panel de Brenda.
 skip: Saltar al contenido
-announcement: Asesorías de interiorismo · Argentina y online
+announcement: Asesorías de interiorismo online · para cualquier lugar
 nav_aria: Navegación principal
 nav_asesoria: Asesoría
 nav_servicios: Servicios
@@ -21,7 +21,7 @@ contact_wa: Escribime por WhatsApp
 contact_email: Escribile a Brenda
 btn_online: Conocé la asesoría online
 btn_how_online: Cómo funciona la asesoría online
-footer_tagline: Interiorismo y decoración · Argentina y online. Asesorías sin obra.
+footer_tagline: Interiorismo y decoración · Asesorías online para cualquier lugar, sin obra.
 footer_services_h: Servicios
 footer_site_aria: El sitio
 footer_site_h: BRENBE
@@ -72,12 +72,12 @@ wa_guide: Hola Brenda, leí la guía "%s" en brenbe.com y quiero consultar por u
 wa_page: Hola Brenda, estoy mirando "%s" en brenbe.com y quiero consultar por una asesoría.
 price_from: "Desde %s"
 price_ask: Consultá el precio
-schema_org_description: "Asesorías de interiorismo y decoración, presenciales y online, para renovar espacios sin obra: color, mobiliario, iluminación y textiles."
+schema_org_description: "Asesorías de interiorismo y decoración online, para cualquier lugar, para renovar espacios sin obra: color, mobiliario, iluminación y textiles."
 schema_slogan: Interiores pensados para tu manera de vivir
 schema_org_service_types: [Asesoría de interiorismo, Asesoría de decoración, Diseño de interiores online]
 schema_knows_about: [Interiorismo, Decoración de interiores, Diseño de interiores, Paletas de color, Iluminación, Mobiliario, Textiles]
 schema_job_title: Interiorista
-schema_person_description: Interiorista argentina, fundadora de BRENBE Interiorismo. Asesora a distancia y de forma presencial en decoración y diseño de interiores.
+schema_person_description: Interiorista, fundadora de BRENBE Interiorismo. Asesora online en decoración y diseño de interiores.
 schema_person_knows: [Interiorismo, Decoración, Color, Iluminación]
 schema_service_name: Asesoría de interiorismo y decoración online
 schema_service_type: Asesoría de interiorismo
@@ -123,7 +123,7 @@ ref2_alt: "Dormitorio en tonos crema, oliva y granate"
 ref3_title: "Rincón de lectura"
 ref3_sub: "Materiales y objetos"
 ref3_alt: "Rincón de lectura con sillón oliva y lámpara de travertino"
-site_description: "Asesorías de interiorismo y decoración desde Argentina: renová tu casa sin obra, presencial u online."
+site_description: "Asesorías de interiorismo y decoración online, para cualquier lugar: renová tu casa sin obra, con color, mobiliario e iluminación."
 og_image_alt: Living con sofá oliva, muebles de nogal y acentos granate
 
 # Plantillas de contenido, temas (hubs), paletas y redirección a WhatsApp

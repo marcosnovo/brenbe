@@ -77,7 +77,7 @@ content:
             - Otro
       - name: location
         label: Ciudad o barrio (opcional)
-        description: 'Por ejemplo "Palermo, CABA" o "Rosario". Dejalo vacío si preferís no mostrarlo.'
+        description: 'Es el barrio o la ciudad del espacio de tu cliente, no el tuyo. Por ejemplo "Palermo" o "Rosario". Es opcional: dejalo vacío si preferís no mostrarlo.'
         type: string
         options:
           maxlength: 60
@@ -439,7 +439,7 @@ content:
           maxlength: 2500
       - name: whatsapp
         label: Tu WhatsApp
-        description: 'Solo números, sin espacios ni signos, con código de país. Ejemplo: 5491112345678 (54 es Argentina, 9 va siempre para celulares, después el código de área sin 0 y el número sin 15).'
+        description: 'Solo números, sin espacios ni signos, con código de país. Primero el código de país y después tu número completo. Ejemplo: 5491112345678.'
         type: string
         pattern:
           regex: '^[0-9]{10,15}$'

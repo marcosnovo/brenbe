@@ -83,7 +83,7 @@ Un asesoramiento de interiorismo pensado para renovar sin obras suele abarcar:
 - Sugerencias de iluminación, textiles y objetos.
 - Un camino claro para implementar los cambios a tu ritmo.
 
-En la página de [interiorismo online](/es-es/interiorismo-online/) está explicado cómo trabajamos en BRENBE paso a paso, por videollamada desde Argentina y con clientes en España.
+En la página de [interiorismo online](/es-es/interiorismo-online/) está explicado cómo trabajamos en BRENBE paso a paso, por videollamada, online y con clientes en España.
 
 ## Preguntas para hacer a cualquier profesional
 

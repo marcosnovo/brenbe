@@ -4,12 +4,6 @@ apellido:
 cargo:
 formacion:
 anio_inicio:
-ciudad:
-provincia:
-# Lista, por ejemplo: [CABA, GBA Norte]. Vacío si solo trabaja online.
-zona_presencial: []
-direccion:
-codigo_postal:
 telefono:
 # Mensaje que se completa al abrir WhatsApp desde la portada (vacío = mensaje por defecto).
 whatsapp_mensaje:
@@ -17,7 +11,6 @@ pinterest:
 linkedin:
 facebook:
 behance:
-google_business_url:
 # Frase sobre plazos, por ejemplo: "Reunión de 60 minutos y propuesta en 7 días".
 duracion:
 # Medición y verificación (vacío = no se publica nada).

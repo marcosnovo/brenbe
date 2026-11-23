@@ -5,7 +5,7 @@ ref: servicio-mobiliario
 title: Asesoría de mobiliario y distribución
 seo_title: Asesoría de mobiliario y distribución de ambientes | BRENBE
 h1: Mobiliario y distribución de ambientes
-description: "Asesoría para distribuir tus muebles y elegir los que faltan: circulación, medidas, qué conservar y qué comprar, sin obra, online o presencial."
+description: "Asesoría para distribuir tus muebles y elegir los que faltan: circulación, medidas, qué conservar y qué comprar, sin obra, 100 % online."
 intro: "Si el living no termina de funcionar, o vas a comprar un sofá y querés acertar, esta asesoría te ayuda a ordenar el espacio, elegir las piezas y evitar compras que no entran o no sirven."
 card: "Cómo ubicar los muebles que tenés y cómo elegir los que faltan."
 order: 3
