@@ -143,9 +143,20 @@ await t('contactos únicos (wa o formulario, sin doble conteo) y serie diaria de
   const n = new Date();
   const stats7 = stats.shape({}, 7, new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate()) - 6 * 86400000), n);
   assert.deepEqual(dates, stats7.series.map((x) => x.date), 'mismos días que la serie de stats.js');
-  assert.equal(body.series.reduce((k, x) => k + x.people, 0), body.totals.people.value, 'la serie suma las personas');
+  assert.ok(body.series.reduce((k, x) => k + x.people, 0) >= body.totals.people.value, 'cada persona cuenta al menos un día');
   assert.ok(body.series.every((x) => Number.isInteger(x.people) && x.people >= 0));
   assert.equal(body.range.from.slice(0, 10), dates[0]);
+});
+await t('serie diaria: una misma pestaña activa dos días cuenta en ambos días', async () => {
+  const today = new Date(NOW).toISOString().slice(0, 10);
+  const minsToday = Math.max(1, Math.floor((NOW - Date.parse(today + 'T00:00:00Z')) / 60000) - 1);
+  const rows = [ev('pestana2dias', minsToday + 60 * 24), ev('pestana2dias', 0)].sort((a, b) => a.ts - b.ts);
+  const { body } = await call({ qs: '?days=7', env: { DB: mockDb({ rows }) } });
+  const byDate = Object.fromEntries(body.series.map((x) => [x.date, x.people]));
+  assert.equal(byDate[today], 1, 'hoy cuenta a la persona');
+  const yesterday = new Date(Date.parse(today) - 86400000).toISOString().slice(0, 10);
+  assert.equal(byDate[yesterday], 1, 'ayer también');
+  assert.equal(body.totals.people.value, 1);
 });
 await t('consulta: ventana de días, límite y solo lecturas', async () => {
   const db = mockDb();

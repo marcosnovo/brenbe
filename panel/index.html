@@ -720,7 +720,7 @@ indexable: false
     var dd = dataVisto();
     var head = cardHead('visto', 'Lo más visto', null, tabsHtml('visto', [['paginas', 'Páginas'], ['wa', 'Clics a WhatsApp']], ''));
     return head + '<div class="cb">' + panel('visto', '', listBody(dd, 5)) + (dd.note && !dd.state ? '<p class="dr-sub">' + esc(dd.note) + '</p>' : '') + '</div>' +
-      '<div class="cf"><span>' + (ok(st) ? 'Cloudflare' : '') + '</span>' + (dd.list && dd.list.length > 5 ? seeAll('visto', 'Ver las ' + dd.list.length) : '') + '</div>';
+      '<div class="cf"><span>' + (ok(st) ? 'Cloudflare' : '') + '</span>' + (dd.list && dd.list.length > 3 ? seeAll('visto', 'Ver las ' + dd.list.length) : '') + '</div>';
   }
 
   function botCount() {

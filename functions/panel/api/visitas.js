@@ -48,11 +48,12 @@ export function shape(rows, { days, now, previousPeople = 0, previousContacted =
         sid: e.sid, start: e.ts, end: e.ts, bot: 0, reasons: new Set(),
         country: e.country || '', region: e.region || '', city: e.city || '', device: e.device || 'other',
         channel: ch.channel, detail: ch.detail, ref: e.ref_host || '', locale: e.locale || 'es-ar',
-        pages: [], utm: null, wa: 0, contact: 0, dur: 0, scroll: 0,
+        pages: [], utm: null, wa: 0, contact: 0, dur: 0, scroll: 0, days: new Set(),
       };
       sessions.set(e.sid, s);
     }
     if (e.ts > s.end) s.end = e.ts;
+    if (e.type !== 'leave') s.days.add(dayKey(e.ts));
     if (e.is_bot) { s.bot = 1; if (e.bot_reason) s.reasons.add(e.bot_reason); }
     // Si el primer evento no traía origen/UTM pero uno posterior sí (p. ej. recarga), se completa.
     if (s.channel === 'Directo' && (e.utm_source || e.ref_host) && pv(e)) { const ch = channelFor(e); s.channel = ch.channel; s.detail = ch.detail; s.ref = e.ref_host || s.ref; }
@@ -69,9 +70,10 @@ export function shape(rows, { days, now, previousPeople = 0, previousContacted =
 
   const people = [], bots = [];
   for (const s of sessions.values()) (s.bot ? bots : people).push(s);
-  // Serie diaria de personas (sesiones no-bot por día de inicio, días calendario UTC, los días sin datos valen 0).
+  // Serie diaria de personas: sesiones no-bot ACTIVAS cada día (una misma pestaña que vuelve otro día cuenta en ambos).
+  // Días calendario UTC; los días sin datos valen 0.
   const perDay = new Map();
-  for (const s of people) { const k = dayKey(s.start); perDay.set(k, (perDay.get(k) || 0) + 1); }
+  for (const s of people) for (const k of s.days) perDay.set(k, (perDay.get(k) || 0) + 1);
   const first = windowStart(now, days);
   const series = [];
   for (let i = 0; i < days; i++) { const k = dayKey(first + i * DAY); series.push({ date: k, people: perDay.get(k) || 0 }); }
