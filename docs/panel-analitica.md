@@ -92,7 +92,7 @@ Las variables nuevas se aplican en el **próximo despliegue**:
 ## Qué muestra y cómo se calcula
 
 - **Visitas**, **Páginas vistas** y su comparación con el período anterior de la misma duración.
-- **Clics a WhatsApp**: clics a `/wa/<origen>/` (ver `docs/growth/utm.md`; hoy la tarjeta por página depende de CWA, que ya no ve esas rutas: pendiente alimentarla del colector); el origen es la página desde donde tocaron el botón. No se suman a "Páginas vistas".
+- **Clics a WhatsApp**: salen del colector propio (D1, `wa_click`, solo personas); el origen es la página donde tocaron el botón (ver `docs/growth/utm.md`). Sin D1 se muestra "no configurado".
 - **¿De dónde llegan?**: según el *referer*: Google, Pinterest, Instagram, Facebook, WhatsApp, Directo (sin referer) y Otros. Cloudflare no lee UTM (ver `docs/growth/utm.md`).
 - **Idioma de la web**: por prefijo de la ruta (`/es-mx/`, `/es-es/`, `/en/`, `/pt-br/`; el resto es es-AR).
 - Los títulos de las páginas salen de `/panel/pages.json`, que se genera en cada build.
@@ -112,8 +112,8 @@ Desde la v2 el panel junta **tres fuentes** (cada bloque dice cuál usa):
 
 | Fuente | Qué aporta | Función |
 |---|---|---|
-| **Cloudflare Web Analytics** (RUM) | Cifras generales: visitas, páginas, países, dispositivos, WhatsApp por página | `/panel/api/stats` |
-| **Estadísticas propias** (colector `/c` + base D1) | **Ciudad** y país, recorrido de cada visita, canales y UTM, bots, clics a WhatsApp / mail | `/panel/api/visitas` |
+| **Cloudflare Web Analytics** (RUM) | Cifras generales: visitas, páginas, países, dispositivos | `/panel/api/stats` |
+| **Estadísticas propias** (colector `/c` + base D1) | **Ciudad** y país, recorrido de cada visita, canales y UTM, bots, clics a WhatsApp (total y por página, también en `/panel/api/stats`) / mail | `/panel/api/visitas` |
 | **Google Search Console** | **Qué buscó la gente en Google** (consulta, clics, impresiones, posición) | `/panel/api/busquedas` |
 
 **Todo es opcional y se activa por partes.** Si falta la base D1 o las claves de Google, el sitio funciona igual y cada bloque del panel muestra "todavía no está activado". Las tres funciones verifican el JWT de Access igual que `/panel/api/stats`.

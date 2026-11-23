@@ -315,14 +315,14 @@ indexable: false
     if (st === undefined) return '<div class="pn-load" aria-label="Cargando"><div class="pn-kpis"><div class="pn-kpi sk" style="height:120px"></div><div class="pn-kpi sk" style="height:120px"></div><div class="pn-kpi sk" style="height:120px"></div><div class="pn-kpi sk" style="height:120px"></div></div></div>';
     if (st.err === 'noconf') return '<div class="pn-msg"><h2>El panel todavía no está configurado</h2><p>Falta terminar la configuración técnica de Cloudflare. Avisale a Marcos (los pasos están en docs/panel-analitica.md).</p></div>';
     if (st.err) return '<div class="pn-msg" role="alert"><h2>No pudimos cargar los números de Cloudflare</h2><p>' + esc(st.message || 'Probá de nuevo en un ratito. Si sigue igual, avisale a Marcos.') + '</p><button type="button" class="pn-btn" data-retry>Probar de nuevo</button></div>';
-    var t = st.totals, label = 'los ' + st.days + ' días anteriores';
+    var t = st.totals, label = 'los ' + st.days + ' días anteriores', waOn = st.whatsapp_configured !== false && t.whatsapp.value !== null;
     var h = '<div class="pn-kpis">' +
       '<div class="pn-kpi"><h2>Visitas</h2><div class="n">' + fmt(t.visits.value) + '</div>' + pct(t.visits.value, t.visits.previous, label) + '<p class="hint">Personas que entraron a la web.</p></div>' +
       '<div class="pn-kpi"><h2>Páginas vistas</h2><div class="n">' + fmt(t.pageviews.value) + '</div>' + pct(t.pageviews.value, t.pageviews.previous, label) + '<p class="hint">Todo lo que miraron.</p></div>' +
-      '<div class="pn-kpi"><h2>Clics a WhatsApp</h2><div class="n">' + fmt(t.whatsapp.value) + '</div>' + pct(t.whatsapp.value, t.whatsapp.previous, label) + '<p class="hint">Personas que tocaron el botón para escribirte.</p></div>' +
+      '<div class="pn-kpi"><h2>Clics a WhatsApp</h2>' + (waOn ? '<div class="n">' + fmt(t.whatsapp.value) + '</div>' + pct(t.whatsapp.value, t.whatsapp.previous, label) : '<div class="n">—</div><div class="d flat">Todavía no está activado</div>') + '<p class="hint">Personas que tocaron el botón para escribirte (estadísticas propias).</p></div>' +
       '<div class="pn-kpi"><h2>Bots detectados</h2><div class="n">' + fmt(t.bots ? t.bots.value : 0) + '</div><p class="hint">Programas automáticos, no personas. No están sumados en las otras cifras.</p></div></div>' +
-      '<p class="pn-note" style="margin:0 0 14px">' + 'Estas cuatro cifras vienen de <b>Cloudflare Web Analytics</b>. Las visitas y páginas vistas ya no incluyen bots.</p>';
-    if (!t.visits.value && !t.pageviews.value && !t.whatsapp.value) h += '<div class="pn-msg"><h2>Todavía no hay visitas de personas en este período</h2><p>Si la web es nueva o recién se activó la medición, los números aparecen en unas horas. Probá con otro período.</p></div>';
+      '<p class="pn-note" style="margin:0 0 14px">' + 'Visitas, páginas vistas y bots vienen de <b>Cloudflare Web Analytics</b> (sin bots en visitas ni páginas). Los clics a WhatsApp vienen de las <b>estadísticas propias</b> de BRENBE.</p>';
+    if (!t.visits.value && !t.pageviews.value && !(t.whatsapp.value || 0)) h += '<div class="pn-msg"><h2>Todavía no hay visitas de personas en este período</h2><p>Si la web es nueva o recién se activó la medición, los números aparecen en unas horas. Probá con otro período.</p></div>';
     return h;
   }
 
@@ -434,7 +434,7 @@ indexable: false
     h += channelsHtml();
     if (d) {
       var pg = card('pg', 'Páginas más vistas', 'Lo que más miraron.', 'cf', rows(d.pages.slice(0, 10).map(function (p) { var n = pageName(p.path); return { label: esc(n.t) + localeTag(p.path), sub: n.sub ? esc(n.sub) : '', v: p.views }; }), { unit: '' }));
-      var wa = card('wa', 'Clics a WhatsApp por página', 'Desde qué página tocaron el botón para escribirte.', 'cf', d.whatsapp.length ? rows(d.whatsapp.slice(0, 10).map(function (w) {
+      var wa = card('wa', 'Clics a WhatsApp por página', 'Desde qué página tocaron el botón para escribirte.', 'own', d.whatsapp_configured === false ? '<p class="pn-off">' + esc(OFF_OWN) + '</p>' : d.whatsapp.length ? rows(d.whatsapp.slice(0, 10).map(function (w) {
         var m = byId[w.id], n = m ? (m.url === '/' ? { t: 'Inicio' } : { t: cleanTitle(m.title) }) : { t: w.id.replace(/-/g, ' ') };
         return { label: esc(n.t) + (m ? localeTag(m.url) : ''), v: w.clicks, cls: 'olive' };
       }), { unit: '' }) : '<p class="pn-empty">Todavía nadie tocó el botón de WhatsApp en este período.</p>');

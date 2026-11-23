@@ -15,7 +15,7 @@ Esa ruta la resuelve una **Pages Function** (`functions/wa/[[path]].js`), no una
 
 **El número de WhatsApp no está en el repo ni en el HTML.** Vive como secreto de Cloudflare Pages (lo gestiona Marcos; Brenda no lo ve): `WA_NUMBER_AR` (es-AR) y `WA_NUMBER_ES` (es-MX, es-ES, en, pt-BR); solo dígitos, formato internacional sin `+`. Si falta uno se usa el otro; si faltan los dos, el botón lleva a la página de Contacto del idioma.
 
-**Cómo se miden los clics:** el colector propio (`/c`, ver `docs/panel-analitica.md`) registra `wa_click` con la página de origen al tocar cualquier enlace `/wa/` (Panel > visitas: "Tocó WhatsApp"). Como la Function responde un 302 sin HTML, el beacon de Cloudflare Web Analytics ya no corre en `/wa/*`: la tarjeta del panel "Clics a WhatsApp por página" (que leía esas rutas de CWA) quedará en cero hasta que se alimente del colector (pendiente).
+**Cómo se miden los clics:** el colector propio (`/c`) registra `wa_click` con la página donde se tocó el botón (tabla `events` de D1). El panel (`/panel/api/stats`) arma de ahí el total de "Clics a WhatsApp", la comparación con el período anterior y la tarjeta "por página" (solo personas, `is_bot = 0`). Sin D1 conectada se muestra "no configurado", no 0. Cloudflare Web Analytics ya no ve `/wa/*` (la Function responde 302 sin HTML).
 Para ocultar los botones: `whatsapp_enabled: false`.
 Límite: cuenta clics, no conversaciones; y no distingue botón flotante vs. CTA de la misma página. Registrar en la primera respuesta ("¿cómo nos conociste?") sigue siendo necesario.
 
