@@ -98,10 +98,10 @@ await t('páginas: normaliza index.html, excluye /wa/ y /panel', async () => {
   assert.deepEqual(body.pages.map((p) => p.path), ['/', '/guias/colores-para-living/', '/es-mx/guias/x/']);
   assert.ok(!body.pages.some((p) => p.path.startsWith('/wa/') || p.path.startsWith('/panel')));
 });
-// D1 falso: batch([cur, prev]) -> [{results:[{path,n}]}, {results:[{n}]}]; guarda los SQL y binds para verificarlos.
-function fakeDb({ rows, prev, fail = false }) {
+// D1 falso: batch([cur, curTotal, prev]) -> [{results:[{path,n}]}, {results:[{n:total}]}, {results:[{n}]}]; guarda los SQL y binds.
+function fakeDb({ rows, prev, total, fail = false }) {
   const calls = [];
-  return { calls, prepare: (sql) => ({ bind: (...b) => ({ sql, b }) }), batch: async (qs) => { calls.push(...qs); if (fail) throw new Error('no such table'); return [{ results: rows }, { results: [{ n: prev }] }]; } };
+  return { calls, prepare: (sql) => ({ bind: (...b) => ({ sql, b }) }), batch: async (qs) => { calls.push(...qs); if (fail) throw new Error('no such table'); return [{ results: rows }, { results: [{ n: total ?? rows.reduce((a, r) => a + r.n, 0) }] }, { results: [{ n: prev }] }]; } };
 }
 await t('WhatsApp sale del colector D1 (wa_click, solo personas), por página, con período anterior', async () => {
   const db = fakeDb({ rows: [{ path: '/', n: 6 }, { path: '/guias/colores-para-living/', n: 4 }, { path: '/guias/colores-para-living/index.html', n: 1 }], prev: 3 });
@@ -111,7 +111,9 @@ await t('WhatsApp sale del colector D1 (wa_click, solo personas), por página, c
   assert.deepEqual(body.whatsapp.map((w) => [w.id, w.clicks]), [['home', 6], ['guias-colores-para-living', 5]]);
   assert.match(db.calls[0].sql, /type = 'wa_click' AND is_bot = 0/);
   assert.match(db.calls[1].sql, /type = 'wa_click' AND is_bot = 0/);
-  const [s0, e0] = db.calls[0].b, [ps, pe] = db.calls[1].b;
+  assert.match(db.calls[0].sql, /sid NOT IN \(SELECT sid FROM events WHERE is_bot = 1/, 'excluye sesiones con eventos de bot');
+  assert.doesNotMatch(db.calls[1].sql, /LIMIT/, 'el total no depende del límite del ranking');
+  const [s0, e0] = db.calls[0].b, [ps, pe] = db.calls[2].b;
   assert.equal(pe, s0, 'el período anterior termina donde empieza el actual');
   assert.equal(Math.round((s0 - ps) / 86400000), 30);
   assert.ok(e0 > s0);

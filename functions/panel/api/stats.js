@@ -237,15 +237,17 @@ export async function authorize(request, env) {
 export const waId = (path) => { const t = String(path || '/').replace(/^\/+|\/+$/g, '').replace(/\/+/g, '-').toLowerCase(); return t || 'home'; };
 export async function waClicks(db, start, end, days) {
   const ms = days * 86400000, s = start.getTime(), e = end.getTime();
-  const [cur, prev] = await db.batch([
-    db.prepare("SELECT path, COUNT(*) AS n FROM events WHERE type = 'wa_click' AND is_bot = 0 AND ts >= ? AND ts < ? GROUP BY path ORDER BY n DESC LIMIT 200").bind(s, e),
-    db.prepare("SELECT COUNT(*) AS n FROM events WHERE type = 'wa_click' AND is_bot = 0 AND ts >= ? AND ts < ?").bind(s - ms, s),
+  // Una sesión con cualquier evento marcado como bot no cuenta (mismo criterio que /panel/api/visitas).
+  const human = "type = 'wa_click' AND is_bot = 0 AND ts >= ? AND ts < ? AND sid NOT IN (SELECT sid FROM events WHERE is_bot = 1 AND ts >= ? AND ts < ?)";
+  const [cur, curTotal, prev] = await db.batch([
+    db.prepare(`SELECT path, COUNT(*) AS n FROM events WHERE ${human} GROUP BY path ORDER BY n DESC LIMIT 200`).bind(s, e, s, e),
+    db.prepare(`SELECT COUNT(*) AS n FROM events WHERE ${human}`).bind(s, e, s, e),
+    db.prepare(`SELECT COUNT(*) AS n FROM events WHERE ${human}`).bind(s - ms, s, s - ms, s),
   ]);
   const byId = new Map();
-  let total = 0;
+  const total = Number(curTotal && curTotal.results && curTotal.results[0] && curTotal.results[0].n) || 0;
   for (const r of (cur && cur.results) || []) {
     const path = normPath(r.path), n = Number(r.n) || 0;
-    total += n;
     const id = waId(path), c = byId.get(id) || { path, id, clicks: 0 };
     c.clicks += n; byId.set(id, c);
   }
