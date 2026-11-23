@@ -127,10 +127,6 @@ site_description: "Consultoria de decoração e design de interiores online, par
 og_image_alt: Sala de estar aconchegante com sofá verde-oliva, móveis de nogueira e detalhes em granada
 
 # Plantillas de contenido, temas (hubs), paletas y redirección a WhatsApp
-wa_redirect_title: "Abrindo o WhatsApp"
-wa_redirect_h: "Abrindo o WhatsApp…"
-wa_redirect_btn: "Continuar para o WhatsApp"
-wa_redirect_back: "Voltar para a página"
 hub_topics_h: "Temas"
 hub_eyebrow: "Tema"
 hub_more_h: "Mais sobre este tema"

@@ -1,5 +1,5 @@
 // Cloudflare Pages Function: GET /panel/api/stats?days=7|30|90  (&debug=1 para ver errores de GraphQL)
-// Estadísticas privadas del panel (/panel/): lee Cloudflare Web Analytics (RUM) por la API GraphQL.
+// Estadísticas privadas del panel (/panel/): lee Cloudflare Web Analytics (RUM) por la API GraphQL; los clics a WhatsApp salen del colector D1 (binding DB).
 // Seguridad (en capas): 1) Cloudflare Access protege /panel* en el borde; 2) acá se vuelve a verificar el JWT
 // `Cf-Access-Jwt-Assertion` (RS256, aud, iss, exp). Sin configuración -> 503. Nunca se sirven datos sin autenticar.
 // Variables (Pages > brenbe > Settings > Variables and Secrets): ACCESS_TEAM_DOMAIN, ACCESS_AUD, CF_ACCOUNT_ID, CF_SITE_TAG, CF_ANALYTICS_TOKEN (secreto).
@@ -143,13 +143,12 @@ export function shape(acc, days, start, end) {
 
   // Rutas: se normalizan y juntan (/x y /x/index.html son la misma página). /wa/ = clics a WhatsApp.
   const pages = new Map();
-  const wa = new Map();
   const loc = {};
   let waTotal = 0, waPrev = 0, noise = 0, noisePrev = 0;
   for (const r of g('paths')) {
     const p = normPath(dim(r, 'requestPath'));
     const n = r.count || 0;
-    if (isWa(p)) { waTotal += n; wa.set(p, (wa.get(p) || 0) + n); continue; }
+    if (isWa(p)) { waTotal += n; continue; } // histórico: antes /wa/ era una página con beacon
     if (isNoise(p)) { noise += n; continue; }
     const cur = pages.get(p) || { path: p, views: 0, visits: 0 };
     cur.views += n; cur.visits += sv(r);
@@ -162,9 +161,7 @@ export function shape(acc, days, start, end) {
     if (isWa(p)) waPrev += r.count || 0;
     else if (isNoise(p)) noisePrev += r.count || 0;
   }
-  const waList = [...wa.entries()]
-    .map(([path, clicks]) => ({ path, id: path.replace(/^\/wa\//, '').replace(/\/$/, ''), clicks }))
-    .sort((a, b) => b.clicks - a.clicks).slice(0, 15);
+  // Los clics a WhatsApp ya NO salen de RUM (/wa/* es un 302 sin HTML): los pone el handler desde el colector D1 (waClicks).
 
   // Serie diaria completa (los días sin datos valen 0).
   const byDay = new Map(g('series').map((r) => [dim(r, 'date'), r]));
@@ -205,7 +202,7 @@ export function shape(acc, days, start, end) {
     totals: {
       visits: { value: sv(t), previous: sv(pt) },
       pageviews: { value: Math.max(0, (t.count || 0) - waTotal - noise), previous: Math.max(0, (pt.count || 0) - waPrev - noisePrev) },
-      whatsapp: { value: waTotal, previous: waPrev },
+      whatsapp: { value: 0, previous: 0 },
       bots: { value: bt.count || 0, previous: bpt.count || 0, visits: sv(bt) },
     },
     botCountries,
@@ -216,7 +213,8 @@ export function shape(acc, days, start, end) {
     countries: rank(countries, 'country').slice(0, 15),
     devices: rank(devices, 'device'),
     locales: ['es-ar', 'es-mx', 'es-es', 'en', 'pt-br'].map((l) => ({ locale: l, views: loc[l] || 0 })),
-    whatsapp: waList,
+    whatsapp: [],
+    whatsapp_configured: false,
   };
 }
 
@@ -232,6 +230,43 @@ export async function authorize(request, env) {
   const auth = await verifyAccessJwt(token, env);
   if (!auth.ok) return json({ error: 'acceso_denegado', message: 'Tu sesión no es válida o venció. Volvé a entrar al panel.' }, 403);
   return null;
+}
+
+// ---------- Clics a WhatsApp: colector propio (D1, tabla `events`, type wa_click, solo personas) ----------
+// path = página donde tocaron el botón. `id` = origen estilo /wa/<id>/ (la home es "home"; /guias/x/ -> guias-x).
+export const waId = (path) => { const t = String(path || '/').replace(/^\/+|\/+$/g, '').replace(/\/+/g, '-').toLowerCase(); return t || 'home'; };
+export async function waClicks(db, start, end, days) {
+  const ms = days * 86400000, s = start.getTime(), e = end.getTime();
+  // Una sesión con cualquier evento marcado como bot no cuenta (mismo criterio que /panel/api/visitas).
+  const human = "type = 'wa_click' AND is_bot = 0 AND ts >= ? AND ts < ? AND sid NOT IN (SELECT sid FROM events WHERE is_bot = 1 AND ts >= ? AND ts < ?)";
+  const [cur, curTotal, prev] = await db.batch([
+    db.prepare(`SELECT path, COUNT(*) AS n FROM events WHERE ${human} GROUP BY path ORDER BY n DESC LIMIT 200`).bind(s, e, s, e),
+    db.prepare(`SELECT COUNT(*) AS n FROM events WHERE ${human}`).bind(s, e, s, e),
+    db.prepare(`SELECT COUNT(*) AS n FROM events WHERE ${human}`).bind(s - ms, s, s - ms, s),
+  ]);
+  const byId = new Map();
+  const total = Number(curTotal && curTotal.results && curTotal.results[0] && curTotal.results[0].n) || 0;
+  for (const r of (cur && cur.results) || []) {
+    const path = normPath(r.path), n = Number(r.n) || 0;
+    const id = waId(path), c = byId.get(id) || { path, id, clicks: 0 };
+    c.clicks += n; byId.set(id, c);
+  }
+  const previous = Number(prev && prev.results && prev.results[0] && prev.results[0].n) || 0;
+  return { total, previous, list: [...byId.values()].sort((a, b) => b.clicks - a.clicks).slice(0, 15) };
+}
+// Completa `data` con los clics a WhatsApp. Sin DB o sin tabla: whatsapp_configured=false y el total en null (el panel muestra "no configurado").
+export async function addWhatsapp(data, env, start, end, days) {
+  data.whatsapp_configured = false;
+  data.totals.whatsapp = { value: null, previous: null };
+  data.whatsapp = [];
+  if (!env.DB) return data;
+  try {
+    const w = await waClicks(env.DB, start, end, days);
+    data.totals.whatsapp = { value: w.total, previous: w.previous };
+    data.whatsapp = w.list;
+    data.whatsapp_configured = true;
+  } catch (e) { /* sin tabla: queda "no configurado" */ }
+  return data;
 }
 
 // ---------- Handler ----------
@@ -276,6 +311,7 @@ export async function onRequestGet(context) {
   }
 
   const data = shape(acc, days, q.start, q.end);
+  await addWhatsapp(data, env, q.start, q.end, days);
   data.generatedAt = new Date().toISOString();
   if (cache && !debug) {
     try { await cache.put(cacheKey, new Response(JSON.stringify(data), { headers: { 'content-type': 'application/json', 'cache-control': 'max-age=' + CACHE_SECONDS } })); } catch (e) { /* ok */ }
