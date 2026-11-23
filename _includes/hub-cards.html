@@ -6,7 +6,7 @@
   <div class="section-head"><h2>{% include t.html k="hub_topics_h" %}</h2></div>
   <ul class="topic-list">
     {%- for pair in hc_live %}
-    {%- assign hc_d = site.data.hubs.hubs[pair[0]][lk] %}
+    {%- assign hc_id = pair[0] %}{%- assign hc_h = site.data.hubs.hubs[hc_id] %}{%- assign hc_d = hc_h[lk] %}
     <li><a href="{{ pair[1] | relative_url }}"><strong>{{ hc_d.nombre | escape }}</strong><span>{{ hc_d.intro | escape }}</span></a></li>
     {%- endfor %}
   </ul>
