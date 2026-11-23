@@ -127,10 +127,6 @@ site_description: "Online interior design and decorating consultations for anywh
 og_image_alt: Warm living room with an olive sofa, walnut furniture and garnet accents
 
 # Plantillas de contenido, temas (hubs), paletas y redirección a WhatsApp
-wa_redirect_title: "Opening WhatsApp"
-wa_redirect_h: "Opening WhatsApp…"
-wa_redirect_btn: "Continue to WhatsApp"
-wa_redirect_back: "Back to the page"
 hub_topics_h: "Topics"
 hub_eyebrow: "Topic"
 hub_more_h: "More on this topic"

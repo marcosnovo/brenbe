@@ -85,7 +85,8 @@ await t('JWT válido -> 200 con datos y cabeceras privadas', async () => {
   assert.match(res.headers.get('x-robots-tag'), /noindex/);
   assert.equal(body.days, 30);
   assert.deepEqual(body.totals.visits, { value: 80, previous: 50 });
-  assert.deepEqual(body.totals.whatsapp, { value: 10, previous: 3 });
+  assert.deepEqual(body.totals.whatsapp, { value: null, previous: null }, 'sin DB: no configurado, no 0');
+  assert.equal(body.whatsapp_configured, false);
   // 120 pageviews - 10 wa - 2 panel = 108; previo 100 - 3 wa = 97
   assert.deepEqual(body.totals.pageviews, { value: 108, previous: 97 });
   assert.equal(body.series.length, 30);
@@ -97,9 +98,37 @@ await t('páginas: normaliza index.html, excluye /wa/ y /panel', async () => {
   assert.deepEqual(body.pages.map((p) => p.path), ['/', '/guias/colores-para-living/', '/es-mx/guias/x/']);
   assert.ok(!body.pages.some((p) => p.path.startsWith('/wa/') || p.path.startsWith('/panel')));
 });
-await t('WhatsApp por origen y split por idioma', async () => {
+// D1 falso: batch([cur, prev]) -> [{results:[{path,n}]}, {results:[{n}]}]; guarda los SQL y binds para verificarlos.
+function fakeDb({ rows, prev, fail = false }) {
+  const calls = [];
+  return { calls, prepare: (sql) => ({ bind: (...b) => ({ sql, b }) }), batch: async (qs) => { calls.push(...qs); if (fail) throw new Error('no such table'); return [{ results: rows }, { results: [{ n: prev }] }]; } };
+}
+await t('WhatsApp sale del colector D1 (wa_click, solo personas), por página, con período anterior', async () => {
+  const db = fakeDb({ rows: [{ path: '/', n: 6 }, { path: '/guias/colores-para-living/', n: 4 }, { path: '/guias/colores-para-living/index.html', n: 1 }], prev: 3 });
+  const { body } = await call({ token: await sign(kp, good), env: { ...ENV, DB: db } });
+  assert.equal(body.whatsapp_configured, true);
+  assert.deepEqual(body.totals.whatsapp, { value: 11, previous: 3 });
+  assert.deepEqual(body.whatsapp.map((w) => [w.id, w.clicks]), [['home', 6], ['guias-colores-para-living', 5]]);
+  assert.match(db.calls[0].sql, /type = 'wa_click' AND is_bot = 0/);
+  assert.match(db.calls[1].sql, /type = 'wa_click' AND is_bot = 0/);
+  const [s0, e0] = db.calls[0].b, [ps, pe] = db.calls[1].b;
+  assert.equal(pe, s0, 'el período anterior termina donde empieza el actual');
+  assert.equal(Math.round((s0 - ps) / 86400000), 30);
+  assert.ok(e0 > s0);
+  // pageviews no cambia por WhatsApp: los /wa/ históricos de RUM igual se descuentan
+  assert.deepEqual(body.totals.pageviews, { value: 108, previous: 97 });
+});
+await t('WhatsApp: D1 sin tabla -> no configurado; sin clics -> 0 configurado', async () => {
+  const bad = await call({ token: await sign(kp, good), env: { ...ENV, DB: fakeDb({ rows: [], prev: 0, fail: true }) } });
+  assert.equal(bad.body.whatsapp_configured, false);
+  assert.deepEqual(bad.body.totals.whatsapp, { value: null, previous: null });
+  assert.deepEqual(bad.body.whatsapp, []);
+  const zero = await call({ token: await sign(kp, good), env: { ...ENV, DB: fakeDb({ rows: [], prev: 0 }) } });
+  assert.equal(zero.body.whatsapp_configured, true);
+  assert.deepEqual(zero.body.totals.whatsapp, { value: 0, previous: 0 });
+});
+await t('split por idioma', async () => {
   const { body } = await call({ token: await sign(kp, good) });
-  assert.deepEqual(body.whatsapp.map((w) => [w.id, w.clicks]), [['home', 6], ['guias-colores-para-living', 4]]);
   const l = Object.fromEntries(body.locales.map((x) => [x.locale, x.views]));
   assert.equal(l['es-ar'], 80);
   assert.equal(l['es-mx'], 10);

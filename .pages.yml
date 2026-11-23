@@ -413,7 +413,7 @@ content:
   # ---------------------------------------------------------------- Mis datos
   - name: negocio
     label: Mis datos
-    description: Tu WhatsApp, tu mail, tu Instagram, tu foto y tu historia. Lo que dejes vacío no se muestra en la web.
+    description: Tu mail, tu Instagram, tu foto y tu historia. Lo que dejes vacío no se muestra en la web.
     type: file
     path: _data/negocio.yml
     format: yaml
@@ -437,13 +437,6 @@ content:
         type: text
         options:
           maxlength: 2500
-      - name: whatsapp
-        label: Tu WhatsApp
-        description: 'Solo números, sin espacios ni signos, con código de país. Primero el código de país y después tu número completo. Ejemplo: 5491112345678.'
-        type: string
-        pattern:
-          regex: '^[0-9]{10,15}$'
-          message: 'Escribí solo números, sin espacios ni signos. Ejemplo: 5491112345678'
       - name: email
         label: Tu mail
         description: 'Ejemplo: hola@brenbe.com'

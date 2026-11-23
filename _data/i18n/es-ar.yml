@@ -128,10 +128,6 @@ site_description: "Asesorías de interiorismo y decoración online, para cualqui
 og_image_alt: Living con sofá oliva, muebles de nogal y acentos granate
 
 # Plantillas de contenido, temas (hubs), paletas y redirección a WhatsApp
-wa_redirect_title: "Abriendo WhatsApp"
-wa_redirect_h: "Abriendo WhatsApp…"
-wa_redirect_btn: "Continuar a WhatsApp"
-wa_redirect_back: "Volver a la página"
 hub_topics_h: "Temas"
 hub_eyebrow: "Tema"
 hub_more_h: "Más en este tema"

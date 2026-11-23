@@ -4,8 +4,9 @@ layout: null
 # Buscadores y buscadores de IA (Google, Bing, ChatGPT search, Perplexity, Claude): permitidos.
 User-agent: *
 Allow: /
-# /wa/ son redirecciones a WhatsApp para medir clics: no tienen contenido que indexar.
+# /wa/ son redirecciones a WhatsApp (Pages Function): no tienen contenido que indexar.
 Disallow: /wa/
+Disallow: /_wa-map.json
 # /panel/ es el panel privado de estadísticas (protegido con Cloudflare Access).
 Disallow: /panel/
 

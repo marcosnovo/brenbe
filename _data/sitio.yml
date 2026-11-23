@@ -20,9 +20,10 @@ cloudflare_analytics_token:
 google_site_verification:
 # Código de verificación del dominio en Pinterest (solo el valor de content="..."). Vacío = no se publica.
 pinterest_domain_verify:
-# Clics a WhatsApp: con true (por defecto) los botones pasan por /wa/<página>/ y cuentan como visita en Cloudflare Web Analytics
-# (solo si hay WhatsApp en "Mis datos"). Poné false para que abran WhatsApp directo, sin medir.
-wa_track: true
+# WhatsApp: con true se muestran los botones, que van a /wa/<página>/ (Pages Function functions/wa/[[path]].js).
+# El número NO se guarda en el repo: vive como secreto de Cloudflare Pages (WA_NUMBER_AR para es-AR, WA_NUMBER_ES para el resto).
+# Lo gestiona Marcos; Brenda no lo ve ni lo edita.
+whatsapp_enabled: true
 
 # Formulario de contacto (ver docs/formulario-contacto.md). Con true se muestra el formulario en las páginas de contacto
 # y estas pasan a indexarse. Activar SOLO cuando el Worker `brenbe-contacto` esté desplegado y con sus secretos.
