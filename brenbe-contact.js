@@ -110,11 +110,10 @@
   }
 
   function track() {
-    try {
-      // Colector propio en /c (si todavía no existe, no pasa nada).
-      if (navigator.sendBeacon) navigator.sendBeacon('/c', new Blob([JSON.stringify({ e: 'contact_submit', p: location.pathname, l: form.elements.locale.value })], { type: 'text/plain' }));
-    } catch (e) { /* no-op */ }
+    // Solo tras un envío confirmado por el servidor: usa el colector de estadísticas (_includes/stats-script.html) si está cargado.
+    try { if (typeof window.brenbeStats === 'function') window.brenbeStats('ct'); } catch (e) {}
   }
+
 
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
