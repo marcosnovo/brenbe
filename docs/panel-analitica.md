@@ -92,7 +92,7 @@ Las variables nuevas se aplican en el **próximo despliegue**:
 ## Qué muestra y cómo se calcula
 
 - **Visitas**, **Páginas vistas** y su comparación con el período anterior de la misma duración.
-- **Clics a WhatsApp**: visitas a las páginas `/wa/<origen>/` (ver `docs/growth/utm.md`); el origen es la página desde donde tocaron el botón. No se suman a "Páginas vistas".
+- **Clics a WhatsApp**: clics a `/wa/<origen>/` (ver `docs/growth/utm.md`; hoy la tarjeta por página depende de CWA, que ya no ve esas rutas: pendiente alimentarla del colector); el origen es la página desde donde tocaron el botón. No se suman a "Páginas vistas".
 - **¿De dónde llegan?**: según el *referer*: Google, Pinterest, Instagram, Facebook, WhatsApp, Directo (sin referer) y Otros. Cloudflare no lee UTM (ver `docs/growth/utm.md`).
 - **Idioma de la web**: por prefijo de la ruta (`/es-mx/`, `/es-es/`, `/en/`, `/pt-br/`; el resto es es-AR).
 - Los títulos de las páginas salen de `/panel/pages.json`, que se genera en cada build.

@@ -6,8 +6,7 @@
 #  2. HubGenerator: páginas de "tema" (hub) por idioma a partir de _data/hubs.yml. Un hub SOLO se genera en un
 #     idioma si tiene al menos `min_guides` guías publicadas (sin páginas finas). Deja en `site.hubs_live`
 #     { 'es-ar' => { 'depto-chico' => '/guias/depto-chico/' } } lo que se generó, para el resto de las plantillas.
-#  3. WaRedirectGenerator: una mini-página /wa/<origen>/ por cada página del sitio (ver _layouts/wa.html).
-#     Cloudflare Web Analytics no registra query strings, por eso el origen del clic va en la RUTA.
+#  (/wa/<origen>/ ya no se genera: lo resuelve la Pages Function functions/wa/[[path]].js; el número vive solo como secreto.)
 
 require 'jekyll'
 
@@ -90,7 +89,9 @@ module Brenbe
       return false if site.data['locales'].dig(locale_of(doc), 'ready') == false
 
       negocio = site.data['negocio'] || {}
-      filled = ->(k) { !negocio[k].to_s.strip.empty? }
+      sitio = site.data['sitio'] || {}
+      # `whatsapp` vale como cargado cuando el interruptor sitio.whatsapp_enabled es true (el número ya no está en los datos).
+      filled = ->(k) { k == 'whatsapp' ? sitio['whatsapp_enabled'] == true : !negocio[k].to_s.strip.empty? }
       # `contact_form` (en index_when_any) vale como cargado si el formulario está activo en _data/sitio.yml.
       form_on = (site.data['sitio'] || {})['contact_form'] == true
       filled_any = ->(k) { filled.call(k) || (k == 'contact_form' && form_on) }
@@ -106,12 +107,6 @@ module Brenbe
       coll ? coll.docs : []
     end
 
-    def pid(url)
-      u = url.to_s.sub(%r{index\.html\z}, '')
-      return 'home' if u.delete('/').empty?
-
-      Jekyll::Utils.slugify(u)
-    end
   end
 end
 
@@ -170,37 +165,6 @@ module Brenbe
         end
       end
       site.config['hubs_live'] = live
-    end
-  end
-
-  class WaPage < Jekyll::PageWithoutAFile; end
-
-  # /wa/<origen>/ : redirección a WhatsApp que cuenta como página vista (ver docs/growth/utm.md).
-  class WaRedirectGenerator < Jekyll::Generator
-    safe true
-    priority :lowest
-
-    def generate(site)
-      # Sin número de WhatsApp (Mis datos) no hay a dónde redirigir: no se generan.
-      return if site.data.dig('negocio', 'whatsapp').to_s.strip.empty?
-
-      sources = site.pages.select { |p| p.data['layout'] && !p.is_a?(WaPage) && p.data['layout'] != 'wa' } +
-                site.documents.select { |d| d.write? }
-      seen = {}
-      sources.each do |src|
-        id = Util.pid(src.url)
-        next if seen[id]
-
-        seen[id] = true
-        page = WaPage.new(site, site.source, "wa/#{id}", 'index.html')
-        page.content = ''
-        page.data.merge!(
-          'layout' => 'wa', 'locale' => Util.locale_of(src), 'wa_for' => src.url,
-          'permalink' => "/wa/#{id}/", 'sitemap' => false, 'indexable' => false,
-          'title' => 'WhatsApp'
-        )
-        site.pages << page
-      end
     end
   end
 end

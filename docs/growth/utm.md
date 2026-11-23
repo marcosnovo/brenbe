@@ -10,11 +10,13 @@ Cloudflare Web Analytics (CWA) es gratis, sin cookies y sin banner, pero **solo 
 
 ## Clics a WhatsApp: `/wa/<página>/`
 
-Cuando "Mis datos" tiene WhatsApp, todos los botones de WhatsApp (flotante, CTA de guías, servicios, contacto, pie, home) apuntan a una mini-página **`/wa/<origen>/`** (una por página del sitio, generadas en el build; el `<origen>` es la URL de la página con guiones: `/guias/colores-para-living/` → `/wa/guias-colores-para-living/`; la home es `/wa/home/`; `/es-mx/guias/...` → `/wa/es-mx-guias-...`).
-Esa página (noindex, fuera del sitemap, `Disallow: /wa/` en robots.txt, `X-Robots-Tag: noindex`) lleva el beacon de CWA, espera ~0,7 s a que se registre la visita y salta a `https://wa.me/<número>?text=<mensaje de esa página>` con `location.replace` (el botón "atrás" vuelve a la página de origen, no queda en un bucle). Respaldo sin JS: `meta refresh` a los 3 s y botón visible.
+Con `whatsapp_enabled: true` en `_data/sitio.yml`, todos los botones de WhatsApp (flotante, CTA de guías, servicios, contacto, pie, home) apuntan a **`/wa/<origen>/`** (el `<origen>` es la URL de la página con guiones: `/guias/colores-para-living/` → `/wa/guias-colores-para-living/`; la home es `/wa/home/`; `/es-mx/guias/...` → `/wa/es-mx-guias-...`).
+Esa ruta la resuelve una **Pages Function** (`functions/wa/[[path]].js`), no una página estática: busca el mensaje de ese origen en `/_wa-map.json` (lo genera Jekyll con `wa-map.json`; sin teléfonos) y responde `302` a `https://wa.me/<número>?text=<mensaje>` (`Cache-Control: private, no-store`, `X-Robots-Tag: noindex`, `Referrer-Policy: no-referrer`). Los bots reciben 403 (no cosechan el número por el header `Location`).
 
-**Cómo leerlo en Cloudflare:** Web Analytics → brenbe.com → filtro **Path** que empiece por `/wa/` → cada ruta es un clic atribuido a su página; el prefijo del idioma está en la ruta. Total de clics = visitas a `/wa/*`.
-Para desactivarlo: `wa_track: false` en `_data/sitio.yml` (los botones vuelven a abrir `wa.me` directo). Sin número de WhatsApp no se genera nada.
+**El número de WhatsApp no está en el repo ni en el HTML.** Vive como secreto de Cloudflare Pages (lo gestiona Marcos; Brenda no lo ve): `WA_NUMBER_AR` (es-AR) y `WA_NUMBER_ES` (es-MX, es-ES, en, pt-BR); solo dígitos, formato internacional sin `+`. Si falta uno se usa el otro; si faltan los dos, el botón lleva a la página de Contacto del idioma.
+
+**Cómo se miden los clics:** el colector propio (`/c`, ver `docs/panel-analitica.md`) registra `wa_click` con la página de origen al tocar cualquier enlace `/wa/` (Panel > visitas: "Tocó WhatsApp"). Como la Function responde un 302 sin HTML, el beacon de Cloudflare Web Analytics ya no corre en `/wa/*`: la tarjeta del panel "Clics a WhatsApp por página" (que leía esas rutas de CWA) quedará en cero hasta que se alimente del colector (pendiente).
+Para ocultar los botones: `whatsapp_enabled: false`.
 Límite: cuenta clics, no conversaciones; y no distingue botón flotante vs. CTA de la misma página. Registrar en la primera respuesta ("¿cómo nos conociste?") sigue siendo necesario.
 
 ## Activar Web Analytics en Cloudflare (qué tiene que hacer la dueña)
@@ -43,7 +45,7 @@ Minúsculas, sin acentos, siempre igual:
 | Nota de prensa / colaboración | `pr` | `referral` | `nombre-medio` | — |
 
 Ejemplos: `https://brenbe.com/guias/colores-para-living/?utm_source=pinterest&utm_medium=organic&utm_campaign=paletas-living-es-ar&utm_content=pin-014` · `https://brenbe.com/?utm_source=gbp&utm_medium=profile&utm_campaign=local`.
-Reglas: una campaña = un nombre; no usar UTM en enlaces **internos** del sitio; los enlaces `wa.me` no admiten UTM (usar `/wa/`). Los enlaces con UTM no cambian la URL canónica (ya apunta a la limpia).
+Reglas: una campaña = un nombre; no usar UTM en enlaces **internos** del sitio; los enlaces `wa.me` no admiten UTM. Los enlaces con UTM no cambian la URL canónica (ya apunta a la limpia).
 Alternativa si se quiere atribuir cada canal en CWA: pedir al dev una página-puente por canal (`/r/pinterest/`, estilo `/wa/`) y usar esa URL en la bio/perfil; cada canal queda como una ruta distinta.
 
 ## Planilla de leads (10 min/semana)

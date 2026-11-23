@@ -236,6 +236,10 @@ for u, p in pages.items():
             err(f'{u}: JSON-LD inválido ({e})')
 
 # 5. enlaces internos
+try:
+    wa_map = json.load(open(os.path.join(SITE, '_wa-map.json'), encoding='utf-8')).get('map', {})
+except Exception:
+    wa_map = {}
 n_links = 0
 for u, p in pages.items():
     for href in p.links:
@@ -243,6 +247,12 @@ for u, p in pages.items():
         if href.startswith(BASE):
             href = href[len(BASE):] or '/'
         if not href.startswith('/') or href.startswith('//') or href.startswith('/cdn-cgi/'):
+            continue
+        if href.startswith('/wa/'):
+            # /wa/<origen>/ lo resuelve la Pages Function (functions/wa/[[path]].js): el origen tiene que estar en el mapa.
+            n_links += 1
+            if href[4:].strip('/') not in wa_map:
+                err(f'{u}: /wa/ sin entrada en _wa-map.json: {href}')
             continue
         n_links += 1
         path, frag = urldefrag(href)

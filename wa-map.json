@@ -1,0 +1,25 @@
+---
+layout: null
+permalink: /_wa-map.json
+sitemap: false
+---
+{%- comment -%}
+  Mapa origen -> { idioma, mensaje prellenado } que lee la Function functions/wa/[[path]].js (por env.ASSETS).
+  NO contiene teléfonos: el número sale de los secretos WA_NUMBER_AR / WA_NUMBER_ES. Fuera del sitemap, noindex (_headers) y Disallow en robots.txt.
+{%- endcomment -%}
+{%- assign wm_items = site.pages | where_exp: 'p', 'p.layout' | concat: site.documents -%}
+{%- assign wm_seen = '|' -%}
+{%- assign wm_n = 0 -%}
+{%- capture wm_out -%}
+{%- if site.data.sitio.whatsapp_enabled == true -%}
+{%- for src in wm_items -%}
+  {%- include wa.html p=src -%}
+  {%- assign wm_key = '|' | append: wa_pid | append: '|' -%}
+  {%- if wa_pid == '' or wm_seen contains wm_key -%}{%- continue -%}{%- endif -%}
+  {%- assign wm_seen = wm_seen | append: wa_pid | append: '|' -%}
+  {%- if wm_n > 0 -%},{%- endif -%}{%- assign wm_n = wm_n | plus: 1 -%}
+  {{ wa_pid | jsonify }}:{"l":{{ lk | jsonify }},"m":{{ wa_msg | jsonify }}}
+{%- endfor -%}
+{%- endif -%}
+{%- endcapture -%}
+{"v":1,"map":{ {{- wm_out | strip -}} }}

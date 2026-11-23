@@ -1,20 +1,20 @@
 {%- comment -%}
-  Define las variables de WhatsApp (vacías si no hay número en negocio.yml):
-    wa_direct  enlace directo https://wa.me/<número>?text=<mensaje>
-    wa_href    el que se usa en los botones: si hay WhatsApp, pasa por /wa/<origen>/ (ver _layouts/wa.html) para que cada
-               clic cuente como página vista en Cloudflare Web Analytics y se sepa desde qué página salió.
-               Con `wa_track: false` en _data/sitio.yml usa wa_direct (comportamiento anterior).
-    wa_rel     valor de rel para esos enlaces (nofollow si va a /wa/, noopener si va directo)
+  Define las variables de WhatsApp (vacías si el interruptor `whatsapp_enabled` de _data/sitio.yml no es true):
+    wa_href    enlace de los botones: SIEMPRE /wa/<origen>/ (Pages Function functions/wa/[[path]].js). El número de teléfono
+               NO está en el repo ni en el HTML: vive solo como secreto de Cloudflare Pages (WA_NUMBER_AR / WA_NUMBER_ES).
+    wa_rel     rel de esos enlaces (nofollow)
+    wa_pid     id de origen de la página (/guias/x/ -> guias-x, home -> home); lo usa también wa-map.json
+    wa_msg     mensaje prellenado de esa página (lo publica _wa-map.json para la Function)
   Mensaje: include.msg > page.wa_message > texto según la página (en el idioma de la página) > sitio.whatsapp_mensaje (solo home es-AR).
-  include.p: página de origen (lo usa _layouts/wa.html); por defecto, la página actual.
+  include.p: página de origen (lo usa wa-map.json); por defecto, la página actual.
 {%- endcomment -%}
 {%- if include.p -%}{%- include loc.html p=include.p -%}{%- else -%}{%- unless T %}{% include loc.html %}{% endunless -%}{%- endif -%}
 {%- assign wa_p = include.p | default: page -%}
-{%- assign wa_num = site.data.negocio.whatsapp | default: '' | append: '' | replace: '+', '' | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' | strip -%}
 {%- assign wa_href = '' -%}
-{%- assign wa_direct = '' -%}
-{%- assign wa_rel = 'noopener' -%}
-{%- if wa_num != '' -%}
+{%- assign wa_rel = 'nofollow' -%}
+{%- assign wa_msg = '' -%}
+{%- assign wa_pid = '' -%}
+{%- if site.data.sitio.whatsapp_enabled == true -%}
   {%- assign wa_default = site.data.sitio.whatsapp_mensaje | default: '' | strip -%}
   {%- assign wa_is_home = false -%}
   {%- if wa_p.url == '/' or wa_p.ref == 'home' -%}{%- assign wa_is_home = true -%}{%- endif -%}
@@ -25,12 +25,7 @@
   {%- elsif wa_p.layout == 'guia' -%}{%- assign wa_msg = T.wa_guide | default: TD.wa_guide | replace: '%s', wa_p.title -%}
   {%- else -%}{%- assign wa_msg = T.wa_page | default: TD.wa_page | replace: '%s', wa_p.title -%}
   {%- endif -%}
-  {%- capture wa_direct -%}https://wa.me/{{ wa_num }}?text={{ wa_msg | url_encode }}{%- endcapture -%}
-  {%- assign wa_href = wa_direct -%}
-  {%- if site.data.sitio.wa_track != false and include.p == nil -%}
-    {%- assign wa_pid = wa_p.url | replace: 'index.html', '' -%}
-    {%- if wa_pid == '/' or wa_pid == '' -%}{%- assign wa_pid = 'home' -%}{%- else -%}{%- assign wa_pid = wa_pid | slugify -%}{%- endif -%}
-    {%- capture wa_href -%}{{ '/wa/' | append: wa_pid | append: '/' | relative_url }}{%- endcapture -%}
-    {%- assign wa_rel = 'nofollow' -%}
-  {%- endif -%}
+  {%- assign wa_pid = wa_p.url | replace: 'index.html', '' -%}
+  {%- if wa_pid == '/' or wa_pid == '' -%}{%- assign wa_pid = 'home' -%}{%- else -%}{%- assign wa_pid = wa_pid | slugify -%}{%- endif -%}
+  {%- capture wa_href -%}{{ '/wa/' | append: wa_pid | append: '/' | relative_url }}{%- endcapture -%}
 {%- endif -%}

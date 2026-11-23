@@ -15,8 +15,9 @@
   X-Robots-Tag: noindex, nofollow
   Cache-Control: private, no-store
 
-# Redirecciones a WhatsApp (medición de clics): nunca indexar.
-/wa/*
+# /wa/* lo responde la Function functions/wa/[[path]].js (con sus propios headers: no-store, noindex).
+# Mapa origen -> mensaje de WhatsApp (sin teléfonos) que lee esa Function: nunca indexar.
+/_wa-map.json
   X-Robots-Tag: noindex, nofollow
   Cache-Control: public, max-age=300
 
