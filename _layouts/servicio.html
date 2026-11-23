@@ -12,7 +12,7 @@ layout: base
       <p>{{ page.intro | escape }}</p>
       <div class="actions">
         <a class="button primary" href="#contacto">{% include t.html k="service_btn_consult" %}</a>
-        {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include t.html k="service_btn_wa" %}</a>{% endif %}
+        {% if wa_href != '' %}<a class="button has-wa secondary" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include wa-icon.html %}{% include t.html k="service_btn_wa" %}</a>{% endif %}
       </div>
     </div>
     {% if page.image %}<figure class="service-figure">{% include imagen.html src=page.image alt=page.image_alt sizes="(max-width: 800px) 100vw, 40vw" loading="eager" %}<figcaption>{% include t.html k="service_visual_ref" %}</figcaption></figure>{% endif %}

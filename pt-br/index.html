@@ -24,7 +24,7 @@ preload_image:
       <div class="actions">
         <a class="button primary" href="{% include l.html ref='asesoria-online' %}">{% include t.html k="btn_online" %}</a>
         <a class="button secondary" href="{% include l.html ref='proyectos' %}">{% include t.html k="nav_proyectos" %}</a>
-        {% if wa_href != '' %}<a class="button secondary" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include t.html k="contact_wa" %}</a>{% endif %}
+        {% if wa_href != '' %}<a class="button has-wa secondary" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include wa-icon.html %}{% include t.html k="contact_wa" %}</a>{% endif %}
       </div>
     </div>
     <div class="hero-image">

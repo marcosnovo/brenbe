@@ -11,7 +11,7 @@
   {% if contact_email != '' or wa_href != '' or contact_form == true %}
   <div class="actions">
     {% if contact_form == true %}<a class="button" href="{% include l.html ref='contacto' %}#formulario">{% include t.html k="cf_h2" %}</a>{% endif %}
-    {% if wa_href != '' %}<a class="button" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include t.html k="contact_wa" %}</a>{% endif %}
+    {% if wa_href != '' %}<a class="button has-wa" href="{{ wa_href }}" rel="{{ wa_rel }}">{% include wa-icon.html %}{% include t.html k="contact_wa" %}</a>{% endif %}
     {% if contact_email != '' %}<a class="button" href="mailto:{{ contact_email | escape }}">{% include t.html k="contact_email" %}</a>{% endif %}
   </div>
   {% endif %}

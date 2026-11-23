@@ -450,3 +450,14 @@ body.has-loc-banner .wa-float { bottom: 72px; }
   .cf-row { grid-template-columns: 1fr; }
   .cf-wrap { max-width: none; }
 }
+
+/* ---- WhatsApp: logo en todos los botones y enlaces ---- */
+.wa-ico { flex: none; width: 1.35em; height: 1.35em; }
+a.has-wa { display: inline-flex; align-items: center; justify-content: center; gap: .55em; }
+.button.has-wa .wa-ico { color: #25D366; }
+.button.has-wa:hover .wa-ico, .button.primary.has-wa .wa-ico, .contact .button.has-wa .wa-ico { color: currentColor; }
+footer a.has-wa .wa-ico { width: 1.15em; height: 1.15em; color: #25D366; }
+.wa-float { background: #075E54; color: #fff; }
+.wa-float .wa-ico { width: 22px; height: 22px; }
+.wa-float:hover { background: #128C7E; }
+.wa-float .wa-ico { color: #25D366; }
