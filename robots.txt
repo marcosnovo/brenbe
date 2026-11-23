@@ -6,6 +6,8 @@ User-agent: *
 Allow: /
 # /wa/ son redirecciones a WhatsApp para medir clics: no tienen contenido que indexar.
 Disallow: /wa/
+# /panel/ es el panel privado de estadísticas (protegido con Cloudflare Access).
+Disallow: /panel/
 
 # Señales de uso (Cloudflare Content Signals).
 # search / ai-input = aparecer en buscadores y en respuestas de IA.
