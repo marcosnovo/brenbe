@@ -24,6 +24,13 @@ export function channelFor(e) {
 }
 
 const pv = (e) => e.type === 'pageview';
+const DAY = 86400000;
+const dayKey = (ms) => new Date(ms).toISOString().slice(0, 10);
+// Ventana alineada a días calendario UTC, igual que /panel/api/stats: hoy incluido + los (days - 1) días anteriores completos.
+export function windowStart(now, days) {
+  const d = new Date(now);
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - (days - 1) * DAY;
+}
 function tally(map, key, obj) {
   const cur = map.get(key);
   if (cur) cur.visits++; else map.set(key, { ...obj, visits: 1 });
@@ -31,7 +38,7 @@ function tally(map, key, obj) {
 const rank = (map, n) => [...map.values()].sort((a, b) => b.visits - a.visits).slice(0, n);
 
 // Arma la respuesta a partir de las filas de `events` (ya ordenadas por ts ascendente).
-export function shape(rows, { days, now, previousPeople = 0, truncated = false }) {
+export function shape(rows, { days, now, previousPeople = 0, previousContacted = 0, truncated = false }) {
   const sessions = new Map();
   for (const e of rows) {
     let s = sessions.get(e.sid);
@@ -62,6 +69,13 @@ export function shape(rows, { days, now, previousPeople = 0, truncated = false }
 
   const people = [], bots = [];
   for (const s of sessions.values()) (s.bot ? bots : people).push(s);
+  // Serie diaria de personas (sesiones no-bot por día de inicio, días calendario UTC, los días sin datos valen 0).
+  const perDay = new Map();
+  for (const s of people) { const k = dayKey(s.start); perDay.set(k, (perDay.get(k) || 0) + 1); }
+  const first = windowStart(now, days);
+  const series = [];
+  for (let i = 0; i < days; i++) { const k = dayKey(first + i * DAY); series.push({ date: k, people: perDay.get(k) || 0 }); }
+  const contacted = people.filter((s) => s.wa || s.contact).length;
   const peopleViews = people.reduce((n, s) => n + s.pages.length, 0);
 
   const cities = new Map(), countries = new Map(), entries = new Map(), channels = new Map(), refs = new Map(), utms = new Map(), devices = new Map();
@@ -97,12 +111,13 @@ export function shape(rows, { days, now, previousPeople = 0, truncated = false }
   return {
     configured: true,
     days, truncated,
-    range: { from: new Date(now - days * 86400000).toISOString(), to: new Date(now).toISOString() },
+    range: { from: new Date(windowStart(now, days)).toISOString(), to: new Date(now).toISOString() },
     totals: {
       people: { value: people.length, previous: previousPeople },
       pageviews: { value: peopleViews },
       whatsapp: { value: people.filter((s) => s.wa).length },
       contact: { value: people.filter((s) => s.contact).length },
+      contacted: { value: contacted, previous: previousContacted },
       bots: { value: bots.length, pageviews: bots.reduce((n, s) => n + s.pages.length, 0) },
     },
     bots: { reasons: rank(botReasons, 6), countries: rank(botCountries, 5) },
@@ -113,24 +128,27 @@ export function shape(rows, { days, now, previousPeople = 0, truncated = false }
     referrers: rank(refs, 10),
     utm: rank(utms, 10),
     devices: rank(devices, 5),
+    series,
     recent,
   };
 }
 
 // ---------- Handler ----------
 async function query(db, days, now) {
-  const start = now - days * 86400000;
+  const start = windowStart(now, days), pstart = start - days * DAY;
   const cols = 'ts, sid, type, path, title, locale, ref_host, ref_path, utm_source, utm_medium, utm_campaign, country, region, city, device, is_bot, bot_reason, dur, scroll';
-  const [cur, prev] = await db.batch([
+  const notBot = 'sid NOT IN (SELECT sid FROM events WHERE is_bot = 1 AND ts >= ? AND ts < ?)';
+  const [cur, prev, prevC] = await db.batch([
     db.prepare('SELECT ' + cols + ' FROM events WHERE ts >= ? ORDER BY ts DESC LIMIT ' + (MAX_ROWS + 1)).bind(start),
-    db.prepare('SELECT COUNT(DISTINCT sid) AS n FROM events WHERE ts >= ? AND ts < ? AND sid NOT IN (SELECT sid FROM events WHERE is_bot = 1 AND ts >= ? AND ts < ?)').bind(start - days * 86400000, start, start - days * 86400000, start),
+    db.prepare('SELECT COUNT(DISTINCT sid) AS n FROM events WHERE ts >= ? AND ts < ? AND ' + notBot).bind(pstart, start, pstart, start),
+    db.prepare("SELECT COUNT(DISTINCT sid) AS n FROM events WHERE type IN ('wa_click', 'contact_submit') AND ts >= ? AND ts < ? AND " + notBot).bind(pstart, start, pstart, start),
   ]);
   let rows = (cur && cur.results) || [];
   const truncated = rows.length > MAX_ROWS;
   if (truncated) rows = rows.slice(0, MAX_ROWS);
   rows = rows.slice().reverse();
-  const n = prev && prev.results && prev.results[0] && prev.results[0].n;
-  return { rows, truncated, previousPeople: Number(n) || 0 };
+  const num = (r) => Number(r && r.results && r.results[0] && r.results[0].n) || 0;
+  return { rows, truncated, previousPeople: num(prev), previousContacted: num(prevC) };
 }
 
 export async function onRequestGet(context) {
@@ -158,7 +176,7 @@ export async function onRequestGet(context) {
   try { q = await query(env.DB, days, now); } catch (e) {
     return json({ configured: false, reason: 'sin_tabla', message: 'La base D1 está conectada pero falta aplicar la migración (migrations/0001_init.sql, ver docs/panel-analitica.md).' });
   }
-  const data = shape(q.rows, { days, now, previousPeople: q.previousPeople, truncated: q.truncated });
+  const data = shape(q.rows, { days, now, previousPeople: q.previousPeople, previousContacted: q.previousContacted, truncated: q.truncated });
   data.generatedAt = new Date(now).toISOString();
   if (cache) {
     try { await cache.put(cacheKey, new Response(JSON.stringify(data), { headers: { 'content-type': 'application/json', 'cache-control': 'max-age=' + CACHE_SECONDS } })); } catch (e) { /* ok */ }
