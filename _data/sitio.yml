@@ -26,7 +26,7 @@ wa_track: true
 
 # Formulario de contacto (ver docs/formulario-contacto.md). Con true se muestra el formulario en las páginas de contacto
 # y estas pasan a indexarse. Activar SOLO cuando el Worker `brenbe-contacto` esté desplegado y con sus secretos.
-contact_form: false
+contact_form: true
 # Clave PÚBLICA del widget Turnstile (la secreta va como secreto TURNSTILE_SECRET del Worker). Vacío = sin Turnstile
 # (el Worker se protege con honeypot + tiempo mínimo + límite por IP).
-turnstile_sitekey:
+turnstile_sitekey: "0x4AAAAAAGOhlYDBuKKjcZSO"
