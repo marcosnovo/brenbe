@@ -110,4 +110,5 @@ exclude:
   - .jekyll-cache
   - functions      # Cloudflare Pages Function (functions/index.js): la usa Pages desde la raíz del repo, no es parte del sitio
   - tests
+  - migrations     # SQL de D1 (estadísticas propias): se aplica con wrangler, no es parte del sitio
   - docs

@@ -49,3 +49,7 @@ Alternativa si se quiere atribuir cada canal en CWA: pedir al dev una página-pu
 ## Planilla de leads (10 min/semana)
 
 Fecha, origen (referer / ruta `/wa/...` / "cómo nos conociste"), idioma, servicio, estado, monto, reseña pedida.
+
+## Actualización: las UTM ahora sí se miden (estadísticas propias)
+
+Desde el panel v2, el colector propio (`/c`, ver `docs/panel-analitica.md`) guarda `utm_source`, `utm_medium` y `utm_campaign` de cada visita (anónimo, sin cookies) y el panel los muestra en "¿De dónde llegan?". Cloudflare Web Analytics sigue sin leer query strings; esto es un complemento. Requiere la base D1 activada.
