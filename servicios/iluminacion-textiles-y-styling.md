@@ -5,7 +5,7 @@ ref: servicio-iluminacion
 title: Asesoría de iluminación, textiles y styling
 seo_title: Iluminación, textiles y styling para tu casa | BRENBE
 h1: Iluminación, textiles y styling
-description: "Asesoría de iluminación, cortinas, alfombras, textiles y styling: los detalles que le dan calidez a un ambiente sin hacer obra. Online y presencial."
+description: "Asesoría de iluminación, cortinas, alfombras, textiles y styling: los detalles que le dan calidez a un ambiente sin hacer obra. 100 % online."
 intro: "Los detalles que más cambian la sensación de un ambiente suelen ser los que no requieren obra: la luz, las cortinas, la alfombra, los textiles y cómo se acomodan los objetos."
 card: "Luz, cortinas, alfombras, textiles y objetos para terminar el ambiente."
 order: 4

@@ -18,8 +18,6 @@ index_when: [nombre_completo, bio]
 {%- assign s_cargo = t.cargo | default: 'Interiorista' | append: '' | strip -%}
 {%- assign s_form = t.formacion | default: '' | append: '' | strip -%}
 {%- assign s_anio = t.anio_inicio | default: '' | append: '' | strip -%}
-{%- assign s_ciudad = t.ciudad | default: '' | append: '' | strip -%}
-{%- assign s_prov = t.provincia | default: '' | append: '' | strip -%}
 {%- assign s_ret = n.retrato | default: '' | append: '' | strip -%}
 <main id="main">
   <div class="section page-intro about-intro">
@@ -41,17 +39,14 @@ index_when: [nombre_completo, bio]
     <p>Trabajo con asesorías, es decir, sin obra: el cambio se logra con color, mobiliario, iluminación, textiles y objetos. Es una forma más ágil y accesible de renovar un espacio, y también la más cómoda si alquilás.</p>
     <h2>Qué hago y qué no</h2>
     <ul>
-      <li><strong>Hago:</strong> asesorías de interiorismo y decoración, online y presenciales; propuestas de color; distribución y selección de mobiliario; iluminación, textiles y styling.</li>
+      <li><strong>Hago:</strong> asesorías de interiorismo y decoración, 100 % online; propuestas de color; distribución y selección de mobiliario; iluminación, textiles y styling.</li>
       <li><strong>No hago:</strong> dirección de obra, reformas ni cálculo estructural. Si tu proyecto lo requiere, te lo digo de entrada.</li>
     </ul>
-    {% if s_form != '' or s_anio != '' or s_ciudad != '' %}
+    {% if s_form != '' or s_anio != '' %}
     <h2>Datos de la profesional</h2>
     <ul>
       {% if s_form != '' %}<li><strong>Formación:</strong> {{ s_form | escape }}</li>{% endif %}
       {% if s_anio != '' %}<li><strong>Trabajo en interiorismo desde:</strong> {{ s_anio | escape }}</li>{% endif %}
-      {% if s_ciudad != '' %}<li><strong>Base:</strong> {{ s_ciudad | escape }}{% if s_prov != '' %}, {{ s_prov | escape }}{% endif %}</li>{% endif %}
-      {% assign zonas = t.zona_presencial | default: '' %}
-      {% if zonas.size > 0 %}<li><strong>Presencial en:</strong> {{ zonas | join: ', ' | escape }}</li>{% endif %}
     </ul>
     {% endif %}
     <p>Si querés ver cómo es trabajar juntas, conocé la <a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">asesoría de interiorismo online</a>, mirá los <a href="{{ '/servicios/' | relative_url }}">servicios</a> o leé las <a href="{{ '/guias/' | relative_url }}">guías</a>.</p>

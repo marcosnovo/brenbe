@@ -14,8 +14,6 @@ permalink: /en/contact/
 ---
 {%- include loc.html -%}
 {%- assign t = site.data.sitio -%}
-{%- assign c_ciudad = t.ciudad | default: '' | append: '' | strip -%}
-{%- assign c_prov = t.provincia | default: '' | append: '' | strip -%}
 <main id="main">
   <div class="section page-intro">
     <p class="breadcrumb"><a href="{% include l.html ref='home' %}">{% include t.html k="bc_home" %}</a> / {{ page.breadcrumb | escape }}</p>
@@ -39,8 +37,8 @@ permalink: /en/contact/
       <li>I tell you how I work and which service fits what you need.</li>
       <li>If it feels right, we agree on the scope and a call time that works in your time zone, and we get started.</li>
     </ol>
-    <h2>Online and in person</h2>
-    <p>The online consultation takes place by video call from Argentina and works for any city or country. Argentina is on UTC-3 year-round, so I am 1 to 2 hours ahead of Eastern Time and 4 to 5 hours ahead of Pacific Time depending on daylight saving time.{% if c_ciudad != '' %} I also see clients in person in {{ c_ciudad | escape }}{% if c_prov != '' %}, {{ c_prov | escape }}{% endif %}, Argentina.{% endif %} Every service is no-renovation: no construction and no contractor supervision.</p>
+    <h2>100% online, for anywhere</h2>
+    <p>The consultation takes place online, by video call and in writing, and works for any city or country. We agree on a call time that suits your time zone. Every service is no-renovation: no construction and no contractor supervision.</p>
     <p>To learn more before writing, see how the <a href="{% include l.html ref='asesoria-online' %}">online consultation</a> works and browse the other <a href="{% include l.html ref='servicios' %}">services</a>.</p>
   </section>
   {% include faq.html title=T.faq_title %}

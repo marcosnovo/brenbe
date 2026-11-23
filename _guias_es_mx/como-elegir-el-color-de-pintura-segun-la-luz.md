@@ -39,7 +39,7 @@ El color de pintura que ves en un catálogo, en una paleta o en una foto nunca e
 
 ## Paso 1: averigua hacia dónde mira cada espacio
 
-En el hemisferio norte el sol sale por el este, pasa por el **sur** y se pone por el oeste. Es el espejo de lo que se lee en muchas notas escritas desde el hemisferio sur (como las de Argentina), donde la ventana luminosa es la que da al norte. Para ubicarte, usa la brújula del celular parado en la ventana.
+En el hemisferio norte el sol sale por el este, pasa por el **sur** y se pone por el oeste. Es el espejo de lo que se lee en muchas notas escritas para el hemisferio sur, donde la ventana luminosa es la que da al norte. Para ubicarte, usa la brújula del celular parado en la ventana.
 
 | Orientación | Qué luz recibe en México | Cómo se comporta el color | Idea de partida |
 |---|---|---|---|

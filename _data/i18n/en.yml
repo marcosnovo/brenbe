@@ -1,6 +1,6 @@
 # UI strings (English, US spelling; "you"). Anything missing falls back to es-ar.
 skip: Skip to content
-announcement: Online interior design consultations · from Argentina, for anywhere
+announcement: Online interior design consultations · for anywhere
 nav_aria: Main navigation
 nav_asesoria: Consultation
 nav_servicios: Services
@@ -20,7 +20,7 @@ contact_wa: Message me on WhatsApp
 contact_email: Email Brenda
 btn_online: See the online consultation
 btn_how_online: How the online consultation works
-footer_tagline: Interior design and decorating · Online consultations from Argentina, no renovation needed.
+footer_tagline: Interior design and decorating · Online consultations for anywhere, no renovation needed.
 footer_services_h: Services
 footer_site_aria: The site
 footer_site_h: BRENBE
@@ -71,12 +71,12 @@ wa_guide: Hi Brenda, I read the guide "%s" on brenbe.com and I'd like to ask abo
 wa_page: Hi Brenda, I'm looking at "%s" on brenbe.com and I'd like to ask about a consultation.
 price_from: "From %s"
 price_ask: Ask for pricing
-schema_org_description: "Online and in-person interior design and decorating consultations to refresh a space without renovation: color, furniture, lighting and textiles."
+schema_org_description: "Online interior design and decorating consultations, for anywhere, to refresh a space without renovation: color, furniture, lighting and textiles."
 schema_slogan: Interiors designed around the way you live
 schema_org_service_types: [Online interior design consultation, Decorating consultation, Virtual interior design]
 schema_knows_about: [Interior design, Home decorating, Color palettes, Lighting, Furniture, Textiles]
 schema_job_title: Interior design consultant
-schema_person_description: Argentine interior design consultant and founder of BRENBE Interiorismo. Advises clients online on decorating and interior design, in English, Spanish and Portuguese.
+schema_person_description: Interior design consultant and founder of BRENBE Interiorismo. Advises clients online on decorating and interior design, in English, Spanish and Portuguese.
 schema_person_knows: [Interior design, Decorating, Color, Lighting]
 schema_service_name: Online interior design consultation
 schema_service_type: Online interior design consultation
@@ -122,7 +122,7 @@ ref2_alt: "Bedroom in cream, olive and garnet tones"
 ref3_title: "Reading nook"
 ref3_sub: "Materials and objects"
 ref3_alt: "Reading nook with an olive armchair and a travertine lamp"
-site_description: "Online interior design and decorating consultations from Argentina: refresh your home without renovation, with color, furniture and lighting."
+site_description: "Online interior design and decorating consultations for anywhere: refresh your home without renovation, with color, furniture and lighting."
 og_image_alt: Warm living room with an olive sofa, walnut furniture and garnet accents
 
 # Plantillas de contenido, temas (hubs), paletas y redirección a WhatsApp

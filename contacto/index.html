@@ -4,7 +4,7 @@ locale: es-ar
 ref: contacto
 title: Contacto
 seo_title: Contacto | Asesoría de interiorismo BRENBE
-description: "Escribile a Brenda para consultar por una asesoría de interiorismo y decoración, online o presencial. Contá qué ambiente querés renovar y qué necesitás mandar."
+description: "Escribile a Brenda para consultar por una asesoría de interiorismo y decoración online. Contá qué ambiente querés renovar y qué necesitás mandar."
 last_modified_at: 2026-11-22
 breadcrumb: Contacto
 # Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
@@ -12,8 +12,6 @@ index_when_any: [whatsapp, email]
 ---
 {%- assign n = site.data.negocio -%}
 {%- assign t = site.data.sitio -%}
-{%- assign c_ciudad = t.ciudad | default: '' | append: '' | strip -%}
-{%- assign c_prov = t.provincia | default: '' | append: '' | strip -%}
 {%- assign c_dur = t.duracion | default: '' | append: '' | strip -%}
 <main id="main">
   <div class="section page-intro">
@@ -37,8 +35,8 @@ index_when_any: [whatsapp, email]
       <li>Te cuento cómo trabajo y qué servicio se ajusta mejor a lo que necesitás.</li>
       <li>Si te sirve, definimos el alcance y empezamos.{% if c_dur != '' %} {{ c_dur | escape }}.{% endif %}</li>
     </ol>
-    <h2>Online y presencial</h2>
-    <p>La asesoría online se hace a distancia desde Argentina y funciona para cualquier ciudad o país.{% if c_ciudad != '' %} También atiendo de forma presencial desde {{ c_ciudad | escape }}{% if c_prov != '' %}, {{ c_prov | escape }}{% endif %}.{% endif %} Todos los servicios son sin obra: no incluyen reformas ni dirección de obra.</p>
+    <h2>100 % online, para cualquier lugar</h2>
+    <p>La asesoría se hace online, por videollamada y por escrito, y funciona para cualquier ciudad o país. Coordinamos el horario de la videollamada según tu zona. Todos los servicios son sin obra: no incluyen reformas ni dirección de obra.</p>
     <p>Para saber más antes de escribir, mirá cómo funciona la <a href="{{ '/asesoria-de-interiorismo-online/' | relative_url }}">asesoría online</a> y los demás <a href="{{ '/servicios/' | relative_url }}">servicios</a>.</p>
   </section>
   {% include faq.html title="Preguntas frecuentes" %}
