@@ -241,11 +241,11 @@ export async function handleContact(request, env, deps = {}) {
     const token = oneLine(form.get('cf-turnstile-response'), 2100);
     if (!token) return fail(400, 'captcha');
     let ok = false;
-    try { ok = await verifyTurnstile(env, token, ip, fetchFn); } catch {
+    try { ok = await verifyTurnstile(env, token, ip, fetchFn); } catch (e) {
       log.error('contact: turnstile no disponible');
       return fail(503, 'captcha_unavailable');
     }
-    if (!ok) return fail(400, 'captcha');
+    if (!ok) { log.error('contact: captcha rechazado'); return fail(400, 'captcha'); }
   }
 
   const sender = env.CONTACT_FROM || DEFAULT_FROM;
@@ -263,9 +263,10 @@ export async function handleContact(request, env, deps = {}) {
   try {
     if (!deps.sendEmail) throw new Error('sin transporte');
     await deps.sendEmail(env, { from: sender, to: env.CONTACT_TO, raw });
-  } catch {
-    // Nunca se registra el mensaje del error: Email Routing puede incluir la dirección de destino.
-    log.error('contact: fallo el envio');
+  } catch (e) {
+    // El mensaje de error se registra SIN la dirección de destino (se reemplaza antes de loguear).
+    const safe = String((e && e.message) || '').split(env.CONTACT_TO).join('<destino>').slice(0, 300);
+    log.error('contact: fallo el envio', (e && e.name) || 'Error', safe);
     return fail(502, 'send_failed');
   }
   return succeed();
