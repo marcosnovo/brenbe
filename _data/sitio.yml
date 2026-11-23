@@ -30,3 +30,10 @@ pinterest_domain_verify:
 # Clics a WhatsApp: con true (por defecto) los botones pasan por /wa/<página>/ y cuentan como visita en Cloudflare Web Analytics
 # (solo si hay WhatsApp en "Mis datos"). Poné false para que abran WhatsApp directo, sin medir.
 wa_track: true
+
+# Formulario de contacto (ver docs/formulario-contacto.md). Con true se muestra el formulario en las páginas de contacto
+# y estas pasan a indexarse. Activar SOLO cuando el Worker `brenbe-contacto` esté desplegado y con sus secretos.
+contact_form: false
+# Clave PÚBLICA del widget Turnstile (la secreta va como secreto TURNSTILE_SECRET del Worker). Vacío = sin Turnstile
+# (el Worker se protege con honeypot + tiempo mínimo + límite por IP).
+turnstile_sitekey:

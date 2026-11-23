@@ -1,0 +1,22 @@
+# Worker del formulario de contacto de brenbe.com (recibe POST /api/contacto y lo manda por mail).
+# Desplegar: cd workers/contacto && npx wrangler deploy   (ver docs/formulario-contacto.md)
+#
+# Secretos (NO van acá; se cargan con `npx wrangler secret put <NOMBRE>` o en el panel de Cloudflare):
+#   CONTACT_TO        casilla privada de destino. Tiene que estar verificada en Email Routing. Nunca se escribe en el repo.
+#   TURNSTILE_SECRET  clave secreta del widget Turnstile (opcional: sin ella solo rigen honeypot + tiempo + límite por IP).
+name = "brenbe-contacto"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+workers_dev = false
+
+routes = [
+  { pattern = "brenbe.com/api/contacto", zone_name = "brenbe.com" },
+]
+
+# Sin `destination_address` ni `allowed_destination_addresses`: el binding acepta cualquier destino verificado
+# en Email Routing, y la dirección se toma en runtime del secreto CONTACT_TO (así no queda en el repo).
+[[send_email]]
+name = "SEND_EMAIL"
+
+[observability]
+enabled = true

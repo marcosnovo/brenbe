@@ -1,0 +1,9 @@
+{
+  "name": "brenbe-contacto",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node ../../tests/contacto.test.mjs",
+    "deploy": "wrangler deploy"
+  }
+}

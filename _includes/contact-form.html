@@ -1,0 +1,96 @@
+{%- comment -%}
+  Formulario de contacto (POST /api/contacto -> Worker `brenbe-contacto`, ver docs/formulario-contacto.md).
+  Solo se imprime con `contact_form: true` en _data/sitio.yml (hasta que el Worker esté desplegado queda oculto).
+  Funciona sin JS (POST normal y redirección a /gracias/) y mejora con brenbe-contact.js (envío con fetch, errores por campo).
+  Turnstile solo si hay `turnstile_sitekey` en _data/sitio.yml. La casilla de destino NUNCA aparece acá: vive en el secreto CONTACT_TO del Worker.
+{%- endcomment -%}
+{%- include loc.html -%}
+{%- assign cf_on = site.data.sitio.contact_form -%}
+{%- assign cf_key = site.data.sitio.turnstile_sitekey | default: '' | append: '' | strip -%}
+{%- if cf_on == true -%}
+{%- assign cf_opts = T.cf_need_opts | default: TD.cf_need_opts -%}
+{%- assign cf_page = page.url | replace: 'index.html', '' -%}
+{%- assign cf_ts_lang = 'es' -%}
+{%- if lk == 'en' -%}{%- assign cf_ts_lang = 'en' -%}{%- elsif lk == 'pt-br' -%}{%- assign cf_ts_lang = 'pt-br' -%}{%- endif -%}
+<section class="section contact-form-section" id="formulario" aria-labelledby="cf-title">
+  <div class="cf-wrap">
+    <h2 id="cf-title">{% include t.html k="cf_h2" %}</h2>
+    <p class="cf-intro">{% include t.html k="cf_intro" %}</p>
+    <p class="form-banner form-banner--error" id="contact-error" tabindex="-1">{% include t.html k="cf_error_static" %}</p>
+    <div class="visually-hidden" id="cf-live" aria-live="polite" aria-atomic="true"></div>
+    <form class="contact-form" id="contact-form" method="post" action="/api/contacto" accept-charset="utf-8"
+      data-sitekey="{{ cf_key | escape }}"
+      data-sending="{% include t.html k='cf_sending' esc=true %}"
+      data-m-required="{% include t.html k='cf_err_required' esc=true %}"
+      data-m-email="{% include t.html k='cf_err_email' esc=true %}"
+      data-m-short="{% include t.html k='cf_err_short' esc=true %}"
+      data-m-long="{% include t.html k='cf_err_long' esc=true %}"
+      data-m-consent="{% include t.html k='cf_err_consent' esc=true %}"
+      data-m-generic="{% include t.html k='cf_err_generic' esc=true %}"
+      data-m-captcha="{% include t.html k='cf_err_captcha' esc=true %}"
+      data-m-fast="{% include t.html k='cf_err_fast' esc=true %}"
+      data-m-rate="{% include t.html k='cf_err_rate' esc=true %}">
+      <input type="hidden" name="locale" value="{{ lk }}">
+      <input type="hidden" name="page" value="{{ cf_page | escape }}">
+      <input type="hidden" name="ts" value="">
+      <input type="hidden" name="utm_source" value="">
+      <input type="hidden" name="utm_medium" value="">
+      <input type="hidden" name="utm_campaign" value="">
+      <input type="hidden" name="utm_content" value="">
+      <input type="hidden" name="utm_term" value="">
+      <div class="cf-hp" aria-hidden="true"><label>Website <input type="text" name="website" value="" tabindex="-1" autocomplete="off"></label></div>
+
+      <div class="cf-field">
+        <label for="cf-nombre">{% include t.html k="cf_nombre" %}</label>
+        <input id="cf-nombre" name="nombre" type="text" autocomplete="name" required maxlength="100" aria-describedby="cf-err-nombre">
+        <p class="cf-error" id="cf-err-nombre" hidden></p>
+      </div>
+      <div class="cf-row">
+        <div class="cf-field">
+          <label for="cf-email">{% include t.html k="cf_email" %}</label>
+          <input id="cf-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" aria-describedby="cf-err-email">
+          <p class="cf-error" id="cf-err-email" hidden></p>
+        </div>
+        <div class="cf-field">
+          <label for="cf-telefono">{% include t.html k="cf_tel" %} <span class="cf-opt">{% include t.html k="cf_opt" %}</span></label>
+          <input id="cf-telefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" maxlength="40">
+        </div>
+      </div>
+      <div class="cf-row">
+        <div class="cf-field">
+          <label for="cf-pais">{% include t.html k="cf_pais" %} <span class="cf-opt">{% include t.html k="cf_opt" %}</span></label>
+          <input id="cf-pais" name="pais" type="text" autocomplete="country-name" maxlength="80">
+        </div>
+        <div class="cf-field">
+          <label for="cf-necesidad">{% include t.html k="cf_need" %} <span class="cf-opt">{% include t.html k="cf_opt" %}</span></label>
+          <select id="cf-necesidad" name="necesidad">
+            <option value="">{% include t.html k="cf_need_ph" %}</option>
+            {%- for o in cf_opts %}
+            <option value="{{ o[0] }}">{{ o[1] }}</option>
+            {%- endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="cf-field">
+        <label for="cf-mensaje">{% include t.html k="cf_msg" %}</label>
+        <textarea id="cf-mensaje" name="mensaje" rows="6" required minlength="10" maxlength="4000" aria-describedby="cf-hint-mensaje cf-err-mensaje"></textarea>
+        <p class="cf-hint" id="cf-hint-mensaje">{% include t.html k="cf_msg_hint" %}</p>
+        <p class="cf-error" id="cf-err-mensaje" hidden></p>
+      </div>
+      <div class="cf-field cf-consent">
+        <label class="cf-check"><input id="cf-consent" type="checkbox" name="consent" value="on" required aria-describedby="cf-err-consent"><span>{% include t.html k="cf_consent" %}</span></label>
+        <p class="cf-error" id="cf-err-consent" hidden></p>
+      </div>
+      {%- if cf_key != '' %}
+      <div class="cf-turnstile" data-turnstile-slot></div>
+      {%- endif %}
+      <div class="cf-actions"><button class="button primary" type="submit" id="cf-submit">{% include t.html k="cf_submit" %}</button></div>
+    </form>
+    <div class="form-success" id="cf-success" role="status" tabindex="-1" hidden>
+      <h3>{% include t.html k="cf_ok_h" %}</h3>
+      <p>{% include t.html k="cf_ok_p" %}</p>
+    </div>
+  </div>
+</section>
+<script defer src="{{ '/brenbe-contact.js' | relative_url }}?v={{ site.time | date: '%s' }}" data-ts-lang="{{ cf_ts_lang }}"></script>
+{%- endif -%}

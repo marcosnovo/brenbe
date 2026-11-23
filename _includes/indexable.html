@@ -2,7 +2,8 @@
   Define `is_indexable` para la página actual o para `include.p`.
   No indexable si: `indexable: false`, `ready: false` (borrador / placeholder de un idioma), el idioma tiene `ready: false`
   en _data/locales.yml, o falta alguno de los datos de `index_when` (claves de _data/negocio.yml, todas requeridas),
-  o faltan todos los de `index_when_any`.
+  o faltan todos los de `index_when_any`. En `index_when_any` la clave especial `contact_form` cuenta como cargada
+  cuando `contact_form: true` en _data/sitio.yml (formulario de contacto activo).
   Así las páginas que dependen de datos de la dueña se activan solas al completarlos.
   Con quiet=true no toca `is_indexable`: solo deja el resultado en `ix_res` (lo usan locs.html y alts.html).
 {%- endcomment -%}
@@ -20,6 +21,7 @@
   {%- for k in ix_p.index_when_any -%}
     {%- assign ix_v = site.data.negocio[k] | default: '' | append: '' | strip -%}
     {%- if ix_v != '' -%}{%- assign ix_any = true -%}{%- endif -%}
+    {%- if k == 'contact_form' and site.data.sitio.contact_form == true -%}{%- assign ix_any = true -%}{%- endif -%}
   {%- endfor -%}
   {%- unless ix_any -%}{%- assign ix_res = false -%}{%- endunless -%}
 {%- endif -%}

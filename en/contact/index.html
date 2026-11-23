@@ -8,8 +8,8 @@ seo_title: "Contact | Online Interior Design BRENBE"
 description: "Contact Brenda about an online interior design consultation. Tell her which room you want to refresh and what to send to get started."
 last_modified_at: 2026-11-22
 breadcrumb: "Contact"
-# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos.
-index_when_any: [whatsapp, email]
+# Se indexa sola cuando hay WhatsApp o email cargado en Pages CMS > Mis datos, o cuando el formulario está activo (sitio.contact_form).
+index_when_any: [whatsapp, email, contact_form]
 permalink: /en/contact/
 ---
 {%- include loc.html -%}
@@ -22,6 +22,7 @@ permalink: /en/contact/
     <h1>Contact</h1>
     <p>Tell me which room you want to refresh and we will figure out how to help. The first conversation is about understanding your starting point and deciding whether an online design consultation is what you need.</p>
   </div>
+  {% include contact-form.html %}
   <section class="section copy">
     <h2>What to send to get started</h2>
     <p>You don't need to have it all figured out. This is enough to begin:</p>
