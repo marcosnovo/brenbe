@@ -26,7 +26,14 @@
 {%- endunless -%}
 {%- if al_ref != '' -%}
   {%- assign al_all = site.pages | concat: site.documents -%}
-  {%- assign al_cand = al_all | where_exp: 'd', 'd.ref == al_ref or d.collection == "guias" and d.slug == al_ref' -%}
+  {%- assign al_cand = '' | split: '' -%}
+  {%- for d in al_all -%}
+    {%- if d.ref == al_ref -%}
+      {%- assign al_cand = al_cand | push: d -%}
+    {%- elsif d.collection == 'guias' -%}
+      {%- if d.slug == al_ref -%}{%- assign al_cand = al_cand | push: d -%}{%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
   {%- for c in al_cand -%}
     {%- assign c_loc = c.locale | default: 'es-ar' -%}
     {%- capture c_tag %},{{ c_loc }},{% endcapture -%}
